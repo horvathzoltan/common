@@ -1,0 +1,9 @@
+HOME = $$system(echo $HOME)
+INSTALLDIR = commonlib
+createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
+copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
+first.depends = $(first) createdir copydata
+export(first.depends)
+export(createdir.commands)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first createdir copydata
