@@ -1,5 +1,5 @@
 #include <QtTest>
-#include <../stringhelper/stringhelper.h>
+#include <../common/stringhelper/stringhelper.h>
 // add necessary includes here
 #include <QDebug>
 
