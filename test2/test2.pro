@@ -15,6 +15,7 @@ SOURCES +=  tst_test2.cpp
 HOME = $$system(echo $HOME)
 INSTALLDIR = commonlib
 
+#itt nem az installdirből kellene felszedni, hanem a fordítottból
 #unix:!macx: LIBS += -L$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper/ -lstringhelper
 #unix:!macx: LIBS += -L$$PWD/../../$$INSTALLDIR/ -lstringhelper
 unix:!macx: LIBS += -L$$HOME/$$INSTALLDIR/ -lstringhelper

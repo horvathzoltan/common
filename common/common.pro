@@ -1,5 +1,9 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    stringhelper \
     macrofactory \
+    stringhelper \
+    filehelper \
+    shortguid \
+    zlog
+

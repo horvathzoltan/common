@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += \
-    test2 \
+SUBDIRS += \    
+    libinstall \
     common \
-    libinstall
+    test2
