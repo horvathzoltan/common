@@ -1,6 +1,6 @@
 #include "../macrofactory/macro.h"
 #include "stringhelper.h"
-#include <QString>
+//#include <QString>
 //#include "zfilenamehelper.h"
 //#include "zlog.h"
 //#include "zstringhelper.h"

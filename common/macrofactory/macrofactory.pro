@@ -8,3 +8,5 @@ HEADERS += \
 
 SOURCES += \
     zlogicexception.cpp
+
+include($$PWD/../../libinstall/libinstall.prf)

@@ -11,10 +11,10 @@ QString zFileHelper::load2(const QString& filename) {
     QFileInfo fi(filename);    
     if(!fi.isAbsolute())
     {
-        zInfo(QStringLiteral("nem abszolut path: %1").arg(filename));
+        zInfo(zfn()+" "+QStringLiteral("nem abszolut path: %1").arg(filename));
         zLog::appendInfo(ikey, "error");
         zLog::closeInfo(ikey);
-        return zStringHelper::Empty;
+        //return zStringHelper::Empty;
     }
 
     if(!fi.exists())
@@ -82,6 +82,8 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
     out.setGenerateByteOrderMark(true);
     out << txt.toUtf8();
     f.close();
+    QFileInfo fi(fn);
+    zInfo(QStringLiteral("File saved: %1").arg(fi.absoluteFilePath()));
 }
 
 

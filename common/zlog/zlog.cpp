@@ -79,14 +79,15 @@ const QMap<ErrLevels, QString> zLog::ErrLevelNames{
 
 
 //TODO ha van gui, akkor az külső dependencyként meg kellene jelenjen itt
-/*
-void zLog::dialog(const QString& str, ErrLevels errlevel) {
 
-    auto h = ErrLevelNames[errlevel];
-    QMessageBox messageBox;
-    QMessageBox::critical(nullptr, h, str);
-    messageBox.setFixedSize(500, 200);
-}*/
+void zLog::dialog(const QString& str, ErrLevels errlevel)
+{
+
+    auto h = ErrLevelNames[errlevel];    
+    //QMessageBox messageBox;
+    //QMessageBox::critical(nullptr, h, str);
+    //messageBox.setFixedSize(500, 200);
+}
 /*message*/
 
 
