@@ -66,11 +66,16 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
     QFile f(fn);
 
-    auto om = QIODevice::WriteOnly | QIODevice::Text; // openmode
+    auto om = QIODevice::WriteOnly | QFile::Text; // openmode
     if(isAppend) om |= QIODevice::Append;
 
-    if (!f.open(om)){
-        zLog::dialogError(QStringLiteral("nem menthető: %1").arg(fn));
+    if (!f.open(om))
+    {
+        auto err = f.error();
+        auto errDesc = f.errorString();
+        //
+        auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(fn).arg(err).arg(errDesc);
+        zLog::dialogError(errstr);
         return;
         }
 
