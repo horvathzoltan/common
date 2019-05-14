@@ -5,6 +5,7 @@
 #include "../zlog/zlog.h"
 #include "filenamehelper.h"
 #include <QFileInfo>
+#include <QDir>
 
 QString zFileHelper::load2(const QString& filename) {
     auto ikey = zLog::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
@@ -64,6 +65,13 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 //    QTextStream out(&logfile);
 //    out << lftxt << endl;
 
+    QFileInfo fi(fn);
+    QDir a = fi.dir();
+    if(!a.exists())
+    {
+        a.mkpath(".");
+    }
+
     QFile f(fn);
 
     auto om = QIODevice::WriteOnly | QFile::Text; // openmode
@@ -87,7 +95,7 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
     out.setGenerateByteOrderMark(true);
     out << txt.toUtf8();
     f.close();
-    QFileInfo fi(fn);
+    //QFileInfo fi(fn);
     zInfo(QStringLiteral("File saved: %1").arg(fi.absoluteFilePath()));
 }
 

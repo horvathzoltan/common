@@ -105,6 +105,7 @@ void zLog::dialogWarning(const QString& str) {
 
 void zLog::dialogError(const QString& str) {
     dialog(str, ErrLevels::ERROR);
+
 }
 
 
