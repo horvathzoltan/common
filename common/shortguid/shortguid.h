@@ -10,7 +10,7 @@ public:
     //zShortGuid(QString value);
     static const zShortGuid Empty;
 
-    zShortGuid(QUuid guid);
+    explicit zShortGuid(QUuid guid);
 
     QUuid uuid;
     QString value;

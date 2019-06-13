@@ -5,10 +5,11 @@
 #include "isettings.h"
 #include <QString>
 
-class SETTINGSHELPERSHARED_EXPORT zSettingsHelper
+namespace com::helper{
+class SETTINGSHELPERSHARED_EXPORT SettingsHelper
 {
 public:
-    zSettingsHelper();
+    SettingsHelper();
     static bool loadSettings();
     static void saveSettings();
     static void init(const QString &, ISettings *);
@@ -19,6 +20,6 @@ private:
     static const QString NAME;
     static QString getFileName();
 };
-
+}  // namespace com
 #endif // ZSETTINGSHELPER_H
 

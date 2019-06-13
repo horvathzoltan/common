@@ -22,18 +22,19 @@ unix:!macx:
 {
 LIBS += -L$$HOME/$$INSTALLDIR/ -lstringhelper
 LIBS += -L$$HOME/$$INSTALLDIR/ -lfilehelper
+LIBS += -L$$HOME/$$INSTALLDIR/ -lshortguid
 LIBS += -L$$HOME/$$INSTALLDIR/ -lzlog
 LIBS += -L$$HOME/$$INSTALLDIR/ -lmacrofactory
-LIBS += -L$$HOME/$$INSTALLDIR/ -lshortguid
 LIBS += -L$$HOME/$$INSTALLDIR/ -linihelper
+LIBS += -L$$HOME/$$INSTALLDIR/ -lsettingshelper
 }
 
 #QMAKE_LFLAGS += -Wl,-rpath,"$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper"
 #QMAKE_LFLAGS += -Wl,-rpath,"$$PWD/../../$$INSTALLDIR"
 QMAKE_LFLAGS += -Wl,-rpath,"$$HOME/$$INSTALLDIR"
 
-INCLUDEPATH += $$PWD/../stringhelper
-DEPENDPATH += $$PWD/../stringhelper
+INCLUDEPATH += $$PWD/../common
+DEPENDPATH += $$PWD/../common
 
 #target.path = += $$[QT_INSTALL_PLUGINS]/stringhelper
 #target.files += /stringhelper/stringhelper.so

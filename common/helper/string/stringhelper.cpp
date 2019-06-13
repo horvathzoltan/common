@@ -1,4 +1,4 @@
-#include "../macrofactory/macro.h"
+#include "../../macrofactory/macro.h"
 #include "stringhelper.h"
 //#include <QString>
 //#include "zfilenamehelper.h"
@@ -28,29 +28,30 @@ zStringHelper::zStringHelper()
 
 }
 */
-const QChar zStringHelper::SEP = ';';
-const QString zStringHelper::Empty = QString();
+
+namespace com::helper{
+const QChar StringHelper::SEP = ';';
 #ifdef Q_OS_LINUX
-const QString zStringHelper::NewLine = QStringLiteral("\n");
+const QString StringHelper::NewLine = QStringLiteral("\n");
 #elif defined(Q_OS_WIN)
 const QString zStringHelper::NewLine = QStringLiteral("\r\n");
 #endif
 
 
-const QString zStringHelper::Equals = QStringLiteral("Equals");
+const QString StringHelper::Equals = QStringLiteral("Equals");
 
-const QStringList zStringHelper::TrueStr = {QStringLiteral("true"), QStringLiteral("yes"), QStringLiteral("ok"), QStringLiteral("1")};
-const QStringList zStringHelper::FalseStr = {QStringLiteral("false"), QStringLiteral("no"), QStringLiteral("nok"), QStringLiteral("0")};
+const QStringList StringHelper::TrueStr = {QStringLiteral("true"), QStringLiteral("yes"), QStringLiteral("ok"), QStringLiteral("1")};
+const QStringList StringHelper::FalseStr = {QStringLiteral("false"), QStringLiteral("no"), QStringLiteral("nok"), QStringLiteral("0")};
 
-const QString zStringHelper::HTML_TAGPATTERN = QStringLiteral(R"(<%1.*?>([\s\S]*?)<\/%1>)");
-const QString zStringHelper::HTML_TABLE = QStringLiteral("table");
-const QString zStringHelper::HTML_TBODY = QStringLiteral("tbody");
-const QString zStringHelper::HTML_TR = QStringLiteral("tr");
-const QString zStringHelper::HTML_TD = QStringLiteral("td");
-const QString zStringHelper::HTML_P= QStringLiteral("p");
-const QString zStringHelper::HTML_SPAN = QStringLiteral("span");
+const QString StringHelper::HTML_TAGPATTERN = QStringLiteral(R"(<%1.*?>([\s\S]*?)<\/%1>)");
+const QString StringHelper::HTML_TABLE = QStringLiteral("table");
+const QString StringHelper::HTML_TBODY = QStringLiteral("tbody");
+const QString StringHelper::HTML_TR = QStringLiteral("tr");
+const QString StringHelper::HTML_TD = QStringLiteral("td");
+const QString StringHelper::HTML_P= QStringLiteral("p");
+const QString StringHelper::HTML_SPAN = QStringLiteral("span");
 
-QString zStringHelper::getInner1(QString *v){
+QString StringHelper::getInner1(QString *v){
     /*    int ix1 = v->indexOf(a);
     int ix2 = v->lastIndexOf(a);
     if(ix1!=-1&&ix2!=-1)
@@ -70,16 +71,16 @@ QString zStringHelper::getInner1(QString *v){
         return "";
 }
 
-bool zStringHelper::isIn(QString *v, QChar a, QChar b){
+bool StringHelper::isIn(QString *v, QChar a, QChar b){
     return (v->startsWith(a) && v->endsWith(b));
 }
 
-bool zStringHelper::toBool(const QString& ezt){
+bool StringHelper::toBool(const QString& ezt){
     if(ezt.isEmpty()) return false;
     return TrueStr.contains(ezt.toLower());
 }
 
-QString zStringHelper::boolToString(bool a)
+QString StringHelper::boolToString(bool a)
 {
     if(a)
     {
@@ -88,7 +89,7 @@ QString zStringHelper::boolToString(bool a)
     return FalseStr.first();
 }
 
-QString zStringHelper::boolToString(bool a, const QString& s)
+QString StringHelper::boolToString(bool a, const QString& s)
 {
     if(a)
     {
@@ -100,18 +101,18 @@ QString zStringHelper::boolToString(bool a, const QString& s)
 /*
  * ponttal elválasztott tagok esetén
 */
-QString zStringHelper::toCamelCase(const QString& s)
+QString StringHelper::toCamelCase(const QString& s)
 {
     auto o = s.split('.');
 
     for (int i = 0; i < o.length(); i++)
         o[i][0] = o[i][0].toUpper();
 
-    return o.join(Empty);
+    return o.join(QString());
 }
 
 //class_nameCamelCase
-QString zStringHelper::getclass_nameCamelCase(const QString& tnev) {
+QString StringHelper::getclass_nameCamelCase(const QString& tnev) {
     QString t2 = tnev;//.toLower();
     //QString sep = TXT+'.';
 
@@ -130,21 +131,21 @@ QString zStringHelper::getclass_nameCamelCase(const QString& tnev) {
     return toCamelCase(t2.replace('_', '.'));
 }
 
-QStringList zStringHelper::toStringList(const QString &s){
+QStringList StringHelper::toStringList(const QString &s){
     return s.split(QRegExp(QStringLiteral("(\\r\\n)|(\\n\\r)|\\r|\\n")), QString::SkipEmptyParts);
 }
 
 // (?:\".*\")|(?:[\d.]+)
-QRegularExpression zStringHelper::r_string_or_number = QRegularExpression(QStringLiteral(R"((?:\".*\")|(?:[^\p{L}][\d.]+))"), QRegularExpression::MultilineOption|QRegularExpression::UseUnicodePropertiesOption);
+QRegularExpression StringHelper::r_string_or_number = QRegularExpression(QStringLiteral(R"((?:\".*\")|(?:[^\p{L}][\d.]+))"), QRegularExpression::MultilineOption|QRegularExpression::UseUnicodePropertiesOption);
 
-bool zStringHelper::isclass_name(const QString& str){
+bool StringHelper::isclass_name(const QString& str){
     auto m = r_string_or_number.match(str);
     auto i = !m.hasMatch();    // ha nincs egyezés, nem konstans
     return i;
 }
 
 //littleM|oUsE littleM|iCe
-QString zStringHelper::caseFixer(QString minta, QString ezt){
+QString StringHelper::caseFixer(QString minta, QString ezt){
     int l = (minta.length()<ezt.length())?minta.length():ezt.length();
     for(int i=0;i<l;i++){
         QChar c = minta[i];
@@ -164,8 +165,8 @@ QString zStringHelper::caseFixer(QString minta, QString ezt){
     return ezt;
 }
 
-const QString zStringHelper::p_filename = QStringLiteral(R"((?:file:\/{2})?((?:[a-zA-Z]\:)?(?:[\\\/][\w._]+)+))");
-const QRegularExpression zStringHelper::r_filename = QRegularExpression(p_filename, QRegularExpression::MultilineOption|QRegularExpression::UseUnicodePropertiesOption);
+const QString StringHelper::p_filename = QStringLiteral(R"((?:file:\/{2})?((?:[a-zA-Z]\:)?(?:[\\\/][\w._]+)+))");
+const QRegularExpression StringHelper::r_filename = QRegularExpression(p_filename, QRegularExpression::MultilineOption|QRegularExpression::UseUnicodePropertiesOption);
 // ha fájlnévvel kezdődik,
 //QStringList zStringHelper::getFilePaths(const QString& txt, const QStringList& fileExtFilter){
 //    auto i_filename = r_filename.globalMatch(txt);
@@ -206,12 +207,12 @@ const QRegularExpression zStringHelper::r_filename = QRegularExpression(p_filena
 //    return txtlist;
 //}
 
-QString zStringHelper::zNormalize(const QString& c){
-    return c.normalized(QString::NormalizationForm_D).replace(QRegExp("[^a-zA-Z0-9_\\s]"), Empty).replace(' ', '_').toLower();
+QString StringHelper::zNormalize(const QString& c){
+    return c.normalized(QString::NormalizationForm_D).replace(QRegExp("[^a-zA-Z0-9_\\s]"), QString()).replace(' ', '_').toLower();
 }
 
 
-QRegularExpression zStringHelper::getHTMLRegExp(const QString &s)
+QRegularExpression StringHelper::getHTMLRegExp(const QString &s)
 {
     auto r = QRegularExpression(HTML_TAGPATTERN.arg(s));
     return r;
@@ -255,11 +256,11 @@ QRegularExpression zStringHelper::getHTMLRegExp(const QString &s)
 //}
 
 
-QString zStringHelper::HtmlDecode(const QString &value)
+QString StringHelper::HtmlDecode(const QString &value)
 {
     if (value.isEmpty())
     {
-        return Empty;
+        return QString();
     }
 
     if (!StringRequiresHtmlDecoding(value))
@@ -271,7 +272,7 @@ QString zStringHelper::HtmlDecode(const QString &value)
     return e;
 }
 
-bool zStringHelper::StringRequiresHtmlDecoding(const QString& s)
+bool StringHelper::StringRequiresHtmlDecoding(const QString& s)
 {
     if (getHtmlDecodeConformance() == UnicodeDecodingConformance::Compat)
     {
@@ -290,30 +291,30 @@ bool zStringHelper::StringRequiresHtmlDecoding(const QString& s)
     return false;
 }
 
-const QChar zStringHelper::_htmlEntityEndingChars[] =  {';', '&' };
-const QSet<QChar> zStringHelper::htmlEntityEndings =  {';', '&' };
+const QChar StringHelper::_htmlEntityEndingChars[] =  {';', '&' };
+const QSet<QChar> StringHelper::htmlEntityEndings =  {';', '&' };
 
 //chars[3] = '\u0058';   // Unicode
-const QChar zStringHelper::HIGH_SURROGATE_START(0xD800);// '\uD800';
-const QChar zStringHelper::LOW_SURROGATE_START(0xDC00);
-const QChar zStringHelper::LOW_SURROGATE_END(0xDFFF);
+const QChar StringHelper::HIGH_SURROGATE_START(0xD800);// '\uD800';
+const QChar StringHelper::LOW_SURROGATE_START(0xDC00);
+const QChar StringHelper::LOW_SURROGATE_END(0xDFFF);
 
-const int zStringHelper::UNICODE_PLANE00_END = 0x00FFFF;
-const int zStringHelper::UNICODE_PLANE01_START = 0x10000;
-const int zStringHelper::UNICODE_PLANE16_END = 0x10FFFF;
+const int StringHelper::UNICODE_PLANE00_END = 0x00FFFF;
+const int StringHelper::UNICODE_PLANE01_START = 0x10000;
+const int StringHelper::UNICODE_PLANE16_END = 0x10FFFF;
 
-zStringHelper::UnicodeDecodingConformance zStringHelper::getHtmlDecodeConformance()
+StringHelper::UnicodeDecodingConformance StringHelper::getHtmlDecodeConformance()
 {
     return UnicodeDecodingConformance::Strict;
 }
 
-QString zStringHelper::HtmlDecode2(const QString &value)
+QString StringHelper::HtmlDecode2(const QString &value)
 {
     QString output;
 
     if (value.isEmpty())
     {
-        return Empty;
+        return QString();
     }
 
     //    if (output == null) {
@@ -452,16 +453,16 @@ QString zStringHelper::HtmlDecode2(const QString &value)
 }
 
 
-void zStringHelper::ConvertSmpToUtf16(uint smpChar, QChar leadingSurrogate, QChar trailingSurrogate) {
+void StringHelper::ConvertSmpToUtf16(uint smpChar, QChar leadingSurrogate, QChar trailingSurrogate) {
     //zInfo(UNICODE_PLANE01_START <= smpChar && smpChar <= UNICODE_PLANE16_END);
 
-    auto utf32 = static_cast<int>(smpChar - zStringHelper::UNICODE_PLANE01_START);
-    leadingSurrogate = QChar((utf32 / 0x400) + zStringHelper::HIGH_SURROGATE_START.unicode());
-    trailingSurrogate = QChar((utf32 % 0x400) + zStringHelper::LOW_SURROGATE_START.unicode());
+    auto utf32 = static_cast<int>(smpChar - StringHelper::UNICODE_PLANE01_START);
+    leadingSurrogate = QChar((utf32 / 0x400) + StringHelper::HIGH_SURROGATE_START.unicode());
+    trailingSurrogate = QChar((utf32 % 0x400) + StringHelper::LOW_SURROGATE_START.unicode());
 }
 
 
-QChar zStringHelper::HtmlEntityLookup(const QString& e)
+QChar StringHelper::HtmlEntityLookup(const QString& e)
 {
     quint16 a;
     a = HtmlNamedEntitiesLatin1[e];
@@ -477,7 +478,7 @@ QChar zStringHelper::HtmlEntityLookup(const QString& e)
 
 //https://www.w3.org/TR/WD-html40-970708/sgml/entities.html
 
-const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesLatin1{
+const QMap<QString,quint16> StringHelper::HtmlNamedEntitiesLatin1{
     //ENTITIES Full Latin 1
     {"nbsp",160}, /* no-break space */
     {"iexcl",161}, /* inverted exclamation mark */
@@ -577,7 +578,7 @@ const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesLatin1{
     {"yuml",255}, /* small y, dieresis or umlaut mark */
 };
 
-const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesSymbolic{
+const QMap<QString,quint16> StringHelper::HtmlNamedEntitiesSymbolic{
     /* Latin Extended-B */
     {"fnof",402}, /* latin small f with hook, =function, =florin, u+0192 ISOtech */
 
@@ -765,7 +766,7 @@ const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesSymbolic{
     {"diams",9830}, /* black diamond suit, u+2666 ISOpub */
 };
 
-const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesSpecial{
+const QMap<QString,quint16> StringHelper::HtmlNamedEntitiesSpecial{
     /* C0 Controls and Basic Latin */
     {"quot",34}, /* quotation mark, =apl quote, u+0022 ISOnum */
     {"amp",38}, /* ampersand, u+0026 ISOnum */
@@ -813,3 +814,4 @@ const QMap<QString,quint16> zStringHelper::HtmlNamedEntitiesSpecial{
 
     /* rsaquo is proposed but not yet ISO standardised */
 };
+}

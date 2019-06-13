@@ -1,15 +1,18 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-05-01T21:53:35
+# Project created by QtCreator 2019-04-02T08:27:00
 #
 #-------------------------------------------------
 
 QT       -= gui
 
-TARGET = inihelper
+TARGET = zlog
 TEMPLATE = lib
 
-DEFINES += INIHELPER_LIBRARY
+DEFINES += ZLOG_LIBRARY
+
+HOME = $$system(echo $HOME)
+COMMON_LIBS = commonlib
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -23,10 +26,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        zinihelper.cpp
+	locinfo.cpp \
+	log.cpp
 
 HEADERS += \
-        zinihelper.h \
-        inihelper_global.h
+        locinfo.h \
+        log.h
+
+HOME = $$system(echo $HOME)
+COMMON_LIBS = commonlib
+
+unix:!macx:
+{
+LIBS += -L$$HOME/$$COMMON_LIBS/ -lshortguid
+}
 
 include($$PWD/../../libinstall/libinstall.prf)
+#HOME = $$system(echo $HOME)
+#INSTALLDIR = commonlib
+#createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
+#copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
+#first.depends = $(first) createdir copydata
+#export(first.depends)
+#export(createdir.commands)
+#export(copydata.commands)
+#QMAKE_EXTRA_TARGETS += first createdir copydata
+
+#SUBDIRS += \
+#    libinstall.pro
+
+# LIBS += -L/$$HOME/$$COMMON_LIBS -lshortguid
+
+DISTFILES +=
+

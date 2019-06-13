@@ -5,14 +5,12 @@
 #include <QString>
 #include <QRegularExpression>
 
-#define EMPTYSTR zStringHelper::Empty
-
-
-class STRINGHELPERSHARED_EXPORT zStringHelper
+namespace com::helper{
+class STRINGHELPERSHARED_EXPORT StringHelper
 {
 public:
     static const QChar SEP;
-    static const QString Empty;
+    //static const QString Empty;
     static const QString NewLine;
     static const QString Equals;
 
@@ -81,5 +79,5 @@ private:
     static const QMap<QString,quint16> HtmlNamedEntitiesSymbolic;
     static const QMap<QString,quint16> HtmlNamedEntitiesSpecial;
 };
-
+}  // namespace com::helper
 #endif // STRINGHELPER_H

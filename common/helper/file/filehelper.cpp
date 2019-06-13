@@ -1,29 +1,30 @@
 //#include "globals.h"
-#include "../macrofactory/macro.h"
+#include "../../macrofactory/macro.h"
 #include "filehelper.h"
-#include "../stringhelper/stringhelper.h"
-#include "../zlog/zlog.h"
+#include "../../helper/string/stringhelper.h"
+#include "../../logger/log.h"
 #include "filenamehelper.h"
 #include <QFileInfo>
 #include <QDir>
 
-QString zFileHelper::load2(const QString& filename) {
-    auto ikey = zLog::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
+namespace com::helper{
+QString FileHelper::load2(const QString& filename) {
+    auto ikey = Log::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
     QFileInfo fi(filename);    
     if(!fi.isAbsolute())
     {
         zInfo(zfn()+" "+QStringLiteral("nem abszolut path: %1").arg(filename));
-        zLog::appendInfo(ikey, "error");
-        zLog::closeInfo(ikey);
+        Log::appendInfo(ikey, "error");
+        Log::closeInfo(ikey);
         //return zStringHelper::Empty;
     }
 
     if(!fi.exists())
     {
         zInfo(QStringLiteral("a fájl nem létezik: %1").arg(filename));
-        zLog::appendInfo(ikey, "error");
-        zLog::closeInfo(ikey);
-        return zStringHelper::Empty;
+        Log::appendInfo(ikey, "error");
+        Log::closeInfo(ikey);
+        return QString();
     }    
 
     QFile f(filename);
@@ -33,18 +34,18 @@ QString zFileHelper::load2(const QString& filename) {
     // egyébként megnyitható azaz
 
     if (f.open(QFile::ReadOnly | QFile::Text))  {
-        zLog::appendInfo(ikey, zLog::OK);
-        zLog::closeInfo(ikey);
+        Log::appendInfo(ikey, Log::OK);
+        Log::closeInfo(ikey);
         //zInfo(QStringLiteral("Beolvasás: %1").arg(filename));
         e =  QTextStream(&f).readAll();
     }
     else{
-        zLog::appendInfo(ikey, zLog::ERROR);
-        zLog::closeInfo(ikey);
-        zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, zLog::ERROR));
-        e= zStringHelper::Empty;
+        Log::appendInfo(ikey, Log::ERROR);
+        Log::closeInfo(ikey);
+        zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, Log::ERROR));
+        e= QString();
     }
-    zLog::closeInfo(ikey);
+    Log::closeInfo(ikey);
     return e;
 }
 
@@ -53,11 +54,11 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
+void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
     if(fn.length()>256)
     {
-        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, zLog::ERROR));
+        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, Log::ERROR));
         return;
     }
 //    QFile logfile(lfn);
@@ -83,7 +84,7 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
         auto errDesc = f.errorString();
         //
         auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(fn).arg(err).arg(errDesc);
-        zLog::dialogError(errstr);
+        Log::dialogError(errstr);
         return;
         }
 
@@ -103,9 +104,9 @@ void zFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 // TODO ha URL vagy ha filename wrapper file megszerzésére
 //
 
-QString zFileHelper::load(const QString& url)
+QString FileHelper::load(const QString& url)
 {
-    if(zFileNameHelper::isURL(url))
+    if(FilenameHelper::isURL(url))
     {
     //zInfo("url");
     //auto e = downloader.download(QStringLiteral(R"(https://docs.google.com/document/export?format=html&id=1tPwsVMObxU9QmA3XR4RpbHPpjcG7hVbd7KQqLD_ABK8&includes_info_params=true)"));
@@ -121,3 +122,5 @@ QString zFileHelper::load(const QString& url)
 //void zTextFileHelper::append(QString fn, QString txt){
 //    save(txt, fn, true);
 //}
+
+} // namespace com::helper

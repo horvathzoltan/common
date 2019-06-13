@@ -4,7 +4,8 @@
 #include <QRegularExpression>
 #include <QString>
 
-class zFileNameHelper
+namespace com::helper{
+class FilenameHelper
 {
 public:
     static const QString urlpattern;
@@ -15,5 +16,5 @@ public:
     static bool isAppLocal(const QString& path);
     static bool isRelative(const QString& path);
 };
-
+} // namespace com::helper
 #endif // ZFILENAMEHELPER_H

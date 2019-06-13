@@ -1,11 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
+    helper \
     macrofactory \
-    settingshelper \
-    stringhelper \
-    filehelper \
-    inihelper \
     shortguid \
-    zlog \    
+    logger \
 
+logger.depends = macrofactory shortguid
+helper.depends = logger macrofactory shortguid

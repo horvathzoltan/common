@@ -6,10 +6,10 @@
 
 QT       -= gui
 
-TARGET = filehelper
+TARGET = stringhelper
 TEMPLATE = lib
 
-DEFINES += FILEHELPER_LIBRARY
+DEFINES += STRINGHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -23,23 +23,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        filehelper.cpp \  
-    filenamehelper.cpp
+        stringhelper.cpp
 
 HEADERS += \
-        filehelper.h \  
-    filenamehelper.h
+        stringhelper.h
+        stringhelper_global.h
 
-include($$PWD/../../libinstall/libinstall.prf)
+include($$PWD/../../../libinstall//libinstall.prf)
+
 #HOME = $$system(echo $HOME)
 #INSTALLDIR = commonlib
-#createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
-#copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
-#first.depends = $(first) createdir copydata
-#export(first.depends)
-#export(createdir.commands)
-#export(copydata.commands)
-#QMAKE_EXTRA_TARGETS += first createdir copydata
 
-DISTFILES +=
+#unix {
+#    target.path = $$HOME/$$INSTALLDIR;
+#    INSTALLS += target
+#}
 

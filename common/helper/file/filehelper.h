@@ -7,8 +7,8 @@
 #include <QTextCodec>
 #include <QTextStream>
 
-
-class zFileHelper
+namespace com::helper{
+class FileHelper
 {
 public:
     static void save(const QString& txt, const QString& fileName, bool isAppend = false);
@@ -17,5 +17,5 @@ public:
 private:
     static QString load2(const QString& filename);
 };
-
+} // namespace com::helper
 #endif // ZTEXTFILEHELPER_H

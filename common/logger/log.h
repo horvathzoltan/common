@@ -5,22 +5,23 @@
 //#include <QTextBrowser>
 //#include <QTabWidget>
 //#include <zstringhelper.h>
-#include "zlocinfo.h"
+#include "locinfo.h"
 #include "../macrofactory/macro.h"
 
+
 #if defined(Q_OS_LINUX)
-#define getLocInfo zLocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
+#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
 #elif defined(Q_OS_WIN)
-#define getLocInfo zLocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
+#define getLocInfo LocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
 #endif
 
 
-#define zError(msg) zLog::error2((msg), getLocInfo)
+#define zError(msg) Log::error2((msg), getLocInfo)
 
-#define zWarning(msg) zLog::warning2((msg), getLocInfo);
-#define zInfo(msg) zLog::info2((msg), getLocInfo);
-#define zDebug() zLog::debug2(getLocInfo);
-#define zTrace() zLog::trace2(getLocInfo);
+#define zWarning(msg) Log::warning2((msg), getLocInfo);
+#define zInfo(msg) Log::info2((msg), getLocInfo);
+#define zDebug() Log::debug2(getLocInfo);
+#define zTrace() Log::trace2(getLocInfo);
 
 // 1. log egy messaget
 // 2. szerez loc infot
@@ -31,7 +32,7 @@ typedef void (*zLogGUIfn)(ErrLevels errlevel, const QString &msg, const QString 
 
 //QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC
 
-class zLog
+class Log
 {
 //public:
     //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
@@ -113,12 +114,12 @@ public:
 //    void trace(const QString&, const QString&);
 //    void trace(const QList<QString>&);
 
-    static void error2(const QString& msg, const zLocInfo& l);
-    static void warning2(const QString& msg, const zLocInfo& l);
-    static void info2(const QString& msg, const zLocInfo& l);
-    static void info2(const QStringList& msg, const zLocInfo& l);
-    static void debug2(const zLocInfo& l);
-    static void trace2(const zLocInfo& l);
+    static void error2(const QString& msg, const LocInfo& l);
+    static void warning2(const QString& msg, const LocInfo& l);
+    static void info2(const QString& msg, const LocInfo& l);
+    static void info2(const QStringList& msg, const LocInfo& l);
+    static void debug2(const LocInfo& l);
+    static void trace2(const LocInfo& l);
 
     static QString openInfo(const QString& txt);
     static void appendInfo(const QString& key, const QString& txt);

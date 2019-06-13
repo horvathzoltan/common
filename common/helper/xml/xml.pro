@@ -1,15 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-05-05T21:00:55
+# Project created by QtCreator 2019-05-22T21:24:07
 #
 #-------------------------------------------------
 
 QT       -= gui
 
-TARGET = settingshelper
+TARGET = xmlhelper
 TEMPLATE = lib
 
-DEFINES += SETTINGSHELPER_LIBRARY
+DEFINES += XMLHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -23,17 +23,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        zsettingshelper.cpp \
-	isettings.cpp
+        xmlhelper.cpp
 
 HEADERS += \
-        zsettingshelper.h \
-        settingshelper_global.h \
-	isettings.h
+        xmlhelper.h \
+        xmlhelper_global.h 
+
+include($$PWD/../../../libinstall//libinstall.prf)
+
+#HOME = $$system(echo $HOME)
+#INSTALLDIR = commonlib
 
 #unix {
-#    target.path = /usr/lib
+#    target.path = /home/zoli/commonlib; #$$HOME/$$INSTALLDIR;#/usr/lib
 #    INSTALLS += target
 #}
-
-include($$PWD/../../libinstall/libinstall.prf)
