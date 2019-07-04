@@ -65,10 +65,10 @@ QString StringHelper::getInner1(QString *v){
         else
             return v->left(l-ix2);
     }*/
-    if(v->length()>2)
+    if(v->length()>2) {
         return v->mid(1, v->length()-2);
-    else
-        return "";
+    }
+    return QString();
 }
 
 bool StringHelper::isIn(QString *v, QChar a, QChar b){
@@ -105,8 +105,9 @@ QString StringHelper::toCamelCase(const QString& s)
 {
     auto o = s.split('.');
 
-    for (int i = 0; i < o.length(); i++)
+    for (int i = 0; i < o.length(); i++) {
         o[i][0] = o[i][0].toUpper();
+}
 
     return o.join(QString());
 }
@@ -158,8 +159,8 @@ QString StringHelper::caseFixer(QString minta, QString ezt){
                 ezt[i]=cl;
             }
         }
-        else
-            break;
+
+        break;
     }
 
     return ezt;
@@ -474,6 +475,14 @@ QChar StringHelper::HtmlEntityLookup(const QString& e)
     }
 
     return {a};
+}
+
+void StringHelper::split2(const QString &v, QChar c, QString *u, QString *p)
+{
+    auto ix = v.indexOf(c);
+    if(ix<0) return;
+    if(u) *u = v.left(ix);
+    if(p) *p = v.right(v.length()-ix-1);
 }
 
 //https://www.w3.org/TR/WD-html40-970708/sgml/entities.html
@@ -814,4 +823,4 @@ const QMap<QString,quint16> StringHelper::HtmlNamedEntitiesSpecial{
 
     /* rsaquo is proposed but not yet ISO standardised */
 };
-}
+} // com::helper

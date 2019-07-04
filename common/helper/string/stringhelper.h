@@ -64,6 +64,7 @@ public:
     //    static QString encodeEntities(const QString &src, const QString &force);
     //    static QString decodeEntities(const QString &src);
     static QString HtmlDecode(const QString& value);
+    static void split2(const QString &str, QChar c, QString*, QString*);
 private:
     static const int UnicodeReplacementChar;// = '\uFFFD';
     static const QSet<QChar> htmlEntityEndings;
@@ -78,6 +79,8 @@ private:
     static const QMap<QString,quint16> HtmlNamedEntitiesLatin1;
     static const QMap<QString,quint16> HtmlNamedEntitiesSymbolic;
     static const QMap<QString,quint16> HtmlNamedEntitiesSpecial;
+
+
 };
 }  // namespace com::helper
 #endif // STRINGHELPER_H
