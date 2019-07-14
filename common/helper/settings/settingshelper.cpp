@@ -7,8 +7,9 @@
 namespace com::helper
 {
 
-QString SettingsHelper::settingsPath;
-QString SettingsHelper::settingsFile;
+QString SettingsHelper::userSettingsFileName;
+//QString SettingsHelper::settingsFile;
+QString SettingsHelper::globalSettingsFileName;
 const QString SettingsHelper::NAME = QStringLiteral("settings");
 ISettings* SettingsHelper::s;
 
@@ -17,37 +18,49 @@ SettingsHelper::SettingsHelper()
     //settingsFile= getFileName();
 }
 
-void SettingsHelper::init(const QString& _settingsPath, ISettings* _s)
+void SettingsHelper::init(const QString& userFN, ISettings* _s)
 {
-    settingsPath = _settingsPath;
-    settingsFile = getFileName();
+    userSettingsFileName = userFN;
+    //settingsFile = getFileName();
+    globalSettingsFileName = NAME+".ini";
     s = _s;
 }
 
+
 bool SettingsHelper::loadSettings()
 {
-    if(settingsFile.isEmpty()) return false;
+    bool isok = false;
     if(!s) return false;
-    if(!QFile::exists(settingsFile)) return false;
-    auto txt = FileHelper::load(settingsFile);
-    auto map = IniHelper::parseIni(txt);
-    s->parseIni(map);
-    return true;
+    if(QFile::exists(globalSettingsFileName)){
+        auto txt = FileHelper::load(globalSettingsFileName);
+        auto map = IniHelper::parseIni(txt);
+        s->parseIni(map);
+        isok=true;
+    }
+
+    if(QFile::exists(userSettingsFileName))
+    {
+        auto txt = FileHelper::load(userSettingsFileName);
+        auto map = IniHelper::parseIni(txt);
+        s->parseIni(map);
+        isok=true;
+    }
+    return isok;
 }
 
 void SettingsHelper::saveSettings()
 {
-    if(settingsFile.isEmpty()) return;
+    if(userSettingsFileName.isEmpty()) return;
     if(!s) return;
 
     auto m = s->toIni();
     auto txt = IniHelper::toString(m, NAME);
-    FileHelper::save(txt, settingsFile);
+    FileHelper::save(txt, userSettingsFileName);
 }
 
-QString SettingsHelper::getFileName()
-{
-    if(settingsPath.isEmpty()) return QString();
-    return settingsPath+QDir::separator() + NAME+".ini";
-}
+//QString SettingsHelper::getFileName()
+//{
+//    if(userSettingsFileName.isEmpty()) return QString();
+//    return userSettingsFileName+QDir::separator() + NAME+".ini";
+//}
 }  // namespace com

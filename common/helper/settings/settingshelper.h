@@ -14,11 +14,12 @@ public:
     static void saveSettings();
     static void init(const QString &, ISettings *);
 private:
-    static QString settingsPath;
+    static QString userSettingsFileName;
     static ISettings *s;
-    static QString settingsFile;
+    //static QString settingsFile;
+    static QString globalSettingsFileName;
     static const QString NAME;
-    static QString getFileName();
+    //static QString getFileName();
 };
 }  // namespace com
 #endif // ZSETTINGSHELPER_H
