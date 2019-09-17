@@ -1,0 +1,10 @@
+unix:HOME = $$system(echo $HOME)
+win32:HOME = $$system(echo %userprofile%)
+
+COMMON_LIBS = commonlib
+
+CONFIG(debug, debug|release){
+BUILD = debug
+} else {
+BUILD = release
+}

@@ -6,6 +6,7 @@
 //#include <QTabWidget>
 //#include <zstringhelper.h>
 #include "locinfo.h"
+#include "logger_global.h"
 #include "../macrofactory/macro.h"
 
 
@@ -32,7 +33,7 @@ typedef void (*zLogGUIfn)(ErrLevels errlevel, const QString &msg, const QString 
 
 //QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC
 
-class Log
+class LOGGERSHARED_EXPORT Log
 {
 //public:
     //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};

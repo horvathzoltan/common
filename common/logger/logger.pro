@@ -6,13 +6,15 @@
 
 QT       -= gui
 
-TARGET = zlog
+TARGET = logger
 TEMPLATE = lib
 
-DEFINES += ZLOG_LIBRARY
+CONFIG += c++1z
+QMAKE_CXXFLAGS += /std:c++17
 
-HOME = $$system(echo $HOME)
-COMMON_LIBS = commonlib
+DEFINES += LOGGER_LIBRARY
+
+include($$PWD/../../libinstall/common.prf)
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -31,14 +33,19 @@ SOURCES += \
 
 HEADERS += \
         locinfo.h \
-        log.h
-
-HOME = $$system(echo $HOME)
-COMMON_LIBS = commonlib
+        log.h \
+        logger_global.h
 
 unix:!macx:
 {
 LIBS += -L$$HOME/$$COMMON_LIBS/ -lshortguid
+}
+
+win32:
+{
+LIBS += -L$$HOME/$$COMMON_LIBS/ -lshortguid
+LIBS += -L$$HOME/$$COMMON_LIBS/ -lmacrofactory
+#message(libs=$$HOME/$$COMMON_LIBS/macrofactory.dll)
 }
 
 include($$PWD/../../libinstall/libinstall.prf)

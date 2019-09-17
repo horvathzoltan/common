@@ -34,7 +34,7 @@ const QChar StringHelper::SEP = ';';
 #ifdef Q_OS_LINUX
 const QString StringHelper::NewLine = QStringLiteral("\n");
 #elif defined(Q_OS_WIN)
-const QString zStringHelper::NewLine = QStringLiteral("\r\n");
+const QString StringHelper::NewLine = QStringLiteral("\r\n");
 #endif
 
 

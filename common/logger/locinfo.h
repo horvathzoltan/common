@@ -2,8 +2,9 @@
 #define ZLOCINFO_H
 
 #include <QString>
+#include "logger_global.h"
 
-class LocInfo
+class LOGGERSHARED_EXPORT LocInfo
 {
 public:
     QString func;

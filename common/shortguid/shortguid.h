@@ -1,9 +1,10 @@
 #ifndef ZSHORTGUID_H
 #define ZSHORTGUID_H
 
+#include "shortguid_global.h"
 #include <QUuid>
 
-class zShortGuid
+class SHORTGUIDSHARED_EXPORT zShortGuid
 {
 public:
     zShortGuid();

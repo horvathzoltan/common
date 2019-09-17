@@ -9,6 +9,9 @@ QT       -= gui
 TARGET = inihelper
 TEMPLATE = lib
 
+CONFIG += c++1z
+QMAKE_CXXFLAGS += /std:c++17
+
 DEFINES += INIHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -21,6 +24,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+
+include($$PWD/../../../libinstall//common.prf)
+
+unix:!macx:
+{
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
+}
+
+win32:
+{
+WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
+LIBS += -L$$WINLIBS -lmacrofactory -llogger -lstringhelper
+#message(win32libs=$$WINLIBS)
+}
 
 SOURCES += \
     inihelper.cpp

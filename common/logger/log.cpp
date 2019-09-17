@@ -237,7 +237,7 @@ QString Log::zStackTrace()
 #endif
 
 #ifdef Q_OS_WIN
-QString zLog::zStackTrace(){
+QString Log::zStackTrace(){
     QStringList e;
 
    // unsigned int max_frames = 64;

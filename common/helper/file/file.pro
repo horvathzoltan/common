@@ -28,18 +28,28 @@ SOURCES += \
 
 HEADERS += \
     filehelper.h \
+    filehelper_global.h \
     filenamehelper.h
 
-HOME = $$system(echo $HOME)
-COMMON_LIBS = commonlib
+CONFIG += c++1z
+QMAKE_CXXFLAGS += /std:c++17
+
+include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -lzlog
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
 }
 
-INCLUDEPATH += $$PWD
-DEPENDPATH += $$PWD
+win32:
+{
+WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
+LIBS += -L$$WINLIBS -lmacrofactory -llogger
+#message(win32libs=$$WINLIBS)
+}
+
+#INCLUDEPATH += $$PWD
+#DEPENDPATH += $$PWD
 
 include($$PWD/../../../libinstall//libinstall.prf)
 #HOME = $$system(echo $HOME)
@@ -52,5 +62,5 @@ include($$PWD/../../../libinstall//libinstall.prf)
 #export(copydata.commands)
 #QMAKE_EXTRA_TARGETS += first createdir copydata
 
-DISTFILES +=
+# DISTFILES +=
 

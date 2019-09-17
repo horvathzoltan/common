@@ -4,8 +4,9 @@
 #include <QString>
 #include <QException>
 #include <QDebug>
+#include "zlogicexpression_global.h"
 
-class zLogicException: public QException
+class MACROFACTORYSHARED_EXPORT zLogicException: public QException
 {
 private:
     const QString& msg;

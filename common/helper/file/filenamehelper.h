@@ -3,9 +3,10 @@
 
 #include <QRegularExpression>
 #include <QString>
+#include "filehelper_global.h"
 
 namespace com::helper{
-class FilenameHelper
+class FILEHELPERSHARED_EXPORT FilenameHelper
 {
 public:
     static const QString urlpattern;

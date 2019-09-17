@@ -1,4 +1,5 @@
 TEMPLATE = aux
 
 DISTFILES += \
-    libinstall.prf
+    libinstall.prf \
+    common.prf

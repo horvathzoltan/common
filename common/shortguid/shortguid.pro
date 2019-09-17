@@ -9,6 +9,9 @@ QT       -= gui
 TARGET = shortguid
 TEMPLATE = lib
 
+CONFIG += c++1z
+QMAKE_CXXFLAGS += /std:c++17
+
 DEFINES += SHORTGUID_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -22,11 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+include($$PWD/../../libinstall/common.prf)
+
 SOURCES += \
         shortguid.cpp 
 
 HEADERS += \
-        shortguid.h 
+        shortguid.h  \
+        shortguid_global.h
 
 include($$PWD/../../libinstall/libinstall.prf)
 #HOME = $$system(echo $HOME)

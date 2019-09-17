@@ -6,9 +6,10 @@
 #include <QString>
 #include <QTextCodec>
 #include <QTextStream>
+#include "filehelper_global.h"
 
 namespace com::helper{
-class FileHelper
+class FILEHELPERSHARED_EXPORT FileHelper
 {
 public:
     static void save(const QString& txt, const QString& fileName, bool isAppend = false);

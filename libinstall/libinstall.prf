@@ -1,4 +1,6 @@
-HOME = $$system(echo $HOME)
+unix:HOME = $$system(echo $HOME)
+win32:HOME = $$system(echo %userprofile%)
+
 INSTALLDIR = commonlib
 #createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
 #copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
@@ -7,5 +9,16 @@ INSTALLDIR = commonlib
 #export(createdir.commands)
 #export(copydata.commands)
 #QMAKE_EXTRA_TARGETS += first createdir copydata
-QMAKE_POST_LINK += $(MKDIR) $$HOME/$$INSTALLDIR;
+#QMAKE_POST_LINK += $(MKDIR) $$HOME/$$INSTALLDIR;
+
+INSTALLHOME = $$shell_path($$HOME/$$INSTALLDIR)
+
+unix {
+!exists(INSTALLHOME):QMAKE_POST_LINK += $(MKDIR) $$shell_path($$HOME/$$INSTALLDIR);
 QMAKE_POST_LINK += $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR;
+}
+win32 {
+!exists(INSTALLHOME):QMAKE_POST_LINK += $(MKDIR) $$shell_path($$HOME/$$INSTALLDIR) &
+QMAKE_POST_LINK +=$(COPY_FILE) $$shell_path($$OUT_PWD/$$BUILD/*.lib) $$shell_path($$HOME/$$INSTALLDIR)
+QMAKE_POST_LINK +=& $(COPY_FILE) $$shell_path($$OUT_PWD/$$BUILD/*.dll) $$shell_path($$HOME/$$INSTALLDIR)
+}

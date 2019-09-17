@@ -6,5 +6,6 @@ SUBDIRS += \
     shortguid \
     logger \
 
-logger.depends = macrofactory shortguid
+logger.depends = shortguid macrofactory
 helper.depends = logger macrofactory shortguid
+

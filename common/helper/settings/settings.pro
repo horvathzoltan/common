@@ -9,6 +9,9 @@ QT       -= gui
 TARGET = settingshelper
 TEMPLATE = lib
 
+CONFIG += c++1z
+QMAKE_CXXFLAGS += /std:c++17
+
 DEFINES += SETTINGSHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -31,17 +34,18 @@ HEADERS += \
         settingshelper_global.h \
 	isettings.h
 
-HOME = $$system(echo $HOME)
-COMMON_LIBS = commonlib
+include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
 LIBS += -L$$HOME/$$COMMON_LIBS/ -linihelper
 }
 
+win32:
+{
+WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
+LIBS += -L$$WINLIBS -lmacrofactory -llogger -lstringhelper -lfilehelper
+#message(win32libs=$$WINLIBS)
+}
 
-#unix {
-#    target.path = /usr/lib
-#    INSTALLS += target
-#}
 include($$PWD/../../../libinstall//libinstall.prf)

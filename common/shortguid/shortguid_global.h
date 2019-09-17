@@ -1,0 +1,13 @@
+#ifndef SHORTGUID_GLOBAL_H
+#define SHORTGUID_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(SHORTGUID_LIBRARY)
+#  define SHORTGUIDSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define SHORTGUIDSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+
+#endif // SHORTGUID_GLOBAL_H

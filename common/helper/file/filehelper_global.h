@@ -1,0 +1,13 @@
+#ifndef FILEHELPER_GLOBAL_H
+#define FILEHELPER_GLOBAL_H
+
+
+#include <QtCore/qglobal.h>
+
+#if defined(FILEHELPER_LIBRARY)
+#  define FILEHELPERSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define FILEHELPERSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // FILEHELPER_GLOBAL_H
