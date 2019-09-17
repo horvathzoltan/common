@@ -1,0 +1,12 @@
+#ifndef SIGNALHELPER_GLOBAL_H
+#define SIGNALHELPER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(SIGNALHELPER_LIBRARY)
+#  define SIGNALHELPER_EXPORT Q_DECL_EXPORT
+#else
+#  define SIGNALHELPER_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // SIGNALHELPER_GLOBAL_H
