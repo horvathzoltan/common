@@ -6,6 +6,7 @@
 #include "filenamehelper.h"
 #include <QFileInfo>
 #include <QDir>
+#include <QDateTime>
 
 namespace com::helper{
 QString FileHelper::load2(const QString& filename) {
@@ -122,5 +123,15 @@ QString FileHelper::load(const QString& url)
 //void zTextFileHelper::append(QString fn, QString txt){
 //    save(txt, fn, true);
 //}
+
+bool FileHelper::backup(const QString& filename)
+{
+    QFile infile(filename);
+    QString now = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss");
+
+    QString outfilename = com::helper::FilenameHelper::appendToBaseName(filename, now);
+
+    return QFile::copy(filename, outfilename);
+}
 
 } // namespace com::helper

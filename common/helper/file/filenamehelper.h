@@ -16,6 +16,8 @@ public:
     static bool isURL(const QString& path);
     static bool isAppLocal(const QString& path);
     static bool isRelative(const QString& path);
+
+    static QString appendToBaseName(const QString& fileName, const QString& a );
 };
 } // namespace com::helper
 #endif // ZFILENAMEHELPER_H

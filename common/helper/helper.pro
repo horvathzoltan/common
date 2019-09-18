@@ -7,6 +7,7 @@ SUBDIRS += \
     string \
     file \
     ini \
+    textfilehelper \
     xml \
 
 file.depends = string

@@ -15,6 +15,7 @@ public:
     static void save(const QString& txt, const QString& fileName, bool isAppend = false);
     static QString load(const QString& filename);
     //static void append(QString line, QString fileName);
+    bool backup(const QString& filename);
 private:
     static QString load2(const QString& filename);
 };

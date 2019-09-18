@@ -27,4 +27,14 @@ bool FilenameHelper::isRelative(const QString &path)
     QFileInfo fi(path);
     return fi.isRelative();
 }
+
+
+QString FilenameHelper::appendToBaseName(const QString& fileName, const QString& a)
+{
+    QFileInfo fi(fileName);
+
+    QString ns = QFileInfo(fi.dir(), fi.baseName()+"_"+a+"."+fi.completeSuffix()).filePath();
+
+    return ns;
+}
 } // namespace namespace com::helper
