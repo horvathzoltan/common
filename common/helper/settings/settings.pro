@@ -10,7 +10,7 @@ TARGET = settingshelper
 TEMPLATE = lib
 
 CONFIG += c++1z
-QMAKE_CXXFLAGS += /std:c++17
+win32:QMAKE_CXXFLAGS += /std:c++17
 
 DEFINES += SETTINGSHELPER_LIBRARY
 
