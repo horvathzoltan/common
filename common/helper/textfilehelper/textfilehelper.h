@@ -10,7 +10,7 @@ class TEXTFILEHELPER_EXPORT TextFileHelper
 public:
     static QString load(const QString& filename);
     static QStringList loadLines(const QString& filename);
-    static void save(const QString& txt, const QString& fileName, bool isAppend = false);
+    static bool save(const QString& txt, const QString& fileName, bool isAppend = false);
     static bool backup(const QString& filename);
 };
 }

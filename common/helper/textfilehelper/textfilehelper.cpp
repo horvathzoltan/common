@@ -81,7 +81,7 @@ QStringList TextFileHelper::loadLines(const QString& filename) {
 }
 
 
-void TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
+bool TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
 //    QFile logfile(lfn);
 //    logfile.open(QIODevice::Append | QIODevice::Text);
@@ -96,7 +96,7 @@ void TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) 
     if (!f.open(om)){
         zError(QStringLiteral("cannot open file to write or append: ")+fn);
         //zLog::dialogError("nem menthető: "+fn);
-        return;
+        return false;
         }
 
 
@@ -107,6 +107,7 @@ void TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) 
     //out.setGenerateByteOrderMark(true);
     out << txt;//.toUtf8();
     f.close();
+    return true;
 }
 
 } // namespace com::helper
