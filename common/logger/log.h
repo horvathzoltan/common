@@ -33,7 +33,8 @@
 // 1. log egy messaget
 // 2. szerez loc infot
 // 3. szerez debug infot (stack)
-enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
+//
+enum class ErrLevels:int {ERRORL, WARNINGL, TRACEL, DEBUGL, INFOL, INFOAPPENDL, INFOCLOSEL};
 
 typedef void (*zLogGUIfn)(ErrLevels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui);
 
@@ -67,8 +68,8 @@ private:
 
 public:        
     static const QString OK;
-    static const QString ERROR;
-    static const QString WARNING;    
+    static const QString ERROR_TXT;
+    static const QString WARNING_TXT;
 
     static const QMap<ErrLevels, QString> ErrLevelNames;
 

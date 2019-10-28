@@ -15,8 +15,8 @@ void* Log::ui = nullptr;
 bool Log::isVerbose = false;
 
 const QString Log::OK = QStringLiteral("ok");
-const QString Log::ERROR = QStringLiteral("error");
-const QString Log::WARNING = QStringLiteral("warning");
+const QString Log::ERROR_TXT = QStringLiteral("error");
+const QString Log::WARNING_TXT = QStringLiteral("warning");
 
 void Log::init(zLogGUIfn ez, bool _isBreakOnError, void* uiptr, bool _isVerbose)
 {
@@ -27,13 +27,13 @@ void Log::init(zLogGUIfn ez, bool _isBreakOnError, void* uiptr, bool _isVerbose)
 }
 
 const QMap<ErrLevels, QString> Log::ErrLevelNames{
-       {ErrLevels::ERROR, nameof(ErrLevels::ERROR)},
-       {ErrLevels::WARNING, nameof(ErrLevels::WARNING)},
-       {ErrLevels::TRACE, nameof(ErrLevels::TRACE)},
-       {ErrLevels::DEBUG, nameof(ErrLevels::DEBUG)},
-       {ErrLevels::INFO, nameof(ErrLevels::INFO)},
-       {ErrLevels::INFOAPPEND, nameof(ErrLevels::INFOAPPEND)},
-       {ErrLevels::INFOCLOSE, nameof(ErrLevels::INFOCLOSE)}
+       {ErrLevels::ERRORL, nameof(ErrLevels::ERRORL)},
+       {ErrLevels::WARNINGL, nameof(ErrLevels::WARNINGL)},
+       {ErrLevels::TRACEL, nameof(ErrLevels::TRACEL)},
+       {ErrLevels::DEBUGL, nameof(ErrLevels::DEBUGL)},
+       {ErrLevels::INFOL, nameof(ErrLevels::INFOL)},
+       {ErrLevels::INFOAPPENDL, nameof(ErrLevels::INFOAPPENDL)},
+       {ErrLevels::INFOCLOSEL, nameof(ErrLevels::INFOCLOSEL)}
    };
 
 /*log*/
