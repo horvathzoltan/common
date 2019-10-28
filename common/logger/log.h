@@ -10,11 +10,17 @@
 #include "../macrofactory/macro.h"
 
 
-#if defined(Q_OS_LINUX)
-#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
-#elif defined(Q_OS_WIN)
-#define getLocInfo LocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
-#endif
+//#if defined(Q_OS_LINUX)
+//#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
+//#elif defined(Q_OS_WIN)
+    #if defined(__GNUC__)
+    #define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
+    #elif defined(__MINGW32__)
+    #define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
+    #elif defined (_MSC_VER )
+    #define getLocInfo LocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
+    #endif
+//#endif
 
 
 #define zError(msg) Log::error2((msg), getLocInfo)

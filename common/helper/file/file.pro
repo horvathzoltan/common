@@ -32,7 +32,7 @@ HEADERS += \
     filenamehelper.h
 
 CONFIG += c++1z
-win32:QMAKE_CXXFLAGS += /std:c++17
+msvc:QMAKE_CXXFLAGS += /std:c++17
 
 include($$PWD/../../../libinstall//common.prf)
 
