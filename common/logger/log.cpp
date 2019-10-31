@@ -92,19 +92,19 @@ void Log::dialog(const QString& str, Errlevels::Levels errlevel)
 
 
 void Log::dialogMessage(const QString& str) {
-    dialog(str, Errlevels::Levels::INFO);
+    dialog(str, Errlevels::INFO);
 }
 
 void Log::dialogTrace(const QString& str) {
-    dialog(str, Errlevels::Levels::TRACE);
+    dialog(str, Errlevels::TRACE);
 }
 
 void Log::dialogWarning(const QString& str) {
-    dialog(str, Errlevels::Levels::WARNING);
+    dialog(str, Errlevels::WARNING);
 }
 
 void Log::dialogError(const QString& str) {
-    dialog(str, Errlevels::Levels::ERROR_);
+    dialog(str, Errlevels::ERROR_);
 
 }
 
@@ -118,19 +118,19 @@ QString Log::logToString(Errlevels::Levels errlevel, const QString &msg, const Q
 
     switch(errlevel)
     {
-    case Errlevels::Levels::ERROR_:
+    case Errlevels::ERROR_:
         msg3= level+": "+msg+"\n"+loci+"\n"+st;
         break;
-    case Errlevels::Levels::WARNING:
+    case Errlevels::WARNING:
         msg3= level+": "+msg+"\n"+loci;
         break;
-    case Errlevels::Levels::TRACE:
+    case Errlevels::TRACE:
         msg3= level+": "+loci;
         break;
-    case Errlevels::Levels::DEBUG:
+    case Errlevels::DEBUG:
         msg3= level+": "+msg+"\n"+loci+"\n"+st;
         break;
-    case Errlevels::Levels::INFO:
+    case Errlevels::INFO:
         msg3= level+": "+msg;
         if(isVerbose)
         {
@@ -260,9 +260,9 @@ void Log::error2(const QString& msg, const LocInfo& locinfo){
 
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::ERROR_, msg, li, st, ui);
+        GUILogger(Errlevels::ERROR_, msg, li, st, ui);
     }
-    auto msg2 = logToString(Errlevels::Levels::ERROR_, msg, li, st);
+    auto msg2 = logToString(Errlevels::ERROR_, msg, li, st);
 
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
@@ -281,9 +281,9 @@ void Log::warning2(const QString& msg, const LocInfo& locinfo){
     auto li = locinfo.toString();
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::WARNING, msg, li, nullptr, ui);
+        GUILogger(Errlevels::WARNING, msg, li, nullptr, ui);
     }
-    auto msg2 = logToString(Errlevels::Levels::WARNING, msg, li, nullptr);
+    auto msg2 = logToString(Errlevels::WARNING, msg, li, nullptr);
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
     auto a = __FUNCTION__;
@@ -303,10 +303,10 @@ void Log::info2(const QString& msg, const LocInfo& locinfo)
     }
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::INFO, msg, nullptr, nullptr, ui);
+        GUILogger(Errlevels::INFO, msg, nullptr, nullptr, ui);
     }    
 
-    auto msg2 = logToString(Errlevels::Levels::INFO, msg, li, nullptr);
+    auto msg2 = logToString(Errlevels::INFO, msg, li, nullptr);
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
     auto a = __FUNCTION__;
@@ -329,9 +329,9 @@ void Log::info2(const QStringList& msgl, const LocInfo& locinfo)
     {
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::Levels::INFO, *msg, nullptr, nullptr, ui);
+            GUILogger(Errlevels::INFO, *msg, nullptr, nullptr, ui);
         }
-        auto msg2 = logToString(Errlevels::Levels::INFO, *msg, nullptr, nullptr);
+        auto msg2 = logToString(Errlevels::INFO, *msg, nullptr, nullptr);
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
     auto a = __FUNCTION__;
@@ -348,9 +348,9 @@ void Log::debug2(const LocInfo& locinfo){
     auto st = Log::zStackTrace();
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::DEBUG, nullptr, li, st, ui);
+        GUILogger(Errlevels::DEBUG, nullptr, li, st, ui);
     }
-    auto msg2 = logToString(Errlevels::Levels::DEBUG, nullptr, li, st);
+    auto msg2 = logToString(Errlevels::DEBUG, nullptr, li, st);
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
     auto a = __FUNCTION__;
@@ -368,9 +368,9 @@ void Log::trace2(const LocInfo& locinfo){
     auto li = locinfo.toString();
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::TRACE, nullptr, li, nullptr, ui);
+        GUILogger(Errlevels::TRACE, nullptr, li, nullptr, ui);
     }
-    auto msg2 = logToString(Errlevels::Levels::TRACE, nullptr, li, nullptr);
+    auto msg2 = logToString(Errlevels::TRACE, nullptr, li, nullptr);
 #ifdef QT_DEBUG  
 #ifdef Q_OS_WIN
     auto a = __FUNCTION__;
@@ -388,7 +388,7 @@ QString Log::openInfo(const QString& msg)
 
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::Levels::INFO, e+' '+msg, nullptr, nullptr, ui);
+            GUILogger(Errlevels::INFO, e+' '+msg, nullptr, nullptr, ui);
         }
       return e;
     }
@@ -398,7 +398,7 @@ void Log::appendInfo(const QString& key, const QString& msg)
 
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::Levels::INFOAPPEND, msg, key, nullptr, ui);
+        GUILogger(Errlevels::INFOAPPEND, msg, key, nullptr, ui);
     }
     }
 
@@ -407,6 +407,6 @@ void Log::closeInfo(const QString& key)
 
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::Levels::INFOCLOSE, nullptr, key, nullptr, ui);
+            GUILogger(Errlevels::INFOCLOSE, nullptr, key, nullptr, ui);
         }
     }

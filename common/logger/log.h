@@ -35,7 +35,7 @@
 // 3. szerez debug infot (stack)
 //
 
-struct Errlevels{
+namespace Errlevels{
     enum Levels:int {
         ERROR_,
         WARNING,
