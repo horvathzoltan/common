@@ -34,14 +34,41 @@
 // 2. szerez loc infot
 // 3. szerez debug infot (stack)
 //
-enum class ErrLevels:int {ERRORL, WARNINGL, TRACEL, DEBUGL, INFOL, INFOAPPENDL, INFOCLOSEL};
 
-typedef void (*zLogGUIfn)(ErrLevels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui);
+struct Errlevels{
+    enum Levels:int {
+        ERROR_,
+        WARNING,
+        TRACE,
+        DEBUG,
+        INFO,
+        INFOAPPEND,
+        INFOCLOSE
+    };
+
+    static QString toString(const Levels &l){
+        switch(l)
+        {
+        case ERROR_: return QStringLiteral("ERROR");
+        case WARNING: return QStringLiteral("WARNING");
+        case TRACE: return QStringLiteral("TRACE");
+        case DEBUG: return QStringLiteral("DEBUG");
+        case INFO: return QStringLiteral("INFO");
+        case INFOAPPEND: return QStringLiteral("INFO");
+        case INFOCLOSE: return QStringLiteral("INFO");
+        }
+    };
+};
+
+typedef void (*zLogGUIfn)(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui);
 
 //QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC
 
 class LOGGERSHARED_EXPORT Log
 {
+private:
+
+
 //public:
     //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
 private:          
@@ -49,7 +76,7 @@ private:
 //    QTextBrowser *widget;
 //    QTabWidget *tabwidget;
 //    int tabindex;
-    static void dialog(const QString&, ErrLevels);
+    static void dialog(const QString&, Errlevels::Levels);
 //    void log(const QString&, int);
 
 //    static QTextBrowser *widget2;
@@ -60,7 +87,7 @@ private:
 
     static void *ui;
 
-    static QString logToString(ErrLevels, const QString&, const QString&, const QString&);
+    static QString logToString(Errlevels::Levels, const QString&, const QString&, const QString&);
 
 
     //static QString zGetLocInfo(const char *func, const char *file, int line);
@@ -68,10 +95,10 @@ private:
 
 public:        
     static const QString OK;
-    static const QString ERROR_TXT;
-    static const QString WARNING_TXT;
+    static const QString ERROR_;
+    static const QString WARNING;
 
-    static const QMap<ErrLevels, QString> ErrLevelNames;
+    //static const QMap<ErrLevels, QString> ErrLevelNames;
 
     //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
     //zLog();

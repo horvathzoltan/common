@@ -41,9 +41,9 @@ QString FileHelper::load2(const QString& filename) {
         e =  QTextStream(&f).readAll();
     }
     else{
-        Log::appendInfo(ikey, Log::ERROR);
+        Log::appendInfo(ikey, Log::ERROR_);
         Log::closeInfo(ikey);
-        zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, Log::ERROR));
+        zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, Log::ERROR_));
         e= QString();
     }
     Log::closeInfo(ikey);
@@ -59,7 +59,7 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
     if(fn.length()>256)
     {
-        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, Log::ERROR));
+        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, Log::ERROR_));
         return;
     }
 //    QFile logfile(lfn);
