@@ -18,20 +18,44 @@ SOURCES +=  tst_test2.cpp
 unix:HOME = $$system(echo $HOME)
 win32:HOME = $$system(echo %userprofile%)
 
-INSTALLDIR = commonlib
+CONFIG(debug, debug|release){
+BUILD = debug
+} else {
+BUILD = release
+}
+
+COMMON_LIBS = commonlib
+
+equals(BUILD,debug) {
+    #message( "build is _ debug" )
+    COMMON_LIBS = $$COMMON_LIBS"_debug"
+}
+#equals(BUILD,release) {
+#    #message( "build is _ release" )
+#}
+
+!contains(QMAKE_TARGET.arch, x86_64) {
+    COMMON_LIBS = $$COMMON_LIBS"_32"
+}
+
+unix:HOME = $$system(echo $HOME)
+win32:HOME = $$system(echo %userprofile%)
+
+# INSTALLDIR = $$COMMON_LIBS
+COMMON_LIBS_FULLPATH = $$shell_path($$HOME/$$COMMON_LIBS)
 
 #itt nem az installdirből kellene felszedni, hanem a fordítottból
 #unix:!macx: LIBS += -L$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper/ -lstringhelper
 #unix:!macx: LIBS += -L$$PWD/../../$$INSTALLDIR/ -lstringhelper
 unix:!macx:
 {
-LIBS += -L$$HOME/$$INSTALLDIR/ -lstringhelper
-LIBS += -L$$HOME/$$INSTALLDIR/ -lfilehelper
-LIBS += -L$$HOME/$$INSTALLDIR/ -lshortguid
-LIBS += -L$$HOME/$$INSTALLDIR/ -llogger
-LIBS += -L$$HOME/$$INSTALLDIR/ -lmacrofactory
-LIBS += -L$$HOME/$$INSTALLDIR/ -linihelper
-LIBS += -L$$HOME/$$INSTALLDIR/ -lsettingshelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lstringhelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lfilehelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lshortguid
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -llogger
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lmacrofactory
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -linihelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lsettingshelper
 }
 
 #QMAKE_LFLAGS += -Wl,-rpath,"$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper"

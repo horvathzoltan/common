@@ -8,3 +8,18 @@ BUILD = debug
 } else {
 BUILD = release
 }
+
+equals(BUILD,debug) {
+    #message( "build is _ debug" )
+    COMMON_LIBS = $$COMMON_LIBS"_debug"
+}
+#equals(BUILD,release) {
+#    #message( "build is _ release" )
+#}
+
+!contains(QMAKE_TARGET.arch, x86_64) {
+    COMMON_LIBS = $$COMMON_LIBS"_32"
+}
+
+#message( "QMAKE_TARGET= "$$QMAKE_TARGET.arch)
+#message( "commonlibs folder= "$$COMMON_LIBS)

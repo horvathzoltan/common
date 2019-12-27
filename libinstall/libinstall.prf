@@ -1,7 +1,7 @@
 unix:HOME = $$system(echo $HOME)
 win32:HOME = $$system(echo %userprofile%)
 
-INSTALLDIR = commonlib
+INSTALLDIR = $$COMMON_LIBS
 #createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
 #copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
 #first.depends = $(first) createdir copydata
