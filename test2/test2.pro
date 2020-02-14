@@ -35,9 +35,10 @@ equals(BUILD,debug) {
 #}
 
 
-message( "QT_ARCH= "$$QT_ARCH )
 !contains(QMAKE_TARGET.arch, x86_64) {
-    COMMON_LIBS = $$COMMON_LIBS"_32"
+    !contains(QT_ARCH, x86_64) {
+        COMMON_LIBS = $$COMMON_LIBS"_32"
+    }
 }
 
 unix:HOME = $$system(echo $HOME)
