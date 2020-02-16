@@ -41,11 +41,14 @@ equals(BUILD,debug) {
     }
 }
 
-unix:HOME = $$system(echo $HOME)
-win32:HOME = $$system(echo %userprofile%)
+#unix:HOME = $$system(echo $HOME)
+#win32:HOME = $$system(echo %userprofile%)
 
 # INSTALLDIR = $$COMMON_LIBS
 COMMON_LIBS_FULLPATH = $$shell_path($$HOME/$$COMMON_LIBS)
+
+message("COMMON_LIBS_FULLPATH: " $$COMMON_LIBS_FULLPATH);
+message("COMMON_LIBS: " $$COMMON_LIBS);
 
 #itt nem az installdirből kellene felszedni, hanem a fordítottból
 #unix:!macx: LIBS += -L$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper/ -lstringhelper
@@ -61,12 +64,13 @@ LIBS += -L$$COMMON_LIBS_FULLPATH/ -linihelper
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lsettingshelper
 }
 
+INCLUDEPATH += $$PWD/../common
+DEPENDPATH += $$PWD/../common
+
 #QMAKE_LFLAGS += -Wl,-rpath,"$$PWD/../../build-common-Desktop_Qt_5_9_0_GCC_64bit-Debug/stringhelper"
 #QMAKE_LFLAGS += -Wl,-rpath,"$$PWD/../../$$INSTALLDIR"
 # QMAKE_LFLAGS += -Wl,-rpath, "$$system_path($$HOME/$$INSTALLDIR)"
 
-INCLUDEPATH += $$PWD/../common
-DEPENDPATH += $$PWD/../common
 
 #target.path = += $$[QT_INSTALL_PLUGINS]/stringhelper
 #target.files += /stringhelper/stringhelper.so

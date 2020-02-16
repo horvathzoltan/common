@@ -37,4 +37,14 @@ QString FilenameHelper::appendToBaseName(const QString& fileName, const QString&
 
     return ns;
 }
+
+QString FilenameHelper::GetAbsolutPath(const QString& dirName, bool isCreate){
+    auto projectDir = QDir(QDir::homePath()).filePath(dirName);
+    if(isCreate)
+    {
+        if(!QDir(projectDir).exists())
+            QDir(QDir::homePath()).mkpath(projectDir);
+    }
+    return projectDir;
+}
 } // namespace namespace com::helper

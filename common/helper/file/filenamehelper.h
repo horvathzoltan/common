@@ -18,6 +18,7 @@ public:
     static bool isRelative(const QString& path);
 
     static QString appendToBaseName(const QString& fileName, const QString& a );
+    static QString GetAbsolutPath(const QString &dirName, bool isCreate = false);
 };
 } // namespace com::helper
 #endif // ZFILENAMEHELPER_H
