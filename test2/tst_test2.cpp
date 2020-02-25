@@ -7,6 +7,8 @@
 // add necessary includes here
 #include <QDebug>
 
+//csiga
+
 class test2 : public QObject
 {
 Q_OBJECT
