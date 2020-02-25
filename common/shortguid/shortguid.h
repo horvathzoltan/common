@@ -4,6 +4,8 @@
 #include "shortguid_global.h"
 #include <QUuid>
 
+//valami
+
 class SHORTGUIDSHARED_EXPORT zShortGuid
 {
 public:
