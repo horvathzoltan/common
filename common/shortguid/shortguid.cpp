@@ -38,4 +38,4 @@ QUuid zShortGuid::Decode(QString s){
       return a;
     }
 
-
+//valami2
