@@ -29,7 +29,8 @@ zStringHelper::zStringHelper()
 }
 */
 
-namespace com::helper{
+namespace com{
+namespace helper{
 const QChar StringHelper::SEP = ';';
 #ifdef Q_OS_LINUX
 const QString StringHelper::NewLine = QStringLiteral("\n");
@@ -130,10 +131,6 @@ QString StringHelper::getclass_nameCamelCase(const QString& tnev) {
     return o.join("");*/
 
     return toCamelCase(t2.replace('_', '.'));
-}
-
-QStringList StringHelper::toStringList(const QString &s){
-    return s.split(QRegExp(QStringLiteral("(\\r\\n)|(\\n\\r)|\\r|\\n")), QString::SkipEmptyParts);
 }
 
 // (?:\".*\")|(?:[\d.]+)
@@ -823,4 +820,31 @@ const QMap<QString,quint16> StringHelper::HtmlNamedEntitiesSpecial{
 
     /* rsaquo is proposed but not yet ISO standardised */
 };
+
+QString StringHelper::GetFirstRow(const QString & a){
+    int ix = a.indexOf('\n');
+    if(ix==-1) return a;
+    if(ix>0&&a[ix-1]=='\r') ix--;
+    return a.left(ix);
+}
+
+QString StringHelper::join(const QList<QChar>& chars, const QChar &s){
+    QString str;
+    foreach (auto c, chars) {
+        if(!str.isEmpty()) str+=s;
+        str+=c;
+    }
+    return str;
+}
+
+QStringList StringHelper::toStringList(const QString &s, const QRegularExpression& r){
+    return s.split(r, QString::SkipEmptyParts);
+}
+
+QStringList StringHelper::toStringList(const QString &s){
+    auto static r = QRegularExpression(QStringLiteral("(\\r\\n)|(\\n\\r)|\\r|\\n"));
+    return toStringList(s, r);
+    //return s.split(QRegExp(QStringLiteral("(\\r\\n)|(\\n\\r)|\\r|\\n")), QString::SkipEmptyParts);
+}
 } // com::helper
+}

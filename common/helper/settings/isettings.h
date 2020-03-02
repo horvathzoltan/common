@@ -3,6 +3,7 @@
 
 #include <QMap>
 
+namespace com::helper{
 class ISettings
 {
 public:
@@ -11,5 +12,5 @@ public:
     virtual void parseIni(QMap<QString, QString>)=0;
     virtual QMap<QString, QString> toIni()=0;
 };
-
+}
 #endif // ISETTINGS_H

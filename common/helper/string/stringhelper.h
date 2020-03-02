@@ -5,7 +5,14 @@
 #include <QString>
 #include <QRegularExpression>
 
-namespace com::helper{
+#ifdef Q_OS_LINUX
+ #define NEWLINE "\n"
+#elif defined(Q_OS_WIN)
+ #define NEWLINE "\r\n"
+#endif
+
+namespace com{
+namespace helper{
 class STRINGHELPERSHARED_EXPORT StringHelper
 {
 public:
@@ -65,6 +72,13 @@ public:
     //    static QString decodeEntities(const QString &src);
     static QString HtmlDecode(const QString& value);
     static void split2(const QString &str, QChar c, QString*, QString*);
+
+    static QString GetFirstRow(const QString &a);
+    //static QStringList toStringList(const QString &s);
+    static QStringList toStringList(const QString &s, const QRegularExpression &r);
+    static QString join(const QList<QChar> &chars, const QChar &s);
+    static QStringList toStrigListNl(const QString &s);
+
 private:
     static const int UnicodeReplacementChar;// = '\uFFFD';
     static const QSet<QChar> htmlEntityEndings;
@@ -82,5 +96,7 @@ private:
 
 
 };
+
 }  // namespace com::helper
+}
 #endif // STRINGHELPER_H
