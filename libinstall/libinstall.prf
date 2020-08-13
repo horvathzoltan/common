@@ -13,7 +13,10 @@ INSTALLDIR = $$COMMON_LIBS
 
 INSTALLHOME = $$shell_path($$HOME/$$INSTALLDIR)
 
+message( "Installing to "$$INSTALLHOME )
+
 unix {
+message ("hello")
 !exists(INSTALLHOME):QMAKE_POST_LINK += $(MKDIR) $$shell_path($$HOME/$$INSTALLDIR);
 QMAKE_POST_LINK += $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR;
 }
