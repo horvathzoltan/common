@@ -46,7 +46,8 @@ namespace Errlevels{
         INFOCLOSE
     };
 
-    static QString toString(const Levels &l){
+    [[maybe_unused]]
+    static QString toString  (const Levels &l){
         switch(l)
         {
         case ERROR_: return QStringLiteral("ERROR");
@@ -56,7 +57,8 @@ namespace Errlevels{
         case INFO: return QStringLiteral("INFO");
         case INFOAPPEND: return QStringLiteral("INFO");
         case INFOCLOSE: return QStringLiteral("INFO");
-        }
+        default: return QStringLiteral("INFO");
+        }        
     };
 };
 

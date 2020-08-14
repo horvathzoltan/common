@@ -82,7 +82,7 @@ void Log::init(zLogGUIfn ez, bool _isBreakOnError, void* uiptr, bool _isVerbose)
 
 void Log::dialog(const QString& str, Errlevels::Levels errlevel)
 {
-
+    Q_UNUSED(str)
     auto h = Errlevels::toString(errlevel);
     //QMessageBox messageBox;
     //QMessageBox::critical(nullptr, h, str);
