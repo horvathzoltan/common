@@ -1,5 +1,5 @@
-#ifndef MACROFACTORY_GLOBAL_H
-#define MACROFACTORY_GLOBAL_H
+#ifndef COM_MACROFACTORY_GLOBAL_H
+#define COM_MACROFACTORY_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

@@ -1,5 +1,5 @@
-#ifndef ZFILENAMEHELPER_H
-#define ZFILENAMEHELPER_H
+#ifndef COM_ZFILENAMEHELPER_H
+#define COM_ZFILENAMEHELPER_H
 
 #include <QRegularExpression>
 #include <QString>

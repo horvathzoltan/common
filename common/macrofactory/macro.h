@@ -1,5 +1,5 @@
-#ifndef ZMACRO_H
-#define ZMACRO_H
+#ifndef COM_ZMACRO_H
+#define COM_ZMACRO_H
 
 #include <QRegularExpression>
 #include "zlogicexception.h"

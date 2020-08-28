@@ -1,5 +1,5 @@
-#ifndef ZSHORTGUID_H
-#define ZSHORTGUID_H
+#ifndef COM_ZSHORTGUID_H
+#define COM_ZSHORTGUID_H
 
 #include "shortguid_global.h"
 #include <QUuid>

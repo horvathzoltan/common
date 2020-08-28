@@ -1,5 +1,5 @@
-#ifndef ISETTINGS_H
-#define ISETTINGS_H
+#ifndef COM_ISETTINGS_H
+#define COM_ISETTINGS_H
 
 #include <QMap>
 

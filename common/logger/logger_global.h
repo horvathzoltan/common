@@ -1,5 +1,5 @@
-#ifndef LOGGER_GLOBAL_H
-#define LOGGER_GLOBAL_H
+#ifndef COM_LOGGER_GLOBAL_H
+#define COM_LOGGER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

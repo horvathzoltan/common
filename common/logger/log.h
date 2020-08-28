@@ -1,5 +1,5 @@
-#ifndef ZERROR_H
-#define ZERROR_H
+#ifndef COM_ZERROR_H
+#define COM_ZERROR_H
 
 #include <QString>
 //#include <QTextBrowser>

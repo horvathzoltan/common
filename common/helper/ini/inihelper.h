@@ -1,5 +1,5 @@
-#ifndef ZINIHELPER_H
-#define ZINIHELPER_H
+#ifndef COM_ZINIHELPER_H
+#define COM_ZINIHELPER_H
 
 
 #include "inihelper_global.h"

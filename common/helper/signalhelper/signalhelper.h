@@ -1,5 +1,5 @@
-#ifndef SIGNALHELPER_H
-#define SIGNALHELPER_H
+#ifndef COM_SIGNALHELPER_H
+#define COM_SIGNALHELPER_H
 
 #include <csignal>
 #include "signalhelper_global.h"
