@@ -85,7 +85,8 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
         auto errDesc = f.errorString();
         //
         auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(fn).arg(err).arg(errDesc);
-        Log::dialogError(errstr);
+        //zError2(errstr,1);
+        Log::error2(errstr, getLocInfo);
         return;
         }
 

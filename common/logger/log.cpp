@@ -26,89 +26,6 @@ void Log::init(zLogGUIfn ez, bool _isBreakOnError, void* uiptr, bool _isVerbose)
     isVerbose = _isVerbose;
 }
 
-//const QMap<ErrLevels, QString> Log::ErrLevelNames{
-//   {ErrLevels::ERROR_, QStringLiteral("ERROR")},
-//   {ErrLevels::WARNING, nameof(ErrLevels::WARNING)},
-//   {ErrLevels::TRACE, nameof(ErrLevels::TRACE)},
-//   {ErrLevels::DEBUG_, QStringLiteral("DEBUG")},
-//   {ErrLevels::INFO, nameof(ErrLevels::INFO)},
-//   {ErrLevels::INFOAPPEND, nameof(ErrLevels::INFOAPPEND)},
-//   {ErrLevels::INFOCLOSE, nameof(ErrLevels::INFOCLOSE)}
-//   };
-
-/*log*/
-
-
-//const QMap<ErrLevels, QString> zLog::ErrLevelNames
-//{
-//    {ErrLevels::ERROR, nameof(ErrLevels::ERROR)},
-//    {ErrLevels::WARNING, nameof(ErrLevels::WARNING)},
-//    {ErrLevels::TRACE, nameof(ErrLevels::TRACE)},
-//    {ErrLevels::DEBUG, nameof(ErrLevels::DEBUG)},
-//    {ErrLevels::INFO, nameof(ErrLevels::INFO)},
-//    {ErrLevels::INFOAPPEND, nameof(ErrLevels::INFOAPPEND)},
-//    {ErrLevels::INFOCLOSE, nameof(ErrLevels::INFOCLOSE)}
-//};
-
-
-//QString zLog::LevelToString(ErrLevels i)
-//{
-//    switch(i)
-//    {
-//        case ErrLevels::ERROR:
-//            return QStringLiteral("Error");
-//            break;
-//        case ErrLevels::WARNING:
-//            return QStringLiteral("Warning");
-//            break;
-//        case ErrLevels::TRACE:
-//            return QStringLiteral("Trace");
-//            break;
-//        case ErrLevels::DEBUG:
-//            return QStringLiteral("Debug");
-//            break;
-//        case ErrLevels::INFO:
-//            return QStringLiteral("Info");
-//            break;
-//        default:
-//            return zStringHelper::Empty;
-//            break;
-//    }
-
-//}
-
-
-//TODO ha van gui, akkor az külső dependencyként meg kellene jelenjen itt
-
-void Log::dialog(const QString& str, Errlevels::Levels errlevel)
-{
-    Q_UNUSED(str)
-    auto h = Errlevels::toString(errlevel);
-    //QMessageBox messageBox;
-    //QMessageBox::critical(nullptr, h, str);
-    //messageBox.setFixedSize(500, 200);
-}
-/*message*/
-
-
-void Log::dialogMessage(const QString& str) {
-    dialog(str, Errlevels::INFO);
-}
-
-void Log::dialogTrace(const QString& str) {
-    dialog(str, Errlevels::TRACE);
-}
-
-void Log::dialogWarning(const QString& str) {
-    dialog(str, Errlevels::WARNING);
-}
-
-void Log::dialogError(const QString& str) {
-    dialog(str, Errlevels::ERROR_);
-
-}
-
-
 //#pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunused-parameter"
 QString Log::logToString(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st)
@@ -254,13 +171,13 @@ QString Log::zStackTrace(){
 #endif
 
 
-void Log::error2(const QString& msg, const LocInfo& locinfo){
+void Log::error2(const QString& msg,  const LocInfo& locinfo, int flag){
     auto li = locinfo.toString();
     auto st = Log::zStackTrace();
 
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::ERROR_, msg, li, st, ui);
+        GUILogger(Errlevels::ERROR_, msg, li, st, ui, flag);
     }
     auto msg2 = logToString(Errlevels::ERROR_, msg, li, st);
 
@@ -277,11 +194,11 @@ void Log::error2(const QString& msg, const LocInfo& locinfo){
 #endif
     }
 
-void Log::warning2(const QString& msg, const LocInfo& locinfo){
+void Log::warning2(const QString& msg, const LocInfo& locinfo, int flag){
     auto li = locinfo.toString();
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::WARNING, msg, li, nullptr, ui);
+        GUILogger(Errlevels::WARNING, msg, li, nullptr, ui, flag);
     }
     auto msg2 = logToString(Errlevels::WARNING, msg, li, nullptr);
 #ifdef QT_DEBUG
@@ -294,7 +211,7 @@ void Log::warning2(const QString& msg, const LocInfo& locinfo){
 #endif
     }
 
-void Log::info2(const QString& msg, const LocInfo& locinfo)
+void Log::info2(const QString& msg, const LocInfo& locinfo, int flag)
 {
     QString li;
     if(isVerbose)
@@ -303,7 +220,7 @@ void Log::info2(const QString& msg, const LocInfo& locinfo)
     }
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::INFO, msg, nullptr, nullptr, ui);
+        GUILogger(Errlevels::INFO, msg, nullptr, nullptr, ui, flag);
     }    
 
     auto msg2 = logToString(Errlevels::INFO, msg, li, nullptr);
@@ -317,7 +234,7 @@ void Log::info2(const QString& msg, const LocInfo& locinfo)
 #endif
 }
 
-void Log::info2(const QStringList& msgl, const LocInfo& locinfo)
+void Log::info2(const QStringList& msgl, const LocInfo& locinfo, int flag)
 {
     QString li;
     if(isVerbose)
@@ -329,7 +246,7 @@ void Log::info2(const QStringList& msgl, const LocInfo& locinfo)
     {
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::INFO, *msg, nullptr, nullptr, ui);
+            GUILogger(Errlevels::INFO, *msg, nullptr, nullptr, ui, flag);
         }
         auto msg2 = logToString(Errlevels::INFO, *msg, nullptr, nullptr);
 #ifdef QT_DEBUG
@@ -346,10 +263,10 @@ void Log::info2(const QStringList& msgl, const LocInfo& locinfo)
 void Log::debug2(const LocInfo& locinfo){
     auto li = locinfo.toString();
     auto st = Log::zStackTrace();
-    if(GUILogger!=nullptr)
-    {
-        GUILogger(Errlevels::DEBUG, nullptr, li, st, ui);
-    }
+//    if(GUILogger!=nullptr)
+//    {
+//        GUILogger(Errlevels::DEBUG, nullptr, li, st, ui);
+//    }
     auto msg2 = logToString(Errlevels::DEBUG, nullptr, li, st);
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
@@ -366,10 +283,10 @@ void Log::debug2(const LocInfo& locinfo){
 
 void Log::trace2(const LocInfo& locinfo){
     auto li = locinfo.toString();
-    if(GUILogger!=nullptr)
-    {
-        GUILogger(Errlevels::TRACE, nullptr, li, nullptr, ui);
-    }
+//    if(GUILogger!=nullptr)
+//    {
+//        GUILogger(Errlevels::TRACE, nullptr, li, nullptr, ui);
+//    }
     auto msg2 = logToString(Errlevels::TRACE, nullptr, li, nullptr);
 #ifdef QT_DEBUG  
 #ifdef Q_OS_WIN
@@ -388,7 +305,7 @@ QString Log::openInfo(const QString& msg)
 
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::INFO, e+' '+msg, nullptr, nullptr, ui);
+            GUILogger(Errlevels::INFO, e+' '+msg, nullptr, nullptr, ui, 0);
         }
       return e;
     }
@@ -398,7 +315,7 @@ void Log::appendInfo(const QString& key, const QString& msg)
 
     if(GUILogger!=nullptr)
     {
-        GUILogger(Errlevels::INFOAPPEND, msg, key, nullptr, ui);
+        GUILogger(Errlevels::INFOAPPEND, msg, key, nullptr, ui, 0);
     }
     }
 
@@ -407,6 +324,6 @@ void Log::closeInfo(const QString& key)
 
         if(GUILogger!=nullptr)
         {
-            GUILogger(Errlevels::INFOCLOSE, nullptr, key, nullptr, ui);
+            GUILogger(Errlevels::INFOCLOSE, nullptr, key, nullptr, ui, 0);
         }
     }

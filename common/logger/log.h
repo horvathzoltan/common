@@ -30,6 +30,11 @@
 #define zDebug() Log::debug2(getLocInfo);
 #define zTrace() Log::trace2(getLocInfo);
 
+#define zError2(msg,i) Log::error2((msg), getLocInfo,(i));
+#define zWarning2(msg,i) Log::warning2((msg), getLocInfo,(i));
+#define zInfo2(msg,i) Log::info2((msg), getLocInfo,(i));
+
+
 // 1. log egy messaget
 // 2. szerez loc infot
 // 3. szerez debug infot (stack)
@@ -62,28 +67,15 @@ namespace Errlevels{
     };
 };
 
-typedef void (*zLogGUIfn)(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui);
-
-//QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC
+typedef void (*zLogGUIfn)(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
 
 class LOGGERSHARED_EXPORT Log
 {
 private:
 
-
-//public:
-    //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
 private:          
     static zLogGUIfn GUILogger;
-//    QTextBrowser *widget;
-//    QTabWidget *tabwidget;
-//    int tabindex;
-    static void dialog(const QString&, Errlevels::Levels);
-//    void log(const QString&, int);
 
-//    static QTextBrowser *widget2;
-//    static QTabWidget *tabwidget2;
-//    static int tabindex2;
     static bool isBreakOnError;
     static bool isVerbose;
 
@@ -91,8 +83,6 @@ private:
 
     static QString logToString(Errlevels::Levels, const QString&, const QString&, const QString&);
 
-
-    //static QString zGetLocInfo(const char *func, const char *file, int line);
     static QString zStackTrace();
 
 public:        
@@ -100,61 +90,12 @@ public:
     static const QString ERROR_;
     static const QString WARNING;
 
-    //static const QMap<ErrLevels, QString> ErrLevelNames;
-
-    //enum class ErrLevels:int {ERROR, WARNING, TRACE, DEBUG, INFO, INFOAPPEND, INFOCLOSE};
-    //zLog();
-    //~zLog();
-    //static QString LevelToString(ErrLevels loglevel);
-
-    //void init(QTextBrowser*, QTabWidget*, int,bool);
     static void init(zLogGUIfn ez, bool isBreak, void* ui, bool isVerbose);
 
-
-//    [[deprecated]]
-//    void log(const QString&);
-//    void log(const QString&, int);
-
-//    [[deprecated]]
-//    void log(const QList<QString>&);
-
-    /*message*/
-    static void dialogMessage(const QString& str);
-//    //void message(const char*);
-//    void message(const QString&);
-//    void message(const QList<QString>&);
-
-//    /*ok*/
-    static void dialogOk(const QString& str);
-//    //void ok(const char*);
-//    void ok(const QString&);
-//    void ok(const QList<QString>&);
-
-//    /*warning*/
-    static void dialogWarning(const QString& str);
-//    //void warning(const char*);
-//    void warning(const QString&);
-//    void warning(const QList<QString>&);
-
-//    /*error*/
-    static void dialogError(const QString& str);
-//    //void error(const char*);
-//    void error(const QString&);
-//    void error(const QString&, const QString&);
-//    void error(const QList<QString>&);
-
-//    /*trace*/
-    static void dialogTrace(const QString& str);
-//    //void trace(const char*);
-//    void trace(const QString&);
-//   // void trace(const char*, const QString&);
-//    void trace(const QString&, const QString&);
-//    void trace(const QList<QString>&);
-
-    static void error2(const QString& msg, const LocInfo& l);
-    static void warning2(const QString& msg, const LocInfo& l);
-    static void info2(const QString& msg, const LocInfo& l);
-    static void info2(const QStringList& msg, const LocInfo& l);
+    static void error2(const QString& msg, const LocInfo& l, int flag = 0);
+    static void warning2(const QString& msg, const LocInfo& l, int flag = 0);
+    static void info2(const QString& msg, const LocInfo& l, int flag = 0);
+    static void info2(const QStringList& msg, const LocInfo& l, int flag = 0);
     static void debug2(const LocInfo& l);
     static void trace2(const LocInfo& l);
 

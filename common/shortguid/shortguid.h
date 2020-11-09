@@ -10,7 +10,6 @@ class SHORTGUIDSHARED_EXPORT zShortGuid
 {
 public:
     zShortGuid();
-    //zShortGuid(QString value);
     static const zShortGuid Empty;
 
     explicit zShortGuid(QUuid guid);
