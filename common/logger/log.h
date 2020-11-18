@@ -46,6 +46,7 @@ namespace Errlevels{
         INFOCLOSE
     };
 
+    [[maybe_unused]]
     static QString toString(const Levels &l){
         switch(l)
         {
