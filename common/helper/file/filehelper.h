@@ -1,5 +1,5 @@
-#ifndef ZTEXTFILEHELPER_H
-#define ZTEXTFILEHELPER_H
+#ifndef COM_ZTEXTFILEHELPER_H
+#define COM_ZTEXTFILEHELPER_H
 
 
 #include <QFile>

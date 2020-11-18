@@ -1,5 +1,5 @@
-#ifndef ZSETTINGSHELPER_H
-#define ZSETTINGSHELPER_H
+#ifndef COM_ZSETTINGSHELPER_H
+#define COM_ZSETTINGSHELPER_H
 
 #include "settingshelper_global.h"
 #include "isettings.h"

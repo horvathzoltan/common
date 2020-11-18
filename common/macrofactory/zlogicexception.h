@@ -1,5 +1,5 @@
-#ifndef ZLOGICEXCEPTION_H
-#define ZLOGICEXCEPTION_H
+#ifndef COM_ZLOGICEXCEPTION_H
+#define COM_ZLOGICEXCEPTION_H
 
 #include <QString>
 #include <QException>

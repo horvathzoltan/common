@@ -1,5 +1,5 @@
-#ifndef INIHELPER_GLOBAL_H
-#define INIHELPER_GLOBAL_H
+#ifndef COM_INIHELPER_GLOBAL_H
+#define COM_INIHELPER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

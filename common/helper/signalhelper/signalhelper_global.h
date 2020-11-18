@@ -1,5 +1,5 @@
-#ifndef SIGNALHELPER_GLOBAL_H
-#define SIGNALHELPER_GLOBAL_H
+#ifndef COM_SIGNALHELPER_GLOBAL_H
+#define COM_SIGNALHELPER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

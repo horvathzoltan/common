@@ -1,5 +1,5 @@
-#ifndef STRINGHELPER_GLOBAL_H
-#define STRINGHELPER_GLOBAL_H
+#ifndef COM_STRINGHELPER_GLOBAL_H
+#define COM_STRINGHELPER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

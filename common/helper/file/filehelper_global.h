@@ -1,5 +1,5 @@
-#ifndef FILEHELPER_GLOBAL_H
-#define FILEHELPER_GLOBAL_H
+#ifndef COM_FILEHELPER_GLOBAL_H
+#define COM_FILEHELPER_GLOBAL_H
 
 
 #include <QtCore/qglobal.h>

@@ -1,5 +1,5 @@
-#ifndef XMLHELPER_GLOBAL_H
-#define XMLHELPER_GLOBAL_H
+#ifndef COM_XMLHELPER_GLOBAL_H
+#define COM_XMLHELPER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

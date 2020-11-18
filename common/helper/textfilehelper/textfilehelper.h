@@ -1,5 +1,5 @@
-#ifndef TEXTFILEHELPER_H
-#define TEXTFILEHELPER_H
+#ifndef COM_TEXTFILEHELPER_H
+#define COM_TEXTFILEHELPER_H
 
 #include "textfilehelper_global.h"
 #include <QStringList>

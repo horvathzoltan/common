@@ -1,5 +1,5 @@
-#ifndef COREAPPWORKER_GLOBAL_H
-#define COREAPPWORKER_GLOBAL_H
+#ifndef COM_COREAPPWORKER_GLOBAL_H
+#define COM_COREAPPWORKER_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

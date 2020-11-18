@@ -1,8 +1,13 @@
-#ifndef ZMACRO_H
-#define ZMACRO_H
+#ifndef COM_ZMACRO_H
+#define COM_ZMACRO_H
 
 #include <QRegularExpression>
 #include "zlogicexception.h"
+#include "cxxabi.h"
+
+#define GET(v, name) const decltype(v)& name() const {return v;}
+#define SET(v, name) void name(const decltype(v)& m) {v = m;}
+#define SET_UI(v, name, setui) void name(const decltype(v)& m) {v = m; setui();}
 
 #define zforeach(var, container) for(auto (var) = (container).begin(); (var) != (container).end(); ++(var))
 #define zforeach_from(var, container, ix) for(auto (var) = (container).begin()+(ix); (var) != (container).end(); ++(var))
@@ -10,7 +15,17 @@
 #define nameof(x) z_macro_factory::_nameof<0>(#x, sizeof(x))
 #define zfn() z_macro_factory::_zfn<0>((const char*)Q_FUNC_INFO)//Q_FUNC_INFO
 
+#define nameof_type(x) z_macro_factory::_nmnm56(typeid(x).name())
+
 namespace z_macro_factory {
+
+[[maybe_unused]]
+static QString _nmnm56(const char* x) {
+    int status;
+    auto a =  abi::__cxa_demangle(x, NULL, NULL, &status);
+    return a;
+}
+
 template<int a>
 QString _nameof(const char* y, std::size_t)
 {

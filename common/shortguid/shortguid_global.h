@@ -1,5 +1,5 @@
-#ifndef SHORTGUID_GLOBAL_H
-#define SHORTGUID_GLOBAL_H
+#ifndef COM_SHORTGUID_GLOBAL_H
+#define COM_SHORTGUID_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 

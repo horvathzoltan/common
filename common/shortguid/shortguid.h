@@ -1,5 +1,5 @@
-#ifndef ZSHORTGUID_H
-#define ZSHORTGUID_H
+#ifndef COM_ZSHORTGUID_H
+#define COM_ZSHORTGUID_H
 
 #include "shortguid_global.h"
 #include <QUuid>
@@ -10,7 +10,6 @@ class SHORTGUIDSHARED_EXPORT zShortGuid
 {
 public:
     zShortGuid();
-    //zShortGuid(QString value);
     static const zShortGuid Empty;
 
     explicit zShortGuid(QUuid guid);

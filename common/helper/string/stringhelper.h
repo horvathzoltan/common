@@ -1,5 +1,5 @@
-#ifndef STRINGHELPER_H
-#define STRINGHELPER_H
+#ifndef COM_STRINGHELPER_H
+#define COM_STRINGHELPER_H
 
 #include "stringhelper_global.h"
 #include <QString>

@@ -1,5 +1,5 @@
-#ifndef XMLHELPER_H
-#define XMLHELPER_H
+#ifndef COM_XMLHELPER_H
+#define COM_XMLHELPER_H
 
 #include "xmlhelper_global.h"
 #include <QXmlStreamWriter>

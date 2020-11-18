@@ -1,5 +1,5 @@
-#ifndef COREAPPWORKER_H
-#define COREAPPWORKER_H
+#ifndef COM_COREAPPWORKER_H
+#define COM_COREAPPWORKER_H
 
 #include "coreappworker_global.h"
 #include <QObject>

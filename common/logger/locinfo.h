@@ -1,5 +1,5 @@
-#ifndef ZLOCINFO_H
-#define ZLOCINFO_H
+#ifndef COM_ZLOCINFO_H
+#define COM_ZLOCINFO_H
 
 #include <QString>
 #include "logger_global.h"
