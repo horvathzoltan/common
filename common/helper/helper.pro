@@ -2,6 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     CommandLineParserHelper \
+    ProcessHelper \
+    downloader \
     settings \
     signalhelper \
     string \
