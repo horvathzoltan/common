@@ -128,6 +128,7 @@ QString FileHelper::load(const QString& url)
 bool FileHelper::backup(const QString& filename)
 {
     QFile infile(filename);
+
     QString now = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss");
 
     QString outfilename = com::helper::FilenameHelper::appendToBaseName(filename, now);
