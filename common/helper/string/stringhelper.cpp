@@ -1,6 +1,6 @@
 #include "../../macrofactory/macro.h"
 #include "stringhelper.h"
-//#include <QString>
+#include <QChar>
 //#include "zfilenamehelper.h"
 //#include "zlog.h"
 //#include "zstringhelper.h"
@@ -473,6 +473,22 @@ QChar StringHelper::HtmlEntityLookup(const QString& e)
 
     return {a};
 }
+
+void StringHelper::AppendLine(QString *str, const QString &msg)
+{
+    if(!str) return;
+    if(!str->isEmpty()) *str+=StringHelper::NewLine;
+    *str+=msg;
+}
+
+void StringHelper::AppendValue(QString *str, const QString &v, const QString &name)
+{
+    if(!v.isEmpty())
+        com::helper::StringHelper::AppendLine(str, name+'='+v);
+    else
+        com::helper::StringHelper::AppendLine(str, "no "+name);
+}
+
 
 void StringHelper::split2(const QString &v, QChar c, QString *u, QString *p)
 {

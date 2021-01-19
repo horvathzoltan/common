@@ -7,6 +7,7 @@
 #ifdef Q_OS_LINUX
 #include <execinfo.h>
 #include <cxxabi.h>
+#include <QDebug>
 #endif
 
 bool Log::isBreakOnError = false;

@@ -3,6 +3,7 @@
 
 #include "stringhelper_global.h"
 #include <QString>
+#include <QSet>
 #include <QRegularExpression>
 
 #ifdef Q_OS_LINUX
@@ -13,6 +14,7 @@
 
 namespace com{
 namespace helper{
+#define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, #v);
 class STRINGHELPERSHARED_EXPORT StringHelper
 {
 public:
@@ -78,6 +80,8 @@ public:
     static QStringList toStringList(const QString &s, const QRegularExpression &r);
     static QString join(const QList<QChar> &chars, const QChar &s);
     static QStringList toStrigListNl(const QString &s);
+    static void AppendLine(QString *str, const QString& msg);
+    static void AppendValue(QString *str, const QString& v, const QString& name);
 
 private:
     static const int UnicodeReplacementChar;// = '\uFFFD';
@@ -92,9 +96,7 @@ private:
     static QChar HtmlEntityLookup(const QString& e);
     static const QMap<QString,quint16> HtmlNamedEntitiesLatin1;
     static const QMap<QString,quint16> HtmlNamedEntitiesSymbolic;
-    static const QMap<QString,quint16> HtmlNamedEntitiesSpecial;
-
-
+    static const QMap<QString,quint16> HtmlNamedEntitiesSpecial;    
 };
 
 }  // namespace com::helper
