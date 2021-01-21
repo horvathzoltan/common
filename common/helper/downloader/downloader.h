@@ -15,9 +15,12 @@ class COM_DOWNLOADER_EXPORT Downloader : public QObject
 
 private:
     QNetworkAccessManager* _manager;
+    QNetworkRequest* _request;
+    QUrl* _url;
 public:
     Downloader(QObject *parent = nullptr);
-    QByteArray download(const QString&);
+    Downloader(const QString &url, QObject *parent = nullptr);
+    QByteArray download(const QString&, const QString&, QString *err = nullptr);
     void DownloadAsync(const QString&);
     static bool Wget(const QString&, const QString&);
 

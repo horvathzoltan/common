@@ -489,6 +489,11 @@ void StringHelper::AppendValue(QString *str, const QString &v, const QString &na
         com::helper::StringHelper::AppendLine(str, "no "+name);
 }
 
+void StringHelper::AppendValue(QString *str, bool v, const QString &name)
+{
+    com::helper::StringHelper::AppendLine(str, name+'='+boolToString(v));
+}
+
 
 void StringHelper::split2(const QString &v, QChar c, QString *u, QString *p)
 {

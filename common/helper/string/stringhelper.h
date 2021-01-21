@@ -14,7 +14,7 @@
 
 namespace com{
 namespace helper{
-#define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, #v);
+#define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, #v)
 class STRINGHELPERSHARED_EXPORT StringHelper
 {
 public:
@@ -81,8 +81,8 @@ public:
     static QString join(const QList<QChar> &chars, const QChar &s);
     static QStringList toStrigListNl(const QString &s);
     static void AppendLine(QString *str, const QString& msg);
-    static void AppendValue(QString *str, const QString& v, const QString& name);
-
+    static void AppendValue(QString *str, const QString& v, const QString& name);    
+    static void AppendValue(QString *str, bool v, const QString &name);
 private:
     static const int UnicodeReplacementChar;// = '\uFFFD';
     static const QSet<QChar> htmlEntityEndings;

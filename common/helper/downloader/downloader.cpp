@@ -2,6 +2,7 @@
 #include "../../logger/log.h"
 #include "../../helper/ProcessHelper/processhelper.h"
 #include <QEventLoop>
+#include <QUrlQuery>
 
 namespace com::helper{
 Downloader::Downloader(QObject *parent) : QObject(parent)
@@ -9,37 +10,37 @@ Downloader::Downloader(QObject *parent) : QObject(parent)
     _manager = nullptr;
 }
 
-QByteArray Downloader::download(const QString& urlstring)
+Downloader::Downloader(const QString& urlstring, QObject *parent) : QObject(parent)
 {
+    //_manager = nullptr;
     _manager = new QNetworkAccessManager(this);
-    //auto ikey = zInfo::openInfo(QStringLiteral("Beolvasás: %1").arg(urlstring));
+    _url = new QUrl(urlstring);
+    _request = new QNetworkRequest();
+    //_request->setUrl(url);
+    _request->setRawHeader("User-Agent", "zDownloader 1.0");
 
-    //auto url = QUrl(QStringLiteral("https://docs.google.com/document/export?format=html&id=1qqYuhCY5iTAfzBiwQGfzRdU7C1jm1pNnNajVrSrWAfU"));
-    auto url = QUrl(urlstring);
-    QNetworkRequest request;
-    request.setUrl(url);
-    request.setRawHeader("User-Agent", "zDownloader 1.0");
+}
 
-    QNetworkReply* reply = _manager->get(request);
+QByteArray Downloader::download(const QString& pathstr, const QString& querystr, QString *err)
+{
+    if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
+    if(!querystr.isEmpty()) _url->setQuery('?'+querystr);
+
+    _request->setUrl(*_url);
+
+    QNetworkReply* reply = _manager->get(*_request);
 
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    QByteArray e;
     if(reply->error())
     {
-        auto err = reply->errorString();
-        zError(err);
-    }
-    else{
-
-        e = reply->readAll();
+        if(err) *err = reply->errorString();
+        return {};
     }
 
-    //zLog::appendInfo(ikey, zLog::OK);
-    //zLog::closeInfo(ikey);
-    return e;
+    return reply->readAll();
 }
 
 void Downloader::DownloadAsync(const QString& urlstring)
