@@ -24,11 +24,32 @@ Downloader::Downloader(const QString& urlstring, QObject *parent) : QObject(pare
 QByteArray Downloader::download(const QString& pathstr, const QString& querystr, QString *err)
 {
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
-    if(!querystr.isEmpty()) _url->setQuery('?'+querystr);
+    if(!querystr.isEmpty()) _url->setQuery(querystr);
 
     _request->setUrl(*_url);
 
     QNetworkReply* reply = _manager->get(*_request);
+
+    QEventLoop loop;
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    if(reply->error())
+    {
+        if(err) *err = reply->errorString();
+        return {};
+    }
+
+    return reply->readAll();
+}
+
+QByteArray Downloader::post(const QString& pathstr, const QString& querystr, QString *err, const QByteArray &b)
+{
+    if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
+    if(!querystr.isEmpty()) _url->setQuery('?'+querystr);
+    _request->setUrl(*_url);
+
+    QNetworkReply* reply = _manager->post(*_request, b);
 
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));

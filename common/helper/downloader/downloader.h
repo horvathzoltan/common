@@ -21,6 +21,7 @@ public:
     Downloader(QObject *parent = nullptr);
     Downloader(const QString &url, QObject *parent = nullptr);
     QByteArray download(const QString&, const QString&, QString *err = nullptr);
+    QByteArray post(const QString& pathstr, const QString& querystr, QString *err, const QByteArray &b);
     void DownloadAsync(const QString&);
     static bool Wget(const QString&, const QString&);
 
