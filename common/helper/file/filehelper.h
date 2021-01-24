@@ -13,6 +13,7 @@ class FILEHELPERSHARED_EXPORT FileHelper
 {
 public:
     static void save(const QString& txt, const QString& fileName, bool isAppend = false);
+    static auto Save(const QByteArray& data, const QString& fn, bool isAppend = false, QFileDevice::FileError* = nullptr)-> bool;
     static QString load(const QString& filename);
     //static void append(QString line, QString fileName);
     bool backup(const QString& filename);
