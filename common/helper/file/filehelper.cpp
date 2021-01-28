@@ -158,4 +158,15 @@ bool FileHelper::backup(const QString& filename)
     return QFile::copy(filename, outfilename);
 }
 
+auto FileHelper::isEmpty(const QFileInfo &fi) -> bool
+{
+    if(!fi.isDir()) return false;
+    return QDir(fi.absoluteFilePath()).entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries|QDir::Hidden).isEmpty();
+}
+
+auto FileHelper::isEmpty(const QString &fn) -> bool
+{
+    return isEmpty(QFileInfo(fn));
+}
+
 } // namespace com::helper

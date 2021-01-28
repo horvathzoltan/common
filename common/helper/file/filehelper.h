@@ -3,6 +3,7 @@
 
 
 #include <QFile>
+#include <QFileInfo>
 #include <QString>
 #include <QTextCodec>
 #include <QTextStream>
@@ -17,6 +18,8 @@ public:
     static QString load(const QString& filename);
     //static void append(QString line, QString fileName);
     bool backup(const QString& filename);
+    static bool isEmpty(const QFileInfo& fi);
+    static bool isEmpty(const QString& dir);
 private:
     static QString load2(const QString& filename);
 };
