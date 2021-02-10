@@ -55,8 +55,8 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
-
+void FileHelper::save(const QString& txt, const QString& fn, bool isAppend)
+{
     if(fn.length()>256)
     {
         zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, Log::ERROR_));
@@ -76,7 +76,7 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
     QFile f(fn);
 
-    auto om = QIODevice::WriteOnly | QFile::Text; // openmode
+    QFlags om = QIODevice::WriteOnly | QFile::Text; // openmode
     if(isAppend) om |= QIODevice::Append;
 
     if (!f.open(om))
@@ -88,7 +88,7 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
         //zError2(errstr,1);
         Log::error2(errstr, getLocInfo);
         return;
-        }
+    }
 
 
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -102,6 +102,28 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
     zInfo(QStringLiteral("File saved: %1").arg(fi.absoluteFilePath()));
 }
 
+auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, QFileDevice::FileError*err) -> bool
+{
+    if(fn.length()>256) return false;
+    QFileInfo fi(fn);
+    QDir a = fi.dir();
+
+    if(!a.exists()) a.mkpath(QStringLiteral("."));
+    QFile f(fn);
+    QFlags om = QIODevice::WriteOnly; // openmode
+    if(isAppend) om |= QIODevice::Append;
+
+    if (!f.open(om))
+    {
+        if(err) *err = f.error();
+        return false;
+    }
+
+    auto u = f.write(data);
+    if(u==-1 && err) *err = f.error();
+    f.close();
+    return u != -1;
+}
 
 // TODO ha URL vagy ha filename wrapper file megszerzésére
 //
@@ -134,6 +156,17 @@ bool FileHelper::backup(const QString& filename)
     QString outfilename = com::helper::FilenameHelper::appendToBaseName(filename, now);
 
     return QFile::copy(filename, outfilename);
+}
+
+auto FileHelper::isEmpty(const QFileInfo &fi) -> bool
+{
+    if(!fi.isDir()) return false;
+    return QDir(fi.absoluteFilePath()).entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries|QDir::Hidden).isEmpty();
+}
+
+auto FileHelper::isEmpty(const QString &fn) -> bool
+{
+    return isEmpty(QFileInfo(fn));
 }
 
 } // namespace com::helper

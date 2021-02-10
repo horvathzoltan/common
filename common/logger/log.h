@@ -14,7 +14,7 @@
 //#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
 //#elif defined(Q_OS_WIN)
     #if defined(__GNUC__)
-    #define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
+    #define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__) ,__FILE__,__LINE__)
     #elif defined(__MINGW32__)
     #define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
     #elif defined (_MSC_VER )
