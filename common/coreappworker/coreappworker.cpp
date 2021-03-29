@@ -18,22 +18,15 @@ CoreAppWorker::CoreAppWorker(int (*fn)(), QCoreApplication *app, QCommandLinePar
 
 int CoreAppWorker::doWork()
 {
-    //int e = *workerFn();
-    //auto m = new char[40];
-    //m=new char[2];
     qDebug() << "Class1 doWork()";
-    //qDebug() << "worker called";
     return 0;
 }
 
 int CoreAppWorker::run()
 {
-    //doWork();
     int e = workerFn();
-    // Same implementation as before
-    // Emit signal when finished
     emit finished();
     return e;
 }
 
-}
+}  // namespace com
