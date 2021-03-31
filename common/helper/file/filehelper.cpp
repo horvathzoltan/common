@@ -7,8 +7,9 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDateTime>
+#include <QIODevice>
 
-namespace com::helper{
+namespace com { namespace helper{
 QString FileHelper::load2(const QString& filename) {
     auto ikey = Log::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
     QFileInfo fi(filename);    
@@ -76,7 +77,7 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend)
 
     QFile f(fn);
 
-    QFlags om = QIODevice::WriteOnly | QFile::Text; // openmode
+    QFlags<QIODevice::OpenModeFlag> om = QIODevice::WriteOnly | QIODevice::Text; // openmode
     if(isAppend) om |= QIODevice::Append;
 
     if (!f.open(om))
@@ -110,7 +111,7 @@ auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, 
 
     if(!a.exists()) a.mkpath(QStringLiteral("."));
     QFile f(fn);
-    QFlags om = QIODevice::WriteOnly; // openmode
+    QFlags<QIODevice::OpenModeFlag> om = QIODevice::WriteOnly; // openmode
     if(isAppend) om |= QIODevice::Append;
 
     if (!f.open(om))
@@ -168,5 +169,5 @@ auto FileHelper::isEmpty(const QString &fn) -> bool
 {
     return isEmpty(QFileInfo(fn));
 }
-
+}
 } // namespace com::helper

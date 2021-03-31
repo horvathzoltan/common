@@ -4,7 +4,7 @@
 #include "../../logger/log.h"
 
 
-namespace com::helper {
+namespace com{ namespace helper {
 void SignalHelper::handleShutDownSignal( int signalId )
 {
     zInfo(QStringLiteral("EXIT: %1").arg(signalId));
@@ -33,5 +33,5 @@ void SignalHelper::setShutDownSignal( int signalId )
     signal(signalId, handleShutDownSignal);
 }
 #endif
-
+}
 }

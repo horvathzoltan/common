@@ -4,7 +4,7 @@
 #include "textfilehelper_global.h"
 #include <QStringList>
 
-namespace com::helper{
+namespace com { namespace helper{
 class TEXTFILEHELPER_EXPORT TextFileHelper
 {
 public:
@@ -13,5 +13,6 @@ public:
     static bool save(const QString& txt, const QString& fileName, bool isAppend = false);
     static bool backup(const QString& filename);
 };
+}
 }
 #endif // TEXTFILEHELPER_H

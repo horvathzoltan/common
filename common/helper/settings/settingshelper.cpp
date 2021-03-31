@@ -4,8 +4,7 @@
 //#include <QSettings>
 //#include <QApplication>
 #include <QDir>
-namespace com::helper
-{
+namespace com{ namespace helper{
 
 QString SettingsHelper::userSettingsFileName;
 //QString SettingsHelper::settingsFile;
@@ -63,4 +62,5 @@ void SettingsHelper::saveSettings()
 //    if(userSettingsFileName.isEmpty()) return QString();
 //    return userSettingsFileName+QDir::separator() + NAME+".ini";
 //}
+}
 }  // namespace com

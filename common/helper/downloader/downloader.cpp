@@ -4,7 +4,7 @@
 #include <QEventLoop>
 #include <QUrlQuery>
 
-namespace com::helper{
+namespace com { namespace helper{
 Downloader::Downloader(QObject *parent) : QObject(parent)
 {
     _manager = nullptr;
@@ -118,5 +118,6 @@ void Downloader::ReplyFinished (QNetworkReply *reply)
     }
 
     reply->deleteLater();
+}
 }
 }

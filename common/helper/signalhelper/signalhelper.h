@@ -4,7 +4,7 @@
 #include <csignal>
 #include "signalhelper_global.h"
 
-namespace com::helper{
+namespace com { namespace helper{
 class SIGNALHELPER_EXPORT SignalHelper
 {
 public:
@@ -14,6 +14,7 @@ public:
 private:
     static void handleShutDownSignal(int);
 };
+}
 }
 
 #endif // SIGNALHELPER_H

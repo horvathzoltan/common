@@ -3,7 +3,7 @@ QT -= gui
 TEMPLATE = lib
 DEFINES += TEXTFILEHELPER_LIBRARY
 
-CONFIG += c++1z
+CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
 # The following define makes your compiler emit warnings if you use

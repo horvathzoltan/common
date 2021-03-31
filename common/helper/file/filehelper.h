@@ -9,7 +9,7 @@
 #include <QTextStream>
 #include "filehelper_global.h"
 
-namespace com::helper{
+namespace com { namespace helper{
 class FILEHELPERSHARED_EXPORT FileHelper
 {
 public:
@@ -23,5 +23,6 @@ public:
 private:
     static QString load2(const QString& filename);
 };
+}
 } // namespace com::helper
 #endif // ZTEXTFILEHELPER_H

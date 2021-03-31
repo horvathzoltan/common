@@ -4,7 +4,7 @@
 
 #include <QDateTime>
 
-namespace com::helper{
+namespace com { namespace helper{
 bool XmlHelper::putXmlAttr(const QXmlStreamAttributes& a, const QString& n, QString *ptr){
     if(a.hasAttribute(n)){
         *ptr = (a.value(n)).toString();
@@ -67,5 +67,6 @@ bool XmlHelper::putXmlAttr(const QXmlStreamAttributes& a, const QStringList& n, 
         if(putXmlAttr(a, *n0, ptr)) return true;
     }
     return false;
+}
 }
 } // namespace com::helper

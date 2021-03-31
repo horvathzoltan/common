@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-CONFIG += c++1z
+CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
 TARGET = stringhelper
