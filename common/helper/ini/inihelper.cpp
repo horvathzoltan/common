@@ -2,7 +2,7 @@
 #include "../../macrofactory/macro.h"
 #include "../../helper/string/stringhelper.h"
 
-namespace com::helper{
+namespace com { namespace helper{
 QMap<QString, QString> IniHelper::parseIni(const QString& ini)
 {
     QMap<QString, QString> m;
@@ -32,5 +32,5 @@ QString IniHelper::toString(const QMap<QString, QString> &m, const QString &desc
     }
     return e;
 }
-
+}
 }//namespace com::helper

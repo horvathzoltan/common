@@ -1,7 +1,7 @@
 #include "filenamehelper.h"
 #include <QDir>
 
-namespace com::helper{
+namespace com { namespace helper{
 const QString FilenameHelper::urlpattern = QStringLiteral(R"(^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+){2,}[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$)");
 
 const QRegularExpression FilenameHelper::urlregexp = QRegularExpression(urlpattern);
@@ -46,5 +46,6 @@ QString FilenameHelper::GetAbsolutPath(const QString& dirName, bool isCreate){
             QDir(QDir::homePath()).mkpath(projectDir);
     }
     return projectDir;
+}
 }
 } // namespace namespace com::helper

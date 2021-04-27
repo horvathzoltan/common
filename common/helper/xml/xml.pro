@@ -9,7 +9,7 @@ QT       -= gui
 TARGET = xmlhelper
 TEMPLATE = lib
 
-CONFIG += c++1z
+CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
 DEFINES += XMLHELPER_LIBRARY

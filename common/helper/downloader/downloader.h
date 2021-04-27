@@ -8,7 +8,7 @@
 
 #include "downloader_global.h"
 
-namespace com::helper{
+namespace com { namespace helper{
 class COM_DOWNLOADER_EXPORT Downloader : public QObject
 {
     Q_OBJECT
@@ -32,5 +32,6 @@ public slots:
 
 
 };
+}
 } // namespace com::helper
 #endif // COM_DOWNLOADER_H

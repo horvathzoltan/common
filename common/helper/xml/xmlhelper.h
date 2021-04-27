@@ -4,7 +4,7 @@
 #include "xmlhelper_global.h"
 #include <QXmlStreamWriter>
 
-namespace com::helper{
+namespace com { namespace helper{
 class XMLHELPERSHARED_EXPORT XmlHelper
 {
 
@@ -20,5 +20,6 @@ public:
     static bool putXmlAttr(const QXmlStreamAttributes&, const QStringList& n, bool *ptr);
     static bool putXmlAttr(const QXmlStreamAttributes&, const QStringList& n, QDateTime *ptr);
 };
+}
 } // namespace com::helper
 #endif // XMLHELPER_H

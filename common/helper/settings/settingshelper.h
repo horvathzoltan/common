@@ -5,7 +5,7 @@
 #include "isettings.h"
 #include <QString>
 
-namespace com::helper{
+namespace com { namespace helper{
 class SETTINGSHELPERSHARED_EXPORT SettingsHelper
 {
 public:
@@ -21,6 +21,7 @@ private:
     static const QString NAME;
     //static QString getFileName();
 };
+}
 }  // namespace com
 #endif // ZSETTINGSHELPER_H
 

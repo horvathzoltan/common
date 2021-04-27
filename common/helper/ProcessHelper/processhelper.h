@@ -4,7 +4,7 @@
 #include "ProcessHelper_global.h"
 #include <QString>
 
-namespace com::helper{
+namespace com { namespace helper{
 class COM_PROCESSHELPER_EXPORT ProcessHelper
 {
 public:
@@ -23,5 +23,5 @@ public:
     static QString Execute(const QStringList &cmds);
     static Output Execute(const QString &cmd);
 };
-}
+} }
 #endif // COM_PROCESSHELPER_H

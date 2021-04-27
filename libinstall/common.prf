@@ -40,6 +40,7 @@ equals(QT_ARCH, arm){
     COMMON_LIBS = $$COMMON_LIBS"_"$$MARCH
 }
 
+
 message( "architecture = "$$QT_ARCH )
 message( "commonlibs folder = "$$COMMON_LIBS )
 

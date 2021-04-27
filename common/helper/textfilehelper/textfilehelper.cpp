@@ -5,7 +5,7 @@
 #include <QTextCodec>
 #include <QTextStream>
 
-namespace com::helper{
+namespace com { namespace helper{
 
 
 QString TextFileHelper::load(const QString& filename) {
@@ -109,5 +109,5 @@ bool TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) 
     f.close();
     return true;
 }
-
+}
 } // namespace com::helper

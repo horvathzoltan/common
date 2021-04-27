@@ -5,7 +5,7 @@ TARGET = processhelper
 TEMPLATE = lib
 DEFINES += COM_PROCESSHELPER_LIBRARY
 
-CONFIG += c++11
+#CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -18,7 +18,7 @@ HEADERS += \
     ProcessHelper_global.h \
     processhelper.h
 
-CONFIG += c++1z
+CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
 include($$PWD/../../../libinstall//common.prf)

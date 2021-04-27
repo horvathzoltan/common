@@ -5,7 +5,7 @@
 #include <QString>
 #include "filehelper_global.h"
 
-namespace com::helper{
+namespace com { namespace helper{
 class FILEHELPERSHARED_EXPORT FilenameHelper
 {
 public:
@@ -20,5 +20,6 @@ public:
     static QString appendToBaseName(const QString& fileName, const QString& a );
     static QString GetAbsolutPath(const QString &dirName, bool isCreate = false);
 };
+}
 } // namespace com::helper
 #endif // ZFILENAMEHELPER_H

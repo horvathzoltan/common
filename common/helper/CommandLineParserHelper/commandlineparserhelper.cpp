@@ -1,7 +1,7 @@
 #include "commandlineparserhelper.h"
 #include <QStringList>
 
-namespace com::helper{
+namespace com { namespace helper{
 
 CommandLineParserHelper::CommandLineParserHelper()= default;
 
@@ -15,5 +15,5 @@ bool CommandLineParserHelper::addOptionBool(QCommandLineParser *p, const QString
     ////parser.addOption(QCommandLineOption{QStringList {OPTION_BACKUP[0], OPTION_BACKUP},QStringLiteral("set if backup is needed")});
     return p->addOption({QStringList{o.left(1),o},d});
 }
-
+}
 }

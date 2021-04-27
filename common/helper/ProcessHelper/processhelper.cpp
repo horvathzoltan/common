@@ -3,7 +3,7 @@
 #include <QCoreApplication>
 #include <QProcess>
 
-namespace com::helper{
+namespace com { namespace helper{
 const QString ProcessHelper::SEPARATOR = NEWLINE+QStringLiteral("stderr")+NEWLINE;
 
 QString ProcessHelper::Output::ToString(){
@@ -53,5 +53,5 @@ QString ProcessHelper::Execute(const QStringList& cmds){
     }
     return e.ToString();
 }
-
+}
 }
