@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QTextStream>
 #include "filehelper_global.h"
 

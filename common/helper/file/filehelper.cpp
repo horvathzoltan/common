@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QIODevice>
+#include <QTextCodec>
 
 namespace com { namespace helper{
 QString FileHelper::load2(const QString& filename) {
