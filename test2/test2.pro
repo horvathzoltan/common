@@ -5,7 +5,7 @@ CONFIG += qt console warn_on depend_includepath testcase
 CONFIG -= app_bundle
 
 CONFIG += c++14
-msvc:QMAKE_CXXFLAGS += /std:c++17
+msvc:QMAKE_CXXFLAGS += /std:c++14
 
 TEMPLATE = app
 
@@ -51,7 +51,11 @@ equals(QT_ARCH, x86){
 }
 
 equals(QT_ARCH, arm){
-    COMMON_LIBS = $$COMMON_LIBS"_arm"
+#    COMMON_LIBS = $$COMMON_LIBS"_arm"
+    MV33 = $$find(QMAKE_CFLAGS, -march.*)
+    MV34 = $$split(MV33, =)
+    MARCH = $$member(MV34, 1)
+    COMMON_LIBS = $$COMMON_LIBS"_"$$MARCH
 }
 
 message( "architecture = "$$QT_ARCH )

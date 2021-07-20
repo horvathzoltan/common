@@ -74,23 +74,24 @@ class LOGGERSHARED_EXPORT Log
 private:
 
 private:          
-    static zLogGUIfn GUILogger;
+    static zLogGUIfn _GUILogger;
 
-    static bool isBreakOnError;
-    static bool isVerbose;
+    static bool _isBreakOnError;
+    static bool _isVerbose;
+    static Errlevels::Levels _errlevel;
 
-    static void *ui;
+    static void *_ui;
 
     static QString logToString(Errlevels::Levels, const QString&, const QString&, const QString&);
 
     static QString zStackTrace();
-
+    static void message(Errlevels::Levels level, const QString& msg, int flag =0);
 public:        
     static const QString OK;
     static const QString ERROR_;
     static const QString WARNING;
 
-    static void init(zLogGUIfn ez, bool isBreak, void* ui, bool isVerbose);
+    static void init(Errlevels::Levels level, zLogGUIfn ez, bool isBreak, void* ui, bool isVerbose);
 
     static void error2(const QString& msg, const LocInfo& l, int flag = 0);
     static void warning2(const QString& msg, const LocInfo& l, int flag = 0);
@@ -102,6 +103,7 @@ public:
     static QString openInfo(const QString& txt);
     static void appendInfo(const QString& key, const QString& txt);
     static void closeInfo(const QString& key);
+
 };
 
 

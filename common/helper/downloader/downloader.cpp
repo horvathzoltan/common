@@ -23,6 +23,7 @@ Downloader::Downloader(const QString& urlstring, QObject *parent) : QObject(pare
 
 QByteArray Downloader::download(const QString& pathstr, const QString& querystr, QString *err)
 {
+    if(!_url) return nullptr;
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
     if(!querystr.isEmpty()) _url->setQuery(querystr);
 
