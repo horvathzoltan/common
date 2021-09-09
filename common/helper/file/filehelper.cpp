@@ -10,7 +10,9 @@
 #include <QIODevice>
 #include <QTextCodec>
 
-namespace com { namespace helper{
+namespace com {
+namespace helper{
+
 QString FileHelper::load2(const QString& filename) {
     auto ikey = Log::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
     QFileInfo fi(filename);    
@@ -170,5 +172,5 @@ auto FileHelper::isEmpty(const QString &fn) -> bool
 {
     return isEmpty(QFileInfo(fn));
 }
-}
-} // namespace com::helper
+}  // namespace helper
+}  // namespace com

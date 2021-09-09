@@ -14,7 +14,7 @@
 
 namespace com{
 namespace helper{
-#define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, #v)
+#define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, QStringLiteral(#v))
 class STRINGHELPERSHARED_EXPORT StringHelper
 {
 public:

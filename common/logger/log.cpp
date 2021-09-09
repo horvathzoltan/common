@@ -15,14 +15,18 @@ zLogGUIfn Log::_GUILogger = nullptr;
 void* Log::_ui = nullptr;
 bool Log::_isVerbose = false;
 Errlevels::Levels Log:: _errlevel = Errlevels::INFO;
+Dbglevels::Levels Log:: _dbglevel = Dbglevels::TRACE;
 
 const QString Log::OK = QStringLiteral("ok");
 const QString Log::ERROR_ = QStringLiteral("error");
 const QString Log::WARNING = QStringLiteral("warning");
 
-void Log::init(Errlevels::Levels level, zLogGUIfn ez, bool isBreakOnError, void* uiptr, bool isVerbose)
+void Log::init(Errlevels::Levels errlevel,
+               Dbglevels::Levels dbglevel,
+               zLogGUIfn ez, bool isBreakOnError, void* uiptr, bool isVerbose)
 {
-     _errlevel = level;
+     _errlevel = errlevel;
+     _dbglevel = dbglevel;
     _GUILogger = ez;
     _isBreakOnError = isBreakOnError;
     _ui=uiptr;
@@ -31,7 +35,22 @@ void Log::init(Errlevels::Levels level, zLogGUIfn ez, bool isBreakOnError, void*
 
 //#pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunused-parameter"
-QString Log::logToString(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st)
+QString Log::ToDebugString(Dbglevels::Levels level, const QString &msg, const QString &loci, const QString &st){
+    auto txt = Dbglevels::toString(level);
+    QString msg3;
+    switch(level){
+    case Dbglevels::TRACE:
+        msg3= txt+": "+loci;
+        break;
+    case Dbglevels::DEBUG:
+        msg3= txt+": "+msg+"\n"+loci+"\n"+st;
+        break;
+    default: break;
+    }
+    return msg3;
+}
+
+QString Log::ToErrorString(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st)
 {
     auto level = Errlevels::toString(errlevel);
     QString msg3;
@@ -44,21 +63,12 @@ QString Log::logToString(Errlevels::Levels errlevel, const QString &msg, const Q
     case Errlevels::WARNING:
         msg3= level+": "+msg+"\n"+loci;
         break;
-    case Errlevels::TRACE:
-        msg3= level+": "+loci;
-        break;
-    case Errlevels::DEBUG:
-        msg3= level+": "+msg+"\n"+loci+"\n"+st;
-        break;
+
     case Errlevels::INFO:
         msg3= level+": "+msg;
-        if(_isVerbose)
-        {
-            msg3+="\n"+loci;
-        }
+        if(_isVerbose) msg3+="\n"+loci;
         break;
-    default:
-        break;
+    default: break;
     }
 
     return msg3;
@@ -179,15 +189,15 @@ void Log::error2(const QString& msg,  const LocInfo& locinfo, int flag){
     auto li = locinfo.toString();
     auto st = Log::zStackTrace();
 
-    auto msg2 = logToString(Errlevels::ERROR_, msg, li, st);
-    message(Errlevels::ERROR_, msg2, flag);
+    auto msg2 = ToErrorString(Errlevels::ERROR_, msg, li, st);
+    err_message(Errlevels::ERROR_, msg2, flag);
     }
 
 void Log::warning2(const QString& msg, const LocInfo& locinfo, int flag){
     if(_errlevel>Errlevels::WARNING) return;
     auto li = locinfo.toString();
-    auto msg2 = logToString(Errlevels::WARNING, msg, li, nullptr);
-    message(Errlevels::WARNING, msg, flag);
+    auto msg2 = ToErrorString(Errlevels::WARNING, msg, li, nullptr);
+    err_message(Errlevels::WARNING, msg, flag);
     }
 
 void Log::info2(const QString& msg, const LocInfo& locinfo, int flag)
@@ -199,8 +209,8 @@ void Log::info2(const QString& msg, const LocInfo& locinfo, int flag)
         li = locinfo.toString();
     }
 
-    auto msg2 = logToString(Errlevels::INFO, msg, li, nullptr);
-    message(Errlevels::INFO, msg, flag);
+    auto msg2 = ToErrorString(Errlevels::INFO, msg, li, nullptr);
+    err_message(Errlevels::INFO, msg, flag);
 }
 
 void Log::info2(const QStringList& msgl, const LocInfo& locinfo, int flag)
@@ -213,53 +223,55 @@ void Log::info2(const QStringList& msgl, const LocInfo& locinfo, int flag)
 
     for(auto&msg:msgl)
     {
-        auto msg2 = logToString(Errlevels::INFO, msg, nullptr, nullptr);
-        message(Errlevels::INFO, msg2, flag);
+        auto msg2 = ToErrorString(Errlevels::INFO, msg, nullptr, nullptr);
+        err_message(Errlevels::INFO, msg2, flag);
     }
 }
 
 void Log::debug2(const LocInfo& locinfo){
+    if(_dbglevel==Dbglevels::NONE || _dbglevel>Dbglevels::DEBUG) return;
     auto li = locinfo.toString();
     auto st = Log::zStackTrace();
 
-    auto msg2 = logToString(Errlevels::DEBUG, nullptr, li, st);
-    message(Errlevels::DEBUG, msg2);
+    auto msg2 = ToDebugString(Dbglevels::DEBUG, nullptr, li, st);
+    dbg_message(Dbglevels::DEBUG, msg2);
     }
 
 void Log::trace2(const LocInfo& locinfo){
+    if(_dbglevel==Dbglevels::NONE || _dbglevel>Dbglevels::TRACE) return;
     auto li = locinfo.toString();
-    auto msg2 = logToString(Errlevels::TRACE, nullptr, li, nullptr);
-    message(Errlevels::TRACE, msg2);
+    auto msg2 = ToDebugString(Dbglevels::TRACE, nullptr, li, nullptr);
+    dbg_message(Dbglevels::TRACE, msg2);
     }
 
 QString Log::openInfo(const QString& msg)
 {
     QString e= zShortGuid::createNew().value;
 
-    if(_GUILogger!=nullptr)
-        _GUILogger(Errlevels::INFO, e+' '+msg, nullptr, nullptr, _ui, 0);
+    if(_GUILogger){
+        _GUILogger(GUIModes::INFO, e+' '+msg, nullptr, nullptr, _ui, 0);
+    }
 
     return e;
 }
 
 void Log::appendInfo(const QString& key, const QString& msg)
 {
-    if(_GUILogger!=nullptr)
-        _GUILogger(Errlevels::INFOAPPEND, msg, key, nullptr, _ui, 0);
+    if(_GUILogger){
+        _GUILogger(GUIModes::INFOAPPEND, msg, key, nullptr, _ui, 0);
+    }
 }
 
 void Log::closeInfo(const QString& key)
 {
-    if(_GUILogger!=nullptr)
-        _GUILogger(Errlevels::INFOCLOSE, nullptr, key, nullptr, _ui, 0);
+    if(_GUILogger) {
+        _GUILogger(GUIModes::INFOCLOSE, nullptr, key, nullptr, _ui, 0);
+    }
 }
 
-void Log::message(Errlevels::Levels level, const QString& msg, int flag){
-
-    if((level!=Errlevels::DEBUG &&
-        level!=Errlevels::TRACE )
-            && _GUILogger!=nullptr)
-        _GUILogger(level, msg, "", "", _ui, flag);
+void Log::err_message(Errlevels::Levels level, const QString& msg, int flag)
+{
+    GUIModes::Modes guimode;
 
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
@@ -271,22 +283,55 @@ void Log::message(Errlevels::Levels level, const QString& msg, int flag){
     {
     case Errlevels::ERROR_:
         QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, a).critical().noquote()<<msg;
+        guimode = GUIModes::ERROR;
         break;
     case Errlevels::WARNING:
         QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, a).warning().noquote()<<msg;
+        guimode = GUIModes::WARNING;
         break;
     case Errlevels::INFO:
         QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, a).info().noquote()<<msg;
+        guimode = GUIModes::INFO;
         break;
-    case Errlevels::DEBUG:
-    case Errlevels::TRACE:
-        QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, a).debug().noquote()<<msg;
+    default:
+        guimode = GUIModes::INFO;
         break;
-    default: break;
+    }
+    if(_GUILogger) {
+        _GUILogger(guimode, msg, "", "", _ui, flag);
     }
 #ifdef Q_OS_LINUX
-    if((level==Errlevels::ERROR_ || level ==Errlevels::DEBUG)
-            && _isBreakOnError) std::raise(SIGTRAP);
+    if((level==Errlevels::ERROR_) && _isBreakOnError) std::raise(SIGTRAP);
 #endif
 #endif
+}
+
+
+void Log::dbg_message(Dbglevels::Levels level, const QString& msg, int flag)
+{
+    GUIModes::Modes guimode;
+#ifdef QT_DEBUG
+#ifdef Q_OS_WIN
+        auto a = __FUNCTION__;
+#elif defined(Q_OS_LINUX)
+    auto a = static_cast<const char*>(__PRETTY_FUNCTION__);
+#endif
+    switch(level){
+    case Dbglevels::DEBUG:
+    case Dbglevels::TRACE:
+        QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, a).debug().noquote()<<msg;
+        guimode = GUIModes::DEBUG;
+        break;
+    default:
+        guimode = GUIModes::DEBUG;
+        break;
     }
+
+    if(_GUILogger){
+        _GUILogger(guimode, msg, "", "", _ui, flag);
+    }
+#ifdef Q_OS_LINUX
+    if((level ==Dbglevels::DEBUG) && _isBreakOnError) std::raise(SIGTRAP);
+#endif
+#endif
+}

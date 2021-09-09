@@ -3,6 +3,7 @@
 #include "../../helper/ProcessHelper/processhelper.h"
 #include <QEventLoop>
 #include <QUrlQuery>
+#include <QNetworkReply>
 
 namespace com { namespace helper{
 Downloader::Downloader(QObject *parent) : QObject(parent)
@@ -25,7 +26,7 @@ QByteArray Downloader::download(const QString& pathstr, const QString& querystr,
 {
     if(!_url) return nullptr;
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
-    if(!querystr.isEmpty()) _url->setQuery(querystr);
+    if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
 
     _request->setUrl(*_url);
 
@@ -35,19 +36,28 @@ QByteArray Downloader::download(const QString& pathstr, const QString& querystr,
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    if(reply->error())
-    {
-        if(err) *err = reply->errorString();
-        return {};
+    auto a = reply->readAll();
+
+    auto error = reply->error();
+    if(error!=QNetworkReply::NoError)
+    {        
+        auto msg = reply->errorString();
+        if(err) *err = msg;
+        zInfo(QStringLiteral("request: %3 response: %4 status: (%1) %2")
+                  .arg(error)
+                  .arg(msg)
+                  .arg(_url->toString())
+                  .arg(QString(a))
+              );
     }
 
-    return reply->readAll();
+    return a;
 }
 
 QByteArray Downloader::post(const QString& pathstr, const QString& querystr, QString *err, const QByteArray &b)
 {
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
-    if(!querystr.isEmpty()) _url->setQuery('?'+querystr);
+    if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
     _request->setUrl(*_url);
 
     QNetworkReply* reply = _manager->post(*_request, b);

@@ -44,11 +44,7 @@ namespace Errlevels{
     enum Levels:int {
         ERROR_,
         WARNING,
-        TRACE,
-        DEBUG,
         INFO,
-        INFOAPPEND,
-        INFOCLOSE
     };
 
     [[maybe_unused]]
@@ -57,17 +53,40 @@ namespace Errlevels{
         {
         case ERROR_: return QStringLiteral("ERROR");
         case WARNING: return QStringLiteral("WARNING");
-        case TRACE: return QStringLiteral("TRACE");
-        case DEBUG: return QStringLiteral("DEBUG");
         case INFO: return QStringLiteral("INFO");
-        case INFOAPPEND: return QStringLiteral("INFO");
-        case INFOCLOSE: return QStringLiteral("INFO");
-        default: return QStringLiteral("INFO");
+        default: return QStringLiteral("unknown");
         }        
     };
 };
 
-typedef void (*zLogGUIfn)(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
+namespace Dbglevels{
+enum Levels:int {
+    NONE=0,
+    TRACE,
+    DEBUG,
+//    INFOAPPEND,
+//    INFOCLOSE
+};
+
+[[maybe_unused]]
+static QString toString  (const Levels &l){
+    switch(l){
+        case NONE: return QStringLiteral("TRACE");
+        case TRACE: return QStringLiteral("TRACE");
+        case DEBUG: return QStringLiteral("DEBUG");
+//    case INFOAPPEND: return QStringLiteral("INFO");
+//    case INFOCLOSE: return QStringLiteral("INFO");
+        default: return QStringLiteral("unknown");
+    }
+};
+}
+
+namespace GUIModes{
+enum Modes:int{ INFO, INFOAPPEND, INFOCLOSE, WARNING, ERROR, DEBUG};
+}
+
+typedef void (*zLogGUIfn)(GUIModes::Modes mode, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
+
 
 class LOGGERSHARED_EXPORT Log
 {
@@ -77,21 +96,26 @@ private:
     static zLogGUIfn _GUILogger;
 
     static bool _isBreakOnError;
-    static bool _isVerbose;
+    static bool _isVerbose;    
     static Errlevels::Levels _errlevel;
+    static Dbglevels::Levels _dbglevel;
 
     static void *_ui;
 
-    static QString logToString(Errlevels::Levels, const QString&, const QString&, const QString&);
+    static QString ToErrorString(Errlevels::Levels, const QString&, const QString&, const QString&);
+    static QString ToDebugString(Dbglevels::Levels level, const QString &msg, const QString &loci, const QString &st);
 
     static QString zStackTrace();
-    static void message(Errlevels::Levels level, const QString& msg, int flag =0);
+    static void err_message(Errlevels::Levels level, const QString& msg, int flag =0);
+    static void dbg_message(Dbglevels::Levels level, const QString& msg, int flag =0);
 public:        
     static const QString OK;
     static const QString ERROR_;
     static const QString WARNING;
 
-    static void init(Errlevels::Levels level, zLogGUIfn ez, bool isBreak, void* ui, bool isVerbose);
+    static void init(Errlevels::Levels level,
+                     Dbglevels::Levels dbglevel,
+                     zLogGUIfn ez, bool isBreak, void* ui, bool isVerbose);
 
     static void error2(const QString& msg, const LocInfo& l, int flag = 0);
     static void warning2(const QString& msg, const LocInfo& l, int flag = 0);
@@ -102,8 +126,7 @@ public:
 
     static QString openInfo(const QString& txt);
     static void appendInfo(const QString& key, const QString& txt);
-    static void closeInfo(const QString& key);
-
+    static void closeInfo(const QString& key);        
 };
 
 

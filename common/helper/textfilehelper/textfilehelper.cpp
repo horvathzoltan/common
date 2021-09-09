@@ -5,7 +5,8 @@
 #include <QTextCodec>
 #include <QTextStream>
 
-namespace com { namespace helper{
+namespace com {
+namespace helper{
 
 
 QString TextFileHelper::load(const QString& filename) {
@@ -35,7 +36,7 @@ QString TextFileHelper::load(const QString& filename) {
         e = st.readAll();
     }
     else{
-        zInfo(QStringLiteral("cannot open file: %1 ERROR").arg(filename));
+        zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
         e= QString();
     }
     return e;
@@ -74,7 +75,7 @@ QStringList TextFileHelper::loadLines(const QString& filename) {
 
     }
     else{
-        zInfo(QStringLiteral("cannot open file: %1 ERROR").arg(filename));
+        zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
         e= QStringList();
     }
     return e;
@@ -83,22 +84,15 @@ QStringList TextFileHelper::loadLines(const QString& filename) {
 
 bool TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) {
 
-//    QFile logfile(lfn);
-//    logfile.open(QIODevice::Append | QIODevice::Text);
-//    QTextStream out(&logfile);
-//    out << lftxt << endl;
-
     QFile f(fn);
 
     auto om = QIODevice::WriteOnly | QIODevice::Text; // openmode
     if(isAppend) om |= QIODevice::Append;
 
-    if (!f.open(om)){
-        zError(QStringLiteral("cannot open file to write or append: ")+fn);
-        //zLog::dialogError("nem menthető: "+fn);
+    if (!f.open(om)){                
+        zInfo(QStringLiteral("cannot write file (%1): %2").arg(f.errorString()).arg(fn));
         return false;
         }
-
 
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
@@ -109,5 +103,5 @@ bool TextFileHelper::save(const QString& txt, const QString& fn, bool isAppend) 
     f.close();
     return true;
 }
-}
-} // namespace com::helper
+}  // namespace helper
+} // namespace com
