@@ -17,6 +17,7 @@ private:
     QNetworkAccessManager* _manager;
     QNetworkRequest* _request;
     QUrl* _url;
+    //bool _isInited = false;
 public:
     Downloader(QObject *parent = nullptr);
     Downloader(const QString &url, QObject *parent = nullptr);
@@ -24,6 +25,7 @@ public:
     QByteArray post(const QString& pathstr, const QString& querystr, QString *err, const QByteArray &b);
     void DownloadAsync(const QString&);
     static bool Wget(const QString&, const QString&);
+    QString url(){return _url?_url->toString():QString();}
 
 signals:
 

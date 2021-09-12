@@ -9,6 +9,7 @@ namespace com { namespace helper{
 Downloader::Downloader(QObject *parent) : QObject(parent)
 {
     _manager = nullptr;
+    //_isInited = true;
 }
 
 Downloader::Downloader(const QString& urlstring, QObject *parent) : QObject(parent)
@@ -19,12 +20,15 @@ Downloader::Downloader(const QString& urlstring, QObject *parent) : QObject(pare
     _request = new QNetworkRequest();
     //_request->setUrl(url);
     _request->setRawHeader("User-Agent", "zDownloader 1.0");
-
+    //_isInited = true;
 }
 
 QByteArray Downloader::download(const QString& pathstr, const QString& querystr, QString *err)
 {
-    if(!_url) return nullptr;
+    //if(!_isInited) return {};
+//    if(!_url) return {};
+//    if(!_manager) return {};
+//    if(!_request) return {};
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
     if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
 
@@ -56,8 +60,11 @@ QByteArray Downloader::download(const QString& pathstr, const QString& querystr,
 
 QByteArray Downloader::post(const QString& pathstr, const QString& querystr, QString *err, const QByteArray &b)
 {
+//     if(!_isInited) return {};
+//    if(!_url) return {};
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
     if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
+
     _request->setUrl(*_url);
 
     QNetworkReply* reply = _manager->post(*_request, b);
@@ -66,13 +73,17 @@ QByteArray Downloader::post(const QString& pathstr, const QString& querystr, QSt
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    if(reply->error())
+    auto a = reply->readAll();
+
+    auto error = reply->error();
+    if(error!=QNetworkReply::NoError)
     {
+        auto msg = reply->errorString();
         if(err) *err = reply->errorString();
         return {};
     }
 
-    return reply->readAll();
+    return a;//reply->readAll();
 }
 
 void Downloader::DownloadAsync(const QString& urlstring)
