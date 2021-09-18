@@ -30,7 +30,8 @@ QByteArray Downloader::download(const QString& pathstr, const QString& querystr,
 //    if(!_manager) return {};
 //    if(!_request) return {};
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
-    if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
+    //if(!querystr.isEmpty())
+        _url->setQuery(querystr);//'?'+
 
     _request->setUrl(*_url);
 
@@ -63,7 +64,8 @@ QByteArray Downloader::post(const QString& pathstr, const QString& querystr, QSt
 //     if(!_isInited) return {};
 //    if(!_url) return {};
     if(!pathstr.isEmpty()) _url->setPath('/'+pathstr);
-    if(!querystr.isEmpty()) _url->setQuery(querystr);//'?'+
+    //if(!querystr.isEmpty())
+        _url->setQuery(querystr);//'?'+
 
     _request->setUrl(*_url);
 
@@ -141,5 +143,5 @@ void Downloader::ReplyFinished (QNetworkReply *reply)
 
     reply->deleteLater();
 }
-}
-}
+}  // namespace helper
+}  // namespace com
