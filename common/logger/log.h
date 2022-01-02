@@ -47,7 +47,7 @@ namespace Errlevels{
         INFO,
     };
 
-    [[maybe_unused]]
+    [[gnu::unused]]
     static QString toString  (const Levels &l){
         switch(l)
         {
@@ -68,7 +68,7 @@ enum Levels:int {
 //    INFOCLOSE
 };
 
-[[maybe_unused]]
+[[gnu::unused]]
 static QString toString  (const Levels &l){
     switch(l){
         case NONE: return QStringLiteral("TRACE");
@@ -126,7 +126,7 @@ public:
 
     static QString openInfo(const QString& txt);
     static void appendInfo(const QString& key, const QString& txt);
-    static void closeInfo(const QString& key);        
+    static void closeInfo(const QString& key);
 };
 
 

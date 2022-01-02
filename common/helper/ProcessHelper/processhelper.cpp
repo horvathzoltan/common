@@ -25,7 +25,7 @@ QString ProcessHelper::Output::ToString(){
 }
 
 ProcessHelper::Output ProcessHelper::Execute(const QString& cmd){
-    qint64 pid;
+    //qint64 pid;
     QProcess process;
     static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     env.insert("LD_LIBRARY_PATH", "/usr/lib"); // workaround - https://bugreports.qt.io/browse/QTBUG-2284

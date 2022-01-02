@@ -22,7 +22,7 @@
 
 namespace z_macro_factory {
 
-[[maybe_unused]]
+[[gnu::unused]]
 static QString _nmnm56(const char* x) {
     int status;
     auto a =  abi::__cxa_demangle(x, NULL, NULL, &status);
@@ -50,7 +50,7 @@ QString _nameof(const char* y, std::size_t)
     return QStringLiteral("A bad expression in nameof(%1)").arg(x);
 }
 
-[[maybe_unused]]
+[[gnu::unused]]
 static QString _zfn_full(const char* y){return y;}
 
 template<int a>
@@ -67,7 +67,7 @@ QString _zfn(const char* y)
     return QStringLiteral("unknown");
 }
 
-[[maybe_unused]]
+[[gnu::unused]]
 static QString _zfn2(const char* y)
 {
     QString x(y);
