@@ -20,6 +20,10 @@
 #define nameof_fn() z_macro_factory::_zfn2(Q_FUNC_INFO)
 #define nameof_fn_full() z_macro_factory::_zfn_full(Q_FUNC_INFO)
 
+#define STRINGIFY(msg) #msg
+#define STRING(msg) QStringLiteral(STRINGIFY(msg))
+#define L(msg) QStringLiteral(msg)
+
 namespace z_macro_factory {
 
 [[gnu::unused]]
