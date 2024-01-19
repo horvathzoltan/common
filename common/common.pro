@@ -2,11 +2,11 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     coreappworker \
-    helper \
+    helpers \
     macrofactory \
     shortguid \
     logger \
 
 logger.depends = shortguid macrofactory
-helper.depends = logger macrofactory shortguid
+helpers.depends = logger macrofactory shortguid
 

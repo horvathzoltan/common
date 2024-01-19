@@ -5,7 +5,7 @@
 #include <QString>
 #include "filehelper_global.h"
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 class FILEHELPERSHARED_EXPORT FilenameHelper
 {
 public:

@@ -4,7 +4,7 @@
 #include <csignal>
 #include "signalhelper_global.h"
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 class SIGNALHELPER_EXPORT SignalHelper
 {
 public:

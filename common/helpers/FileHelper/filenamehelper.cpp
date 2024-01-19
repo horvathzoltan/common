@@ -1,7 +1,7 @@
 #include "filenamehelper.h"
 #include <QDir>
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 const QString FilenameHelper::urlpattern = QStringLiteral(R"(^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+){2,}[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$)");
 
 const QRegularExpression FilenameHelper::urlregexp = QRegularExpression(urlpattern);

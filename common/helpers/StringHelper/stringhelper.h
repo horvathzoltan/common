@@ -13,7 +13,7 @@
 #endif
 
 namespace com{
-namespace helper{
+namespace helpers{
 #define append_value(msg, v) com::helper::StringHelper::AppendValue(msg, v, QStringLiteral(#v))
 class STRINGHELPERSHARED_EXPORT StringHelper
 {

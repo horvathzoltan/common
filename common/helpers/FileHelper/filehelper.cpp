@@ -1,7 +1,7 @@
 //#include "globals.h"
 #include "../../macrofactory/macro.h"
 #include "filehelper.h"
-#include "../../helper/string/stringhelper.h"
+//#include "../../helpers/StringHelper//stringhelper.h"
 #include "../../logger/log.h"
 #include "filenamehelper.h"
 #include <QFileInfo>
@@ -11,7 +11,7 @@
 #include <QTextCodec>
 
 namespace com {
-namespace helper{
+namespace helpers{
 
 QString FileHelper::load2(const QString& filename) {
     auto ikey = Log::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
@@ -157,7 +157,7 @@ bool FileHelper::backup(const QString& filename)
 
     QString now = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss");
 
-    QString outfilename = com::helper::FilenameHelper::appendToBaseName(filename, now);
+    QString outfilename = com::helpers::FilenameHelper::appendToBaseName(filename, now);
 
     return QFile::copy(filename, outfilename);
 }
@@ -172,5 +172,60 @@ auto FileHelper::isEmpty(const QString &fn) -> bool
 {
     return isEmpty(QFileInfo(fn));
 }
+
+/**/
+QString FileHelper::GetFileName(const QString &fn)
+{
+    QFileInfo fi(fn);
+    QString e = fi.fileName();
+    return e;
+}
+
+bool FileHelper::Exists(const QString &filename)
+{
+    bool valid = FnValidate(filename, nullptr);
+    if(!valid) return false;
+
+    return true;
+}
+
+bool FileHelper::Delete(const QString &filename)
+{
+    bool valid = Exists(filename);
+    if(!valid) return false;
+    bool ok = QFile::remove(filename);
+    return ok;
+}
+
+
+bool FileHelper::FnValidate(const QString& filename, Errors *err)
+{
+    bool valid = true;
+    if(filename.isEmpty())
+    {
+        if(_verbose) zInfo(QStringLiteral("no file name").arg(filename));
+        if(err != nullptr) *err= Errors::NoFileName;
+        valid = false;
+    }else{
+        QFileInfo fi(filename);
+
+        if(!fi.isAbsolute())
+        {
+            if(_verbose) zInfo(QStringLiteral("path is not absolute: %1").arg(filename));
+            if(err != nullptr) *err= Errors::PathIsNotAbsolute;
+            valid = false;
+        }
+
+        if(!fi.exists())
+        {
+            if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
+            if(err != nullptr) *err= Errors::FileNotExists;
+            valid = false;
+        }
+    }
+
+    return valid;
+}
+
 }  // namespace helper
 }  // namespace com

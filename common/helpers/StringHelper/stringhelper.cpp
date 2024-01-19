@@ -30,7 +30,7 @@ zStringHelper::zStringHelper()
 */
 
 namespace com{
-namespace helper{
+namespace helpers{
 const QChar StringHelper::SEP = ';';
 #ifdef Q_OS_LINUX
 const QString StringHelper::NewLine = QStringLiteral("\n");
