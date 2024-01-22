@@ -23,8 +23,8 @@ SOURCES += \
     commandlineparserhelper.cpp
 
 HEADERS += \
-    CommandLineParserHelper_global.h \
-    commandlineparserhelper.h
+    commandlineparserhelper.h \
+    commandlineparserhelper_global.h
 
 # Default rules for deployment.
 #unix {

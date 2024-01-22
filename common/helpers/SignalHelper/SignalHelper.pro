@@ -34,7 +34,7 @@ LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
 win32:
 {
 WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-LIBS += -L$$WINLIBS -lmacrofactory -llogger
+LIBS += -L$$WINLIBS -llogger
 #message(win32libs=$$WINLIBS)
 }
 # Default rules for deployment.

@@ -23,7 +23,9 @@ public:
     static QStringList LoadLinesContains(const QString& filename, const QStringList& t1, FileHelper::Errors *err);
 
     static bool Save(const QString& txt, const QString& fileName, FileHelper::Errors *err, bool isAppend = false);
-    static bool backup(const QString& filename);
+
+    static QChar GetLastChar(const QString &fn, FileHelper::Errors *err);
+
 };
 }
 }

@@ -2,7 +2,7 @@
 #include "../../macrofactory/macro.h"
 #include "filehelper.h"
 //#include "../../helpers/StringHelper//stringhelper.h"
-#include "../../logger/log.h"
+#include "../../logger/logger.h"
 #include "filenamehelper.h"
 #include <QFileInfo>
 #include <QDir>

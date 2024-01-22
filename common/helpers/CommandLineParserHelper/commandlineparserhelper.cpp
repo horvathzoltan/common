@@ -1,19 +1,25 @@
 #include "commandlineparserhelper.h"
 #include <QStringList>
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 
 CommandLineParserHelper::CommandLineParserHelper()= default;
 
-// option with its value
-bool CommandLineParserHelper::addOption(QCommandLineParser *p, const QString& o, const QString& d){
-    return p->addOption({QStringList{o.left(1),o},d,o});
+bool CommandLineParserHelper::addOption(QCommandLineParser *p,
+                                        const QString& o, const QString& description){
+
+    QString optionName = o.at(0);
+    //if(p->optionNames().contains(optionName)) return false;
+    return p->addOption({{optionName,o},description,o});
 }
 
 // option without value
-bool CommandLineParserHelper::addOptionBool(QCommandLineParser *p, const QString& o, const QString& d){
-    ////parser.addOption(QCommandLineOption{QStringList {OPTION_BACKUP[0], OPTION_BACKUP},QStringLiteral("set if backup is needed")});
-    return p->addOption({QStringList{o.left(1),o},d});
+bool CommandLineParserHelper::addOptionBool(QCommandLineParser *p,
+                                            const QString& o, const QString& description){
+    QString optionName = o.at(0);
+    //if(p->optionNames().contains(optionName)) return false;
+    return p->addOption({{optionName,o},description});
 }
+
 }
 }

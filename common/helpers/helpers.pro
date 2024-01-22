@@ -3,18 +3,19 @@ TEMPLATE = subdirs
 SUBDIRS += \
     CommandLineParserHelper \
     ProcessHelper \
-    downloader \
+    Downloader \
     settings \
     SignalHelper \
     StringHelper \
     FileHelper \
-    ini \
+    IniHelper \
     TextFileHelper \
     xml \
+    NetworkHelper \
 
-file.depends = StringHelper
-ini.depends = StringHelper
-settings.depends = StringHelper ini FileHelper
-xml.depends = StringHelper ini FileHelper
+FileHelper.depends = StringHelper
+IniHelper.depends = StringHelper
+settings.depends = StringHelper IniHelper FileHelper
+xml.depends = StringHelper IniHelper FileHelper
 
 

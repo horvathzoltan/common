@@ -1,7 +1,7 @@
 #include "signalhelper.h"
 #include <QString>
 #include <QCoreApplication>
-#include "../../logger/log.h"
+#include "../../logger/logger.h"
 
 
 namespace com{ namespace helpers {

@@ -1,9 +1,11 @@
 #include "processhelper.h"
-#include "../../helper/string/stringhelper.h"
+#include "../../helpers/StringHelper/stringhelper.h"
 #include <QCoreApplication>
 #include <QProcess>
+#include <QElapsedTimer>
+#include <iostream>
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 const QString ProcessHelper::SEPARATOR = NEWLINE+QStringLiteral("stderr")+NEWLINE;
 
 QString ProcessHelper::Output::ToString(){
@@ -24,34 +26,58 @@ QString ProcessHelper::Output::ToString(){
     return e;
 }
 
-ProcessHelper::Output ProcessHelper::Execute(const QString& cmd){
-    qint64 pid;
-    QProcess process;
+ProcessHelper::Output ProcessHelper::ShellExecute(const QString &cmd, int timeout_millis)
+{
     static QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("LD_LIBRARY_PATH", "/usr/lib"); // workaround - https://bugreports.qt.io/browse/QTBUG-2284
+    env.insert("LD_LIBRARY_PATH", "/usr/lib");
+
+    QProcess process;
+
+    // process beállítása
+    // workaround - https://bugreports.qt.io/browse/QTBUG-2284
     process.setProcessEnvironment(env);
-    static auto path = QCoreApplication::applicationDirPath();
+
+    QString path = qApp->applicationDirPath();
     process.setWorkingDirectory(path);
 
-    process.start(cmd);
-    process.waitForFinished(-1); // will wait forever until finished
-    return {process.readAllStandardOutput(), process.readAllStandardError(), process.exitCode()};
+    // process indítása
+    QElapsedTimer t;
+    t.start();
+
+    auto readyR = [&process]()
+    {
+        process.setReadChannel(QProcess::StandardError);
+        while (!process.atEnd()) {
+            QString d = process.readAll();
+            std::cerr << d.toStdString();
+        }
+    };
+
+    //p->setReadChannel(QProcess::StandardError);
+    QObject::connect(&process, &QProcess::readyReadStandardError,readyR);
+
+    process.start("/bin/sh", {"-c", cmd});
+
+    if(!process.waitForStarted()) return{};
+    process.waitForFinished(timeout_millis);
+
+    QObject::disconnect(&process, &QIODevice::readyRead, nullptr, nullptr);
+
+    ProcessHelper::Output o{
+        .stdOut  = process.readAllStandardOutput(),
+        .stdErr = process.readAllStandardError(),
+        .exitCode = process.exitCode(),
+        .elapsedMillis = t.elapsed()
+    };
+
+    return o;
 }
 
-//QString ProcessHelper::Execute(const QString& cmd){
-//    return Execute2(cmd).ToString();
-//}
+ProcessHelper::Output ProcessHelper::ShellExecuteSudo(const QString &cmd, int timeout_millis){
+    if(_password.isEmpty()) return Output();
 
-QString ProcessHelper::Execute(const QStringList& cmds){
-    Output e;
+    QString cmd2 = QStringLiteral("echo \"%1\" | sudo -S %2").arg(_password).arg(cmd);
+    return ShellExecute(cmd2, timeout_millis);
+}
 
-    foreach(auto cmd, cmds){
-        auto r = Execute(cmd);
-        e.stdOut += r.stdOut;
-        e.stdErr += r.stdErr;
-        e.exitCode = r.exitCode;
-    }
-    return e.ToString();
-}
-}
-}
+}}

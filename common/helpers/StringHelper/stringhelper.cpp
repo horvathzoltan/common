@@ -1,4 +1,4 @@
-#include "../../macrofactory/macro.h"
+//#include "../../macros/macro.h"
 #include "stringhelper.h"
 #include <QChar>
 //#include "zfilenamehelper.h"
@@ -31,6 +31,7 @@ zStringHelper::zStringHelper()
 
 namespace com{
 namespace helpers{
+
 const QChar StringHelper::SEP = ';';
 #ifdef Q_OS_LINUX
 const QString StringHelper::NewLine = QStringLiteral("\n");
@@ -484,14 +485,14 @@ void StringHelper::AppendLine(QString *str, const QString &msg)
 void StringHelper::AppendValue(QString *str, const QString &v, const QString &name)
 {
     if(!v.isEmpty())
-        com::helper::StringHelper::AppendLine(str, name+'='+v);
+        StringHelper::AppendLine(str, name+'='+v);
     else
-        com::helper::StringHelper::AppendLine(str, "no "+name);
+        StringHelper::AppendLine(str, "no "+name);
 }
 
 void StringHelper::AppendValue(QString *str, bool v, const QString &name)
 {
-    com::helper::StringHelper::AppendLine(str, name+'='+boolToString(v));
+    StringHelper::AppendLine(str, name+'='+boolToString(v));
 }
 
 
@@ -859,7 +860,13 @@ QString StringHelper::join(const QList<QChar>& chars, const QChar &s){
 }
 
 QStringList StringHelper::toStringList(const QString &s, const QRegularExpression& r){
-    return s.split(r, QString::SkipEmptyParts);
+    QStringList e;
+#if QT_VERSION >= 0x050000 && QT_VERSION < 0x060000
+    e= s.split(r, Qt::SkipEmptyParts);
+#elif QT_VERSION >= 0x06
+    e= s.split(r, QString::SkipEmptyParts);
+#endif
+    return e;
 }
 
 QStringList StringHelper::toStringList(const QString &s){

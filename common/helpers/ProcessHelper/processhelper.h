@@ -1,27 +1,34 @@
 #ifndef COM_PROCESSHELPER_H
 #define COM_PROCESSHELPER_H
 
-#include "ProcessHelper_global.h"
+#include "processhelper_global.h"
 #include <QString>
 
-namespace com { namespace helper{
+namespace com { namespace helpers{
 class COM_PROCESSHELPER_EXPORT ProcessHelper
 {
+private:
+    static bool _verbose;
+    static const QString SEPARATOR;
+    static QString _password;
+
 public:
     struct Output
     {
     public:
         QString stdOut;
         QString stdErr;
-        int exitCode;
+        int exitCode=1;
+        qint64 elapsedMillis;
+
         QString ToString();
     };
-public:
-    static const QString SEPARATOR;
 
-    //static QString Execute(const QString& cmd);
-    static QString Execute(const QStringList &cmds);
-    static Output Execute(const QString &cmd);
+    static void setVerbose(bool v){_verbose = v;}
+    static void setPassword(const QString& v){_password=v;}
+
+    static Output ShellExecute(const QString& cmd, int timeout_millis = -1);
+    static Output ShellExecuteSudo(const QString& cmd, int timeout_millis = -1);
 };
 } }
 #endif // COM_PROCESSHELPER_H

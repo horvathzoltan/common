@@ -1,10 +1,10 @@
 #ifndef COM_COMMANLINEPARSERHELPER_H
 #define COM_COMMANLINEPARSERHELPER_H
 
-#include "CommandLineParserHelper_global.h"
+#include "commandlineparserhelper_global.h"
 
 #include <QCommandLineParser>
-namespace com { namespace helper{
+namespace com { namespace helpers{
 class COMMANDLINEPARSERHELPER_EXPORT CommandLineParserHelper
 {
 public:

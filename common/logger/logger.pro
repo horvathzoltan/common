@@ -29,12 +29,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	locinfo.cpp \
-	log.cpp
+	logger.cpp \
+	stackhelper.cpp
 
 HEADERS += \
         locinfo.h \
-        log.h \
-        logger_global.h
+        logger.h \
+        logger_global.h \
+        stackhelper.h
 
 unix:!macx:
 {
@@ -44,7 +46,7 @@ LIBS += -L$$HOME/$$COMMON_LIBS/ -lshortguid
 win32:
 {
 LIBS += -L$$HOME/$$COMMON_LIBS/ -lshortguid
-LIBS += -L$$HOME/$$COMMON_LIBS/ -lmacrofactory
+#LIBS += -L$$HOME/$$COMMON_LIBS/ -lmacros
 #message(libs=$$HOME/$$COMMON_LIBS/macrofactory.dll)
 }
 

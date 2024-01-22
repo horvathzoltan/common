@@ -15,8 +15,8 @@ SOURCES += \
     processhelper.cpp
 
 HEADERS += \
-    ProcessHelper_global.h \
-    processhelper.h
+    processhelper.h \
+    processhelper_global.h
 
 CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
@@ -31,7 +31,7 @@ LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
 win32:
 {
 WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-LIBS += -L$$WINLIBS -lmacrofactory -llogger
+LIBS += -L$$WINLIBS -llogger
 }
 
 include($$PWD/../../../libinstall//libinstall.prf)

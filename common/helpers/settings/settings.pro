@@ -44,7 +44,7 @@ LIBS += -L$$HOME/$$COMMON_LIBS/ -linihelper
 win32:
 {
 WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-LIBS += -L$$WINLIBS -lmacrofactory -llogger -lstringhelper -lfilehelper
+LIBS += -L$$WINLIBS -lmacros -llogger -lstringhelper -lfilehelper
 #message(win32libs=$$WINLIBS)
 }
 
