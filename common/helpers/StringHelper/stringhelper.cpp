@@ -207,7 +207,8 @@ const QRegularExpression StringHelper::r_filename = QRegularExpression(p_filenam
 //}
 
 QString StringHelper::zNormalize(const QString& c){
-    return c.normalized(QString::NormalizationForm_D).replace(QRegExp("[^a-zA-Z0-9_\\s]"), QString()).replace(' ', '_').toLower();
+    static QRegularExpression regexp("[^a-zA-Z0-9_\\s]");
+    return c.normalized(QString::NormalizationForm_D).replace(regexp, QString()).replace(' ', '_').toLower();
 }
 
 
@@ -298,9 +299,9 @@ const QChar StringHelper::HIGH_SURROGATE_START(0xD800);// '\uD800';
 const QChar StringHelper::LOW_SURROGATE_START(0xDC00);
 const QChar StringHelper::LOW_SURROGATE_END(0xDFFF);
 
-const int StringHelper::UNICODE_PLANE00_END = 0x00FFFF;
-const int StringHelper::UNICODE_PLANE01_START = 0x10000;
-const int StringHelper::UNICODE_PLANE16_END = 0x10FFFF;
+const QChar StringHelper::UNICODE_PLANE00_END(0x00FFFF);
+const QChar StringHelper::UNICODE_PLANE01_START(0x10000);
+const QChar StringHelper::UNICODE_PLANE16_END(0x10FFFF);
 
 StringHelper::UnicodeDecodingConformance StringHelper::getHtmlDecodeConformance()
 {
@@ -368,7 +369,7 @@ QString StringHelper::HtmlDecode2(const QString &value)
                     // See http://www.w3.org/TR/REC-html40/charset.html#entities
 
                     bool pOk;
-                    uint pv;
+                    QChar pv;
                     if(entity[1] == 'x' || entity[1] == 'X')
                     {
                         //hexadecimális
@@ -452,10 +453,10 @@ QString StringHelper::HtmlDecode2(const QString &value)
 }
 
 
-void StringHelper::ConvertSmpToUtf16(uint smpChar, QChar leadingSurrogate, QChar trailingSurrogate) {
+void StringHelper::ConvertSmpToUtf16(QChar smpChar, QChar leadingSurrogate, QChar trailingSurrogate) {
     //zInfo(UNICODE_PLANE01_START <= smpChar && smpChar <= UNICODE_PLANE16_END);
 
-    auto utf32 = static_cast<int>(smpChar - StringHelper::UNICODE_PLANE01_START);
+    auto utf32 = smpChar.unicode() - StringHelper::UNICODE_PLANE01_START.unicode();
     leadingSurrogate = QChar((utf32 / 0x400) + StringHelper::HIGH_SURROGATE_START.unicode());
     trailingSurrogate = QChar((utf32 % 0x400) + StringHelper::LOW_SURROGATE_START.unicode());
 }
@@ -862,9 +863,9 @@ QString StringHelper::join(const QList<QChar>& chars, const QChar &s){
 QStringList StringHelper::toStringList(const QString &s, const QRegularExpression& r){
     QStringList e;
 #if QT_VERSION >= 0x050000 && QT_VERSION < 0x060000
-    e= s.split(r, Qt::SkipEmptyParts);
-#elif QT_VERSION >= 0x06
     e= s.split(r, QString::SkipEmptyParts);
+#elif QT_VERSION >= 0x06
+    e= s.split(r, Qt::SkipEmptyParts);
 #endif
     return e;
 }

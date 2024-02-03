@@ -1,7 +1,6 @@
 QT -= gui
 QT += network
 
-TARGET = downloader
 TEMPLATE = lib
 DEFINES += COM_DOWNLOADER_LIBRARY
 
@@ -23,13 +22,13 @@ include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lprocesshelper
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lProcessHelper
 }
 
-win32:
-{
-WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-LIBS += -L$$WINLIBS -llogger -lprocesshelper
-}
+# win32:
+# {
+# WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
+# LIBS += -L$$WINLIBS -llogger -lprocesshelper
+# }
 
 include($$PWD/../../../libinstall//libinstall.prf)

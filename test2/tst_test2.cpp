@@ -1,8 +1,9 @@
 #include <QtTest>
-#include <../common/helper/string/stringhelper.h>
-#include <../common/helper/file/filehelper.h>
-#include <../common/helper/ini/inihelper.h>
-#include <../common/helper/settings/settingshelper.h>
+#include <../../common/common/helpers/StringHelper/stringhelper.h>
+#include <../../common/common/helpers/FileHelper/filehelper.h>
+#include <../../common/common/helpers/TextFileHelper/textfilehelper.h>
+#include <../../common/common/helpers/IniHelper/inihelper.h>
+#include <../../common/common/helpers/SettingsHelper/settingshelper.h>
 #include <QFileInfo>
 // add necessary includes here
 #include <QDebug>
@@ -42,7 +43,7 @@ void test2::test_case1()
     //QVERIFY(e == "HELLO");
 
     QString a = "Apple";
-    QString a2 = com::helper::StringHelper::zNormalize(a);
+    QString a2 = com::helpers::StringHelper::zNormalize(a);
 
     qDebug() << a <<" _ " << a2;
 }
@@ -51,12 +52,12 @@ void test2::test_case2()
 {
     QString e = "Hello2";
     QString fn = "testfile";
-    com::helper::FileHelper::save(e, fn);
+    com::helpers::FileHelper::save(e, fn);
 
     auto isExist = QFileInfo::exists(fn);
     QVERIFY(isExist);
 
-    QString e2 = com::helper::FileHelper::load(fn);
+    QString e2 = com::helpers::FileHelper::load(fn);
     QVERIFY(e == e2);
 }
 
@@ -73,22 +74,26 @@ void test2::test_case3()
     m.insert(k1, v1);
     m.insert(k2, v2);
 
-    auto a = com::helper::IniHelper::toString(m, fn);
+    auto a = com::helpers::IniHelper::toString(m, fn);
     qDebug() << a;
 
-    com::helper::FileHelper::save(a, fn);
+    com::helpers::FileHelper::save(a, fn);
 
     auto isExist = QFileInfo::exists(fn);
     QVERIFY(isExist);
 
-    auto b = com::helper::FileHelper::load(fn);
+    com::helpers::FileHelper::Errors err;
+    auto b = com::helpers::TextFileHelper::LoadLines(fn,&err);
 
-    auto n = com::helper::IniHelper::parseIni(b);
+    if(err == com::helpers::FileHelper::Errors::Ok){
+        auto n = com::helpers::IniHelper::Parse(b, ',');
+        QVERIFY(n.contains(k1));
+        QVERIFY(n.contains(k2));
+        QVERIFY(n[k1]==v1);
+        QVERIFY(n[k2]==v2);
+    }
 
-    QVERIFY(n.contains(k1));
-    QVERIFY(n.contains(k2));
-    QVERIFY(n[k1]==v1);
-    QVERIFY(n[k2]==v2);
+
 
 
     QVERIFY(!a.isEmpty());

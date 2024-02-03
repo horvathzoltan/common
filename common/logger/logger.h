@@ -83,7 +83,7 @@ namespace GUIModes{
 //typedef void (*zLogGUIfn)(GUIModes::Modes mode, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
 
 
-class LOGGERSHARED_EXPORT Logger
+class COM_LOGGERSHARED_EXPORT Logger
 {
 private:
     //static zLogGUIfn _GUILogger;

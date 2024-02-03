@@ -6,13 +6,13 @@
 
 QT       -= gui
 
-TARGET = shortguid
+#TARGET = shortguid
 TEMPLATE = lib
 
 CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
-DEFINES += SHORTGUID_LIBRARY
+DEFINES += COM_SHORTGUID_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings

@@ -1,56 +1,36 @@
 //#include "globals.h"
-#include "../../macrofactory/macro.h"
+//#include "../../macros/macro.h"
 #include "filehelper.h"
 //#include "../../helpers/StringHelper//stringhelper.h"
 #include "../../logger/logger.h"
-#include "filenamehelper.h"
+#include "../FileNameHelper/filenamehelper.h"
 #include <QFileInfo>
 #include <QDir>
 #include <QDateTime>
 #include <QIODevice>
-#include <QTextCodec>
+#include <QChar>
+//#include <QTextCodec>
 
 namespace com {
 namespace helpers{
 
-QString FileHelper::load2(const QString& filename) {
-    auto ikey = Log::openInfo(QStringLiteral("Beolvasás: %1").arg(filename));
-    QFileInfo fi(filename);    
-    if(!fi.isAbsolute())
-    {
-        zInfo(zfn()+" "+QStringLiteral("nem abszolut path: %1").arg(filename));
-        Log::appendInfo(ikey, "error");
-        Log::closeInfo(ikey);
-        //return zStringHelper::Empty;
-    }
+bool FileHelper::_verbose = false;
 
-    if(!fi.exists())
-    {
-        zInfo(QStringLiteral("a fájl nem létezik: %1").arg(filename));
-        Log::appendInfo(ikey, "error");
-        Log::closeInfo(ikey);
-        return QString();
-    }    
+QString FileHelper::load2(const QString& filename)
+{
+    bool valid = FnValidate(filename, nullptr);
+    if(!valid) return QString();
 
     QFile f(filename);
-    QString e;   
 
-    // TODO ha relatív a filename, akkor abszolúttá kell tenni
-    // egyébként megnyitható azaz
+    bool ok = f.open(QFile::ReadOnly | QFile::Text);
+    if (!ok)  {
+        if(_verbose) zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, "error"));
+        return QString();
+    }
 
-    if (f.open(QFile::ReadOnly | QFile::Text))  {
-        Log::appendInfo(ikey, Log::OK);
-        Log::closeInfo(ikey);
-        //zInfo(QStringLiteral("Beolvasás: %1").arg(filename));
-        e =  QTextStream(&f).readAll();
-    }
-    else{
-        Log::appendInfo(ikey, Log::ERROR_);
-        Log::closeInfo(ikey);
-        zInfo(QStringLiteral("A fájl nem nyitható meg: %1 %2").arg(filename, Log::ERROR_));
-        e= QString();
-    }
-    Log::closeInfo(ikey);
+    QString e;
+    e =  QTextStream(&f).readAll();
     return e;
 }
 
@@ -59,38 +39,39 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-void FileHelper::save(const QString& txt, const QString& fn, bool isAppend)
+void FileHelper::save(const QString& txt, const QString& filename, bool isAppend)
 {
-    if(fn.length()>256)
+    FileHelper::Errors err;
+    bool valid = FileHelper::FnValidate(filename, &err);
+    if(!valid) return;
+
+    if(filename.length()>256)
     {
-        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(fn, Log::ERROR_));
+        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(filename, "error"));
         return;
     }
-//    QFile logfile(lfn);
-//    logfile.open(QIODevice::Append | QIODevice::Text);
-//    QTextStream out(&logfile);
-//    out << lftxt << endl;
 
-    QFileInfo fi(fn);
-    QDir a = fi.dir();
-    if(!a.exists())
-    {
-        a.mkpath(".");
-    }
+    QFileInfo fi(filename);
+    // QDir a = fi.dir();
+    // if(!a.exists())
+    // {
+    //     a.mkpath(".");
+    // }
 
-    QFile f(fn);
+    QFile f(filename);
 
     QFlags<QIODevice::OpenModeFlag> om = QIODevice::WriteOnly | QIODevice::Text; // openmode
     if(isAppend) om |= QIODevice::Append;
 
-    if (!f.open(om))
+    bool ok = f.open(om);
+    if (!ok)
     {
         auto err = f.error();
         auto errDesc = f.errorString();
         //
-        auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(fn).arg(err).arg(errDesc);
+        auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(filename).arg(err).arg(errDesc);
         //zError2(errstr,1);
-        Log::error2(errstr, getLocInfo);
+        //Log::error2(errstr, getLocInfo);
         return;
     }
 
@@ -98,8 +79,8 @@ void FileHelper::save(const QString& txt, const QString& fn, bool isAppend)
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     QTextStream out(&f);
-    out.setCodec(QTextCodec::codecForName("UTF-8"));
-    out.setGenerateByteOrderMark(true);
+    //out.setCodec(QTextCodec::codecForName("UTF-8"));
+    //out.setGenerateByteOrderMark(true);
     out << txt.toUtf8();
     f.close();
     //QFileInfo fi(fn);
@@ -134,7 +115,7 @@ auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, 
 
 QString FileHelper::load(const QString& url)
 {
-    if(FilenameHelper::isURL(url))
+    if(FileNameHelper::isURL(url))
     {
     //zInfo("url");
     //auto e = downloader.download(QStringLiteral(R"(https://docs.google.com/document/export?format=html&id=1tPwsVMObxU9QmA3XR4RpbHPpjcG7hVbd7KQqLD_ABK8&includes_info_params=true)"));
@@ -157,7 +138,7 @@ bool FileHelper::backup(const QString& filename)
 
     QString now = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss");
 
-    QString outfilename = com::helpers::FilenameHelper::appendToBaseName(filename, now);
+    QString outfilename = com::helpers::FileNameHelper::appendToBaseName(filename, now);
 
     return QFile::copy(filename, outfilename);
 }
@@ -216,12 +197,12 @@ bool FileHelper::FnValidate(const QString& filename, Errors *err)
             valid = false;
         }
 
-        if(!fi.exists())
-        {
-            if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
-            if(err != nullptr) *err= Errors::FileNotExists;
-            valid = false;
-        }
+        // if(!fi.exists())
+        // {
+        //     if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
+        //     if(err != nullptr) *err= Errors::FileNotExists;
+        //     valid = false;
+        // }
     }
 
     return valid;

@@ -36,9 +36,9 @@ public:
 
     static const QChar _htmlEntityEndingChars[];
 
-    static const int UNICODE_PLANE00_END;// = 0x00FFFF;
-    static const int UNICODE_PLANE01_START;// = 0x10000;
-    static const int UNICODE_PLANE16_END;// = 0x10FFFF;
+    static const QChar UNICODE_PLANE00_END;// = 0x00FFFF;
+    static const QChar UNICODE_PLANE01_START;// = 0x10000;
+    static const QChar UNICODE_PLANE16_END;// = 0x10FFFF;
 
     static const QChar HIGH_SURROGATE_START; //= '\uD800';
     static const QChar LOW_SURROGATE_START;// = '\uDC00';
@@ -92,7 +92,7 @@ private:
     static UnicodeDecodingConformance getHtmlDecodeConformance();
     static bool StringRequiresHtmlDecoding(const QString& s);
     static QString HtmlDecode2(const QString &value);
-    static void ConvertSmpToUtf16(uint smpChar, QChar leadingSurrogate, QChar trailingSurrogate);
+    static void ConvertSmpToUtf16(QChar smpChar, QChar leadingSurrogate, QChar trailingSurrogate);
     static QChar HtmlEntityLookup(const QString& e);
     static const QMap<QString,quint16> HtmlNamedEntitiesLatin1;
     static const QMap<QString,quint16> HtmlNamedEntitiesSymbolic;

@@ -1,7 +1,7 @@
-#include "zlogicexception.h"
+#include "logicexception.h"
 
 
-zLogicException::zLogicException(const QString& _msg) :msg(_msg)
+LogicException::LogicException(const QString& _msg) :msg(_msg)
 {
 #ifdef Q_OS_WIN
     auto a = __FUNCSIG__;
@@ -11,14 +11,14 @@ zLogicException::zLogicException(const QString& _msg) :msg(_msg)
     QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, static_cast<const char*>(a)).debug().noquote()<<msg;
 }
 
-void zLogicException::raise() const
+void LogicException::raise() const
 {
     throw *this;
 }
 
-zLogicException* zLogicException::clone() const
+LogicException* LogicException::clone() const
 {
-    return new zLogicException(*this);
+    return new LogicException(*this);
 }
 
 

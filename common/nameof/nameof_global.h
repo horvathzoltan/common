@@ -4,10 +4,10 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(NAMEOF_LIBRARY)
-#  define NAMEOF_EXPORT Q_DECL_EXPORT
+#if defined(COM_NAMEOF_LIBRARY)
+#  define COM_NAMEOF_EXPORT Q_DECL_EXPORT
 #else
-#  define NAMEOF_EXPORT Q_DECL_IMPORT
+#  define COM_NAMEOF_EXPORT Q_DECL_IMPORT
 #endif
 
 

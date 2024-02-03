@@ -6,13 +6,13 @@
 
 QT       -= gui
 
-TARGET = logger
+#TARGET = logger
 TEMPLATE = lib
 
 CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
-DEFINES += LOGGER_LIBRARY
+DEFINES += COM_LOGGER_LIBRARY
 
 include($$PWD/../../libinstall/common.prf)
 

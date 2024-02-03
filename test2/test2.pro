@@ -75,13 +75,15 @@ message("COMMON_LIBS: " $$COMMON_LIBS);
 #unix:!macx: LIBS += -L$$PWD/../../$$INSTALLDIR/ -lstringhelper
 unix:!macx:
 {
-LIBS += -L$$COMMON_LIBS_FULLPATH/ -lstringhelper
-LIBS += -L$$COMMON_LIBS_FULLPATH/ -lfilehelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lStringHelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lTextFileHelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lFileNameHelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lFileHelper
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lshortguid
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -llogger
-LIBS += -L$$COMMON_LIBS_FULLPATH/ -lmacrofactory
-LIBS += -L$$COMMON_LIBS_FULLPATH/ -linihelper
-LIBS += -L$$COMMON_LIBS_FULLPATH/ -lsettingshelper
+#LIBS += -L$$COMMON_LIBS_FULLPATH/ -lmacrofactory
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lIniHelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lSettingsHelper
 }
 
 INCLUDEPATH += $$PWD/../common

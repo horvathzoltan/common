@@ -6,13 +6,13 @@
 
 QT       -= gui
 
-TARGET = inihelper
+#TARGET = inihelper
 TEMPLATE = lib
 
 CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17
 
-DEFINES += INIHELPER_LIBRARY
+DEFINES += COM_INIHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings

@@ -7,7 +7,7 @@
 
 namespace com{
 namespace workers{
-class COREAPPWORKER_EXPORT CoreAppWorker : public QObject
+class COM_COREAPPWORKER_EXPORT CoreAppWorker : public QObject
 {
     Q_OBJECT
 public:

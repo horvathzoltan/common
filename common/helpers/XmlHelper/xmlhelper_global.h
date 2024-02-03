@@ -1,0 +1,12 @@
+#ifndef COM_XMLHELPER_GLOBAL_H
+#define COM_XMLHELPER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(COM_XMLHELPER_LIBRARY)
+#  define COM_XMLHELPERSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define COM_XMLHELPERSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // XMLHELPER_GLOBAL_H

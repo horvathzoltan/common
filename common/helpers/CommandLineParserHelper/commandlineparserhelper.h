@@ -5,7 +5,7 @@
 
 #include <QCommandLineParser>
 namespace com { namespace helpers{
-class COMMANDLINEPARSERHELPER_EXPORT CommandLineParserHelper
+class COM_COMMANDLINEPARSERHELPER_EXPORT CommandLineParserHelper
 {
 public:
     CommandLineParserHelper();

@@ -10,7 +10,7 @@
 #include "filehelper_global.h"
 
 namespace com { namespace helpers{
-class FILEHELPERSHARED_EXPORT FileHelper
+class COM_FILEHELPERSHARED_EXPORT FileHelper
 {
 public:
 

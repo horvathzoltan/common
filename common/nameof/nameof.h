@@ -9,7 +9,7 @@
 #define nameof(x) NameOf::_nameof_ulong(#x, sizeof(x))
 #define nameof_fn(x) NameOf::_nameof_fn(#x, (void*)x)
 
-class NAMEOF_EXPORT NameOf
+class COM_NAMEOF_EXPORT NameOf
 {
 private:
     static QString NameOf_private(const QString &x);

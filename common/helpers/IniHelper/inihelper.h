@@ -6,7 +6,7 @@
 #include <QString>
 #include <QMap>
 namespace com { namespace helpers{
-class INIHELPERSHARED_EXPORT IniHelper
+class COM_INIHELPERSHARED_EXPORT IniHelper
 {
 
 public:

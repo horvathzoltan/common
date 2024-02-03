@@ -4,18 +4,20 @@ SUBDIRS += \
     CommandLineParserHelper \
     ProcessHelper \
     Downloader \
-    settings \
+    SettingsHelper \
     SignalHelper \
     StringHelper \
+    FileNameHelper \
     FileHelper \
     IniHelper \
     TextFileHelper \
-    xml \
+    XmlHelper \
     NetworkHelper \
 
 FileHelper.depends = StringHelper
 IniHelper.depends = StringHelper
-settings.depends = StringHelper IniHelper FileHelper
-xml.depends = StringHelper IniHelper FileHelper
+SettingsHelper.depends = StringHelper FileHelper FileNameHelper TextFileHelper IniHelper
+XmlHelper.depends = StringHelper FileHelper FileNameHelper TextFileHelper IniHelper
+Downloader.depends = ProcessHelper
 
 

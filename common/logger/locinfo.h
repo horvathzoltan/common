@@ -4,7 +4,7 @@
 #include <QString>
 #include "logger_global.h"
 
-class LOGGERSHARED_EXPORT LocInfo
+class COM_LOGGERSHARED_EXPORT LocInfo
 {
 public:
     QString func;

@@ -1,7 +1,7 @@
 QT -= gui
 QT += network
 
-TARGET = networkhelper
+#TARGET = networkhelper
 TEMPLATE = lib
 DEFINES += COM_NETWORKHELPER_LIBRARY
 

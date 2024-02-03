@@ -5,7 +5,7 @@
 #include "signalhelper_global.h"
 
 namespace com { namespace helpers{
-class SIGNALHELPER_EXPORT SignalHelper
+class COM_SIGNALHELPER_EXPORT SignalHelper
 {
 public:
     static void setShutDownSignal(int);

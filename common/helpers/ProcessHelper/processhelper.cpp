@@ -7,6 +7,8 @@
 
 namespace com { namespace helpers{
 const QString ProcessHelper::SEPARATOR = NEWLINE+QStringLiteral("stderr")+NEWLINE;
+bool ProcessHelper::_verbose = false;
+QString ProcessHelper::_password;
 
 QString ProcessHelper::Output::ToString(){
     QString e;

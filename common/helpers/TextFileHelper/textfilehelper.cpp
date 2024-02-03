@@ -1,7 +1,7 @@
 #include "textfilehelper.h"
 #include "../../logger/logger.h"
 #include <QFileInfo>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QTextStream>
 
 namespace com {

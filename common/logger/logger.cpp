@@ -1,9 +1,9 @@
 //#include "globals.h"
 #include "logger.h"
 #include "stackhelper.h"
-#include "../shortguid/shortguid.h"
+//#include "../shortguid/shortguid.h"
 //#include <QMessageBox>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <csignal>
 #ifdef Q_OS_LINUX
 

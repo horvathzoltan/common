@@ -3,10 +3,10 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(LOGGER_LIBRARY)
-#  define LOGGERSHARED_EXPORT Q_DECL_EXPORT
+#if defined(COM_LOGGER_LIBRARY)
+#  define COM_LOGGERSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define LOGGERSHARED_EXPORT Q_DECL_IMPORT
+#  define COM_LOGGERSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
 #endif // LOGGER_GLOBAL_H

@@ -1,6 +1,6 @@
 QT -= gui
 
-TARGET = processhelper
+#TARGET = processhelper
 
 TEMPLATE = lib
 DEFINES += COM_PROCESSHELPER_LIBRARY

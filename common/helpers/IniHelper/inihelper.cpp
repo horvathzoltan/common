@@ -1,5 +1,5 @@
 #include "inihelper.h"
-#include "../../macrofactory/macro.h"
+//#include "../../macros/macro.h"
 #include "../../helpers/StringHelper/stringhelper.h"
 
 namespace com { namespace helpers{
@@ -40,9 +40,9 @@ QString IniHelper::toString(const QMap<QString, QString> &m, const QString &desc
 {
     QString e;
     e+=QStringLiteral("# ")+desc + " ini"+StringHelper::NewLine+StringHelper::NewLine;
-    zforeach(i, m)
-    {
-        e+=i.key()+"="+i.value()+StringHelper::NewLine;
+    auto keys = m.keys();
+    for (const QString &key : keys) {
+        e += key + "=" + m.value(key) + StringHelper::NewLine;
     }
     return e;
 }

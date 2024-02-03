@@ -6,10 +6,10 @@
 
 QT       -= gui
 
-TARGET = filehelper
+#TARGET = filehelper
 TEMPLATE = lib
 
-DEFINES += FILEHELPER_LIBRARY
+DEFINES += COM_FILEHELPER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -36,7 +36,7 @@ include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lFileNameHelper
 }
 
 win32:

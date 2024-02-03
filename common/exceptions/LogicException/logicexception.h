@@ -1,20 +1,20 @@
-#ifndef COM_ZLOGICEXCEPTION_H
-#define COM_ZLOGICEXCEPTION_H
+#ifndef COM_LOGICEXCEPTION_H
+#define COM_LOGICEXCEPTION_H
 
 #include <QString>
 #include <QException>
 #include <QDebug>
-#include "zlogicexpression_global.h"
+#include "logicexception_global.h"
 
-class MACROFACTORYSHARED_EXPORT zLogicException: public QException
+class LOGICEXCEPTION_EXPORT LogicException: public QException
 {
 private:
     const QString& msg;
 public:
-    explicit zLogicException(const QString& _msg);
+    explicit LogicException(const QString& _msg);
 
     void raise() const override;
-    zLogicException *clone() const override;
+    LogicException *clone() const override;
 };
 
 #endif // ZLOGICEXCEPTION_H

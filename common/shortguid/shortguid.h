@@ -6,7 +6,7 @@
 
 //valami
 
-class SHORTGUIDSHARED_EXPORT zShortGuid
+class COM_SHORTGUIDSHARED_EXPORT zShortGuid
 {
 public:
     zShortGuid();
