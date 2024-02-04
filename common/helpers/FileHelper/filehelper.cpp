@@ -18,7 +18,7 @@ bool FileHelper::_verbose = false;
 
 QString FileHelper::load2(const QString& filename)
 {
-    bool valid = FnValidate(filename, nullptr);
+    bool valid = FnValidate_Load(filename, nullptr);
     if(!valid) return QString();
 
     QFile f(filename);
@@ -39,10 +39,10 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-void FileHelper::save(const QString& txt, const QString& filename, bool isAppend)
+void FileHelper::Save(const QString& txt, const QString& filename, bool isAppend)
 {
     FileHelper::Errors err;
-    bool valid = FileHelper::FnValidate(filename, &err);
+    bool valid = FileHelper::FnValidate_Save(filename, &err);
     if(!valid) return;
 
     if(filename.length()>256)
@@ -113,7 +113,7 @@ auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, 
 // TODO ha URL vagy ha filename wrapper file megszerzésére
 //
 
-QString FileHelper::load(const QString& url)
+QString FileHelper::Load(const QString& url)
 {
     if(FileNameHelper::isURL(url))
     {
@@ -164,7 +164,7 @@ QString FileHelper::GetFileName(const QString &fn)
 
 bool FileHelper::Exists(const QString &filename)
 {
-    bool valid = FnValidate(filename, nullptr);
+    bool valid = FnValidate_Load(filename, nullptr);
     if(!valid) return false;
 
     return true;
@@ -179,33 +179,43 @@ bool FileHelper::Delete(const QString &filename)
 }
 
 
-bool FileHelper::FnValidate(const QString& filename, Errors *err)
+bool FileHelper::FnValidate_Load(const QString& filename, Errors *err)
 {
-    bool valid = true;
+    bool valid = FnValidate_Save(filename, err);
+
+    if(!valid) return false;
+
+    QFileInfo fi(filename);
+
+    if(!fi.exists())
+    {
+        if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
+        if(err != nullptr) *err= Errors::FileNotExists;
+        return false;
+    }
+
+    return true;
+}
+
+bool FileHelper::FnValidate_Save(const QString& filename, Errors *err)
+{
     if(filename.isEmpty())
     {
         if(_verbose) zInfo(QStringLiteral("no file name").arg(filename));
         if(err != nullptr) *err= Errors::NoFileName;
-        valid = false;
-    }else{
-        QFileInfo fi(filename);
-
-        if(!fi.isAbsolute())
-        {
-            if(_verbose) zInfo(QStringLiteral("path is not absolute: %1").arg(filename));
-            if(err != nullptr) *err= Errors::PathIsNotAbsolute;
-            valid = false;
-        }
-
-        // if(!fi.exists())
-        // {
-        //     if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
-        //     if(err != nullptr) *err= Errors::FileNotExists;
-        //     valid = false;
-        // }
+        return false;
     }
 
-    return valid;
+    QFileInfo fi(filename);
+
+    if(!fi.isAbsolute())
+    {
+        if(_verbose) zInfo(QStringLiteral("path is not absolute: %1").arg(filename));
+        if(err != nullptr) *err= Errors::PathIsNotAbsolute;
+        return false;
+    }
+
+    return true;
 }
 
 }  // namespace helper

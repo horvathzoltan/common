@@ -52,12 +52,12 @@ void test2::test_case2()
 {
     QString e = "Hello2";
     QString fn = "testfile";
-    com::helpers::FileHelper::save(e, fn);
+    com::helpers::FileHelper::Save(e, fn);
 
     auto isExist = QFileInfo::exists(fn);
     QVERIFY(isExist);
 
-    QString e2 = com::helpers::FileHelper::load(fn);
+    QString e2 = com::helpers::FileHelper::Load(fn);
     QVERIFY(e == e2);
 }
 
@@ -77,7 +77,7 @@ void test2::test_case3()
     auto a = com::helpers::IniHelper::toString(m, fn);
     qDebug() << a;
 
-    com::helpers::FileHelper::save(a, fn);
+    com::helpers::FileHelper::Save(a, fn);
 
     auto isExist = QFileInfo::exists(fn);
     QVERIFY(isExist);

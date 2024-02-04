@@ -10,16 +10,14 @@ class COM_SETTINGSHELPERSHARED_EXPORT SettingsHelper
 {
 public:
     SettingsHelper();
-    static bool loadSettings();
-    static void saveSettings();
+    static bool LoadSettings();
+    static void SaveSettings();
     static void init(const QString &, ISettings *);
 private:
-    static QString userSettingsFileName;
-    static ISettings *s;
-    //static QString settingsFile;
-    static QString globalSettingsFileName;
+    static QString _userSettingsFileName;
+    static QString _globalSettingsFileName;
     static const QString NAME;
-    //static QString getFileName();
+    static ISettings *_s;
 };
 }
 }  // namespace com

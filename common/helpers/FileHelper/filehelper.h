@@ -23,15 +23,16 @@ public:
         CannotWrite
     };
     static void SetVerbose(bool v){_verbose = v;}
-    static void save(const QString& txt, const QString& fileName, bool isAppend = false);
+    static void Save(const QString& txt, const QString& fileName, bool isAppend = false);
     static auto Save(const QByteArray& data, const QString& fn, bool isAppend = false, QFileDevice::FileError* = nullptr)-> bool;
-    static QString load(const QString& filename);
+    static QString Load(const QString& filename);
     //static void append(QString line, QString fileName);
     bool backup(const QString& filename);
     static bool isEmpty(const QFileInfo& fi);
     static bool isEmpty(const QString& dir);
 
-    static bool FnValidate(const QString& filename, Errors *err);
+    static bool FnValidate_Load(const QString& filename, Errors *err);
+    static bool FnValidate_Save(const QString& filename, Errors *err);
     static QString GetFileName(const QString &fn);
     static bool Exists(const QString& fn);
     static bool Delete(const QString& fn);

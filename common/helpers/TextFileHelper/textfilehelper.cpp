@@ -22,7 +22,7 @@ void TextFileHelper::SetUtf8Encoding(QTextStream* st)
 
 QString TextFileHelper::Load(const QString& filename, FileHelper::Errors *err) {
 
-    bool valid = FileHelper::FnValidate(filename, err);
+    bool valid = FileHelper::FnValidate_Load(filename, err);
     if(!valid) return QString();
 
     QFile f(filename);    
@@ -30,7 +30,7 @@ QString TextFileHelper::Load(const QString& filename, FileHelper::Errors *err) {
     bool ok = f.open(QFile::ReadOnly | QFile::Text);
 
     if (!ok){
-        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
+        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString(),filename));
         if(err != nullptr) *err= FileHelper::Errors::PathIsNotAbsolute;
         return QString();
     }
@@ -45,10 +45,10 @@ QString TextFileHelper::Load(const QString& filename, FileHelper::Errors *err) {
 }
 
 QStringList TextFileHelper::LoadLines(const QString& filename,FileHelper:: Errors *err) {
-    bool valid = FileHelper::FnValidate(filename, err);
+    bool valid = FileHelper::FnValidate_Load(filename, err);
     if(!valid) return QStringList();
 
-    QFileInfo fi(filename);    
+    //QFileInfo fi(filename);
 
     QFile f(filename);
     QStringList e;
@@ -56,7 +56,7 @@ QStringList TextFileHelper::LoadLines(const QString& filename,FileHelper:: Error
     bool ok = f.open(QFile::ReadOnly | QFile::Text);
 
     if(!ok){
-        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
+        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString(),filename));
         if(err != nullptr) *err= FileHelper::Errors::CannotRead;
         return QStringList();
     }
@@ -77,7 +77,7 @@ QStringList TextFileHelper::LoadLines(const QString& filename,FileHelper:: Error
 
 
 bool TextFileHelper::Save(const QString& txt, const QString& filename, FileHelper::Errors *err, bool isAppend) {
-    bool valid = FileHelper::FnValidate(filename, err);
+    bool valid = FileHelper::FnValidate_Save(filename, err);
     if(!valid) return false;
 
     QFile f(filename);
@@ -88,7 +88,7 @@ bool TextFileHelper::Save(const QString& txt, const QString& filename, FileHelpe
     bool opened = f.open(om);
 
     if (!opened){
-        if(_verbose) zInfo(QStringLiteral("cannot write file (%1): %2").arg(f.errorString()).arg(filename));
+        if(_verbose) zInfo(QStringLiteral("cannot write file (%1): %2").arg(f.errorString(),filename));
         if(err != nullptr) *err= FileHelper::Errors::CannotWrite;
         return false;
         }
@@ -104,7 +104,7 @@ bool TextFileHelper::Save(const QString& txt, const QString& filename, FileHelpe
 }
 
 QStringList TextFileHelper::LoadLinesContains(const QString& filename, const QStringList& t1, FileHelper::Errors *err) {
-    bool valid = FileHelper::FnValidate(filename, err);
+    bool valid = FileHelper::FnValidate_Load(filename, err);
     if(!valid) return QStringList();
 
     QFile f(filename);
@@ -114,7 +114,7 @@ QStringList TextFileHelper::LoadLinesContains(const QString& filename, const QSt
     bool opened = f.open(QIODevice::ReadOnly);
 
     if(!opened){
-        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
+        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString(),filename));
         if(err != nullptr) *err= FileHelper::Errors::CannotRead;
         return QStringList();
     }
@@ -145,7 +145,7 @@ QStringList TextFileHelper::LoadLinesContains(const QString& filename, const QSt
 }
 
 QChar TextFileHelper::GetLastChar(const QString& filename, FileHelper::Errors *err){
-    bool valid = FileHelper::FnValidate(filename, err);
+    bool valid = FileHelper::FnValidate_Load(filename, err);
     if(!valid) return QChar();
 
     QFileInfo fi(filename);
@@ -154,7 +154,7 @@ QChar TextFileHelper::GetLastChar(const QString& filename, FileHelper::Errors *e
 
     bool ok = f.open(QIODevice::ReadOnly);
     if(!ok){
-        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString()).arg(filename));
+        if(_verbose) zInfo(QStringLiteral("cannot read file (%1): %2").arg(f.errorString(),filename));
         if(err != nullptr) *err= FileHelper::Errors::CannotRead;
         return QChar();
     }

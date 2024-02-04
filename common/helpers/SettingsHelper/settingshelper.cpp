@@ -6,11 +6,11 @@
 #include <QDir>
 namespace com{ namespace helpers{
 
-QString SettingsHelper::userSettingsFileName;
+QString SettingsHelper::_userSettingsFileName;
 //QString SettingsHelper::settingsFile;
-QString SettingsHelper::globalSettingsFileName;
+QString SettingsHelper::_globalSettingsFileName;
 const QString SettingsHelper::NAME = QStringLiteral("settings");
-ISettings* SettingsHelper::s;
+ISettings* SettingsHelper::_s;
 
 SettingsHelper::SettingsHelper()
 {
@@ -19,46 +19,46 @@ SettingsHelper::SettingsHelper()
 
 void SettingsHelper::init(const QString& userFN, ISettings* _s)
 {
-    userSettingsFileName = userFN;
+    _userSettingsFileName = userFN;
     //settingsFile = getFileName();
-    globalSettingsFileName = NAME+".ini";
-    s = _s;
+    _globalSettingsFileName = NAME+".ini";
+    _s = _s;
 }
 
 
-bool SettingsHelper::loadSettings()
+bool SettingsHelper::LoadSettings()
 {
     bool isok = false;
-    if(!s) return false;
+    if(!_s) return false;
 
     FileHelper:: Errors err;
-        QStringList lines = TextFileHelper::LoadLines(globalSettingsFileName, &err);
+    QStringList lines = TextFileHelper::LoadLines(_globalSettingsFileName, &err);
     if(err == FileHelper::Errors::Ok)
     {
         auto map = IniHelper::Parse(lines, ',');
-        s->parseIni(map);
+        _s->parseIni(map);
         isok = true;
     }
 
 
-    lines = TextFileHelper::LoadLines(userSettingsFileName, &err);
+    lines = TextFileHelper::LoadLines(_userSettingsFileName, &err);
     if(err == FileHelper::Errors::Ok)
     {
         auto map = IniHelper::Parse(lines, ',');
-        s->parseIni(map);
+        _s->parseIni(map);
         isok=true;
     }
     return isok;
 }
 
-void SettingsHelper::saveSettings()
+void SettingsHelper::SaveSettings()
 {
-    if(userSettingsFileName.isEmpty()) return;
-    if(!s) return;
+    if(_userSettingsFileName.isEmpty()) return;
+    if(!_s) return;
 
-    auto m = s->toIni();
+    auto m = _s->toIni();
     auto txt = IniHelper::toString(m, NAME);
-    FileHelper::save(txt, userSettingsFileName);
+    FileHelper::Save(txt, _userSettingsFileName);
 }
 
 //QString SettingsHelper::getFileName()
