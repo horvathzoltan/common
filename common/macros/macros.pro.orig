@@ -1,0 +1,24 @@
+QT += core
+
+TEMPLATE = lib
+
+CONFIG += c++14
+msvc:QMAKE_CXXFLAGS += /std:c++17
+
+DEFINES += MACROFACTORY_LIBRARY
+
+include($$PWD/../../libinstall/common.prf)
+
+HEADERS += \
+    macro.h \
+<<<<<<< HEAD:common/macros/macros.pro
+    stringify.h \
+=======
+    stringliteral2.h \
+    zlogicexception.h \
+    zlogicexpression_global.h
+>>>>>>> 041a1e2e5842305ecacba93522b5674911cf1ffa:common/macrofactory/macrofactory.pro
+
+SOURCES += \    
+
+include($$PWD/../../libinstall/libinstall.prf)

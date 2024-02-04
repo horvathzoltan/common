@@ -51,10 +51,14 @@ namespace Errlevels{
         INFOCLOSE
     };
 
-    [[gnu::unused]]
+<<<<<<< HEAD:common/logger/log.h.orig
+    [[maybe_unused]]
 <<<<<<< HEAD
     static QString toString(const Levels &l){
 =======
+=======
+    [[gnu::unused]]
+>>>>>>> 041a1e2e5842305ecacba93522b5674911cf1ffa:common/logger/log.h
     static QString toString  (const Levels &l){
 >>>>>>> refs/remotes/origin/master
         switch(l)
@@ -71,7 +75,38 @@ namespace Errlevels{
     };
 };
 
+<<<<<<< HEAD:common/logger/log.h.orig
 typedef void (*zLogGUIfn)(Errlevels::Levels errlevel, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
+=======
+namespace Dbglevels{
+enum Levels:int {
+    NONE=0,
+    TRACE,
+    DEBUG,
+//    INFOAPPEND,
+//    INFOCLOSE
+};
+
+[[gnu::unused]]
+static QString toString  (const Levels &l){
+    switch(l){
+        case NONE: return QStringLiteral("TRACE");
+        case TRACE: return QStringLiteral("TRACE");
+        case DEBUG: return QStringLiteral("DEBUG");
+//    case INFOAPPEND: return QStringLiteral("INFO");
+//    case INFOCLOSE: return QStringLiteral("INFO");
+        default: return QStringLiteral("unknown");
+    }
+};
+}
+
+namespace GUIModes{
+enum Modes:int{ INFO, INFOAPPEND, INFOCLOSE, WARNING, ERROR, DEBUG};
+}
+
+typedef void (*zLogGUIfn)(GUIModes::Modes mode, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
+
+>>>>>>> 041a1e2e5842305ecacba93522b5674911cf1ffa:common/logger/log.h
 
 class LOGGERSHARED_EXPORT Log
 {
