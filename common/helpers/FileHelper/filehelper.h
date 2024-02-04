@@ -20,11 +20,14 @@ public:
         PathIsNotAbsolute,
         FileNotExists,
         CannotRead,
-        CannotWrite
+        CannotWrite, FileNameTooLong
     };
     static void SetVerbose(bool v){_verbose = v;}
-    static void Save(const QString& txt, const QString& fileName, bool isAppend = false);
-    static auto Save(const QByteArray& data, const QString& fn, bool isAppend = false, QFileDevice::FileError* = nullptr)-> bool;
+    static bool Save(const QString& txt, const QString& fileName, FileHelper::Errors *err);
+    static bool Save(const QByteArray& data, const QString& fn, FileHelper::Errors *err);
+    static bool Append(const QString& txt, const QString& fileName, FileHelper::Errors *err);
+    static bool Append(const QByteArray& data, const QString& fn, FileHelper::Errors *err);
+
     static QString Load(const QString& filename);
     //static void append(QString line, QString fileName);
     bool backup(const QString& filename);
@@ -41,6 +44,9 @@ public:
 private:
     static bool _verbose;
     static QString load2(const QString& filename);
+
+    static bool Save_private(const QString& txt, const QString& fileName, FileHelper::Errors *err, bool isAppend);
+    static bool Save_private(const QByteArray& data, const QString& fn, FileHelper::Errors *err, bool isAppend);
 };
 }
 } // namespace com::helper

@@ -39,17 +39,27 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-void FileHelper::Save(const QString& txt, const QString& filename, bool isAppend)
-{
-    FileHelper::Errors err;
-    bool valid = FileHelper::FnValidate_Save(filename, &err);
-    if(!valid) return;
+bool FileHelper::Save(const QString& txt, const QString& filename, FileHelper::Errors *err){
+    return Save_private(txt, filename, err, false);
+}
 
-    if(filename.length()>256)
-    {
-        zInfo(QStringLiteral("Fájlnév túl hosszú: %1 %2").arg(filename, "error"));
-        return;
-    }
+bool FileHelper::Append(const QString& txt, const QString& filename, FileHelper::Errors *err){
+    return Save_private(txt, filename, err, true);
+}
+
+bool FileHelper::Save(const QByteArray& txt, const QString& filename, FileHelper::Errors *err){
+    return Save_private(txt, filename, err, false);
+}
+
+bool FileHelper::Append(const QByteArray& txt, const QString& filename, FileHelper::Errors *err){
+    return Save_private(txt, filename, err, true);
+}
+
+bool FileHelper::Save_private(const QString& txt, const QString& filename, FileHelper::Errors *err, bool isAppend)
+{    
+    bool valid = FileHelper::FnValidate_Save(filename, err);
+    if(!valid) return false;
+
 
     QFileInfo fi(filename);
     // QDir a = fi.dir();
@@ -66,15 +76,11 @@ void FileHelper::Save(const QString& txt, const QString& filename, bool isAppend
     bool ok = f.open(om);
     if (!ok)
     {
-        auto err = f.error();
         auto errDesc = f.errorString();
-        //
-        auto errstr = QStringLiteral("nem menthető: %1 %2:%3").arg(filename).arg(err).arg(errDesc);
-        //zError2(errstr,1);
-        //Log::error2(errstr, getLocInfo);
-        return;
+        if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(filename, errDesc));
+        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
+        return false;
     }
-
 
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
@@ -85,9 +91,10 @@ void FileHelper::Save(const QString& txt, const QString& filename, bool isAppend
     f.close();
     //QFileInfo fi(fn);
     zInfo(QStringLiteral("File saved: %1").arg(fi.absoluteFilePath()));
+    return true;
 }
 
-auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, QFileDevice::FileError*err) -> bool
+bool FileHelper::Save_private(const QByteArray& data, const QString& fn, FileHelper::Errors *err, bool isAppend)
 {
     if(fn.length()>256) return false;
     QFileInfo fi(fn);
@@ -98,14 +105,22 @@ auto FileHelper::Save(const QByteArray& data, const QString& fn, bool isAppend, 
     QFlags<QIODevice::OpenModeFlag> om = QIODevice::WriteOnly; // openmode
     if(isAppend) om |= QIODevice::Append;
 
-    if (!f.open(om))
+    bool ok = f.open(om);
+    if (!ok)
     {
-        if(err) *err = f.error();
+        auto errDesc = f.errorString();
+        if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(fn, errDesc));
+        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
         return false;
     }
 
     auto u = f.write(data);
-    if(u==-1 && err) *err = f.error();
+    if(u==-1 && err){
+        auto errDesc = f.errorString();
+        if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(fn, errDesc));
+        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
+        return false;
+    }
     f.close();
     return u != -1;
 }
@@ -203,6 +218,13 @@ bool FileHelper::FnValidate_Save(const QString& filename, Errors *err)
     {
         if(_verbose) zInfo(QStringLiteral("no file name").arg(filename));
         if(err != nullptr) *err= Errors::NoFileName;
+        return false;
+    }
+
+    if(filename.length()>256)
+    {
+        if(_verbose) zInfo(QStringLiteral("filename too long: %1").arg(filename));
+        if(err!=nullptr) *err = FileHelper::Errors::FileNameTooLong;
         return false;
     }
 

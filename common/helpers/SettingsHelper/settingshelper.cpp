@@ -51,14 +51,17 @@ bool SettingsHelper::LoadSettings()
     return isok;
 }
 
-void SettingsHelper::SaveSettings()
+bool SettingsHelper::SaveSettings()
 {
-    if(_userSettingsFileName.isEmpty()) return;
-    if(!_s) return;
+    if(_userSettingsFileName.isEmpty()) return false;
+    if(!_s) return false;
 
     auto m = _s->toIni();
     auto txt = IniHelper::toString(m, NAME);
-    FileHelper::Save(txt, _userSettingsFileName);
+    FileHelper::Errors err;
+
+    FileHelper::Save(txt, _userSettingsFileName, &err);
+    return err == FileHelper::Errors::Ok;
 }
 
 //QString SettingsHelper::getFileName()

@@ -11,7 +11,7 @@ class COM_SETTINGSHELPERSHARED_EXPORT SettingsHelper
 public:
     SettingsHelper();
     static bool LoadSettings();
-    static void SaveSettings();
+    static bool SaveSettings();
     static void init(const QString &, ISettings *);
 private:
     static QString _userSettingsFileName;
