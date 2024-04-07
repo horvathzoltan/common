@@ -28,13 +28,13 @@ HEADERS += \
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lFileError -lFileHelper
 }
 
 win32:
 {
 WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-LIBS += -L$$WINLIBS  -llogger
+LIBS += -L$$WINLIBS  -llogger -lFileError
 #message(win32libs=$$WINLIBS)
 }
 

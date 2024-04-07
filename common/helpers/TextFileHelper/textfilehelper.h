@@ -5,7 +5,7 @@
 #include <QStringList>
 #include <QTextStream>
 
-#include "../../helpers/FileHelper//filehelper.h"
+#include "../../helpers/FileError//fileerror.h"
 
 namespace com { namespace helpers{
 class TEXTFILEHELPER_EXPORT TextFileHelper
@@ -18,13 +18,13 @@ public:
 
     static void SetUtf8Encoding(QTextStream* st);
 
-    static QString Load(const QString& filename, FileHelper::Errors *err);
-    static QStringList LoadLines(const QString& filename, FileHelper::Errors *err);
-    static QStringList LoadLinesContains(const QString& filename, const QStringList& t1, FileHelper::Errors *err);
+    static QString Load(const QString& filename, FileErrors *err);
+    static QStringList LoadLines(const QString& filename, FileErrors *err);
+    static QStringList LoadLinesContains(const QString& filename, const QStringList& t1, FileErrors *err);
 
-    static bool Save(const QString& txt, const QString& fileName, FileHelper::Errors *err, bool isAppend = false);
+    static bool Save(const QString& txt, const QString& fileName, FileErrors *err, bool isAppend = false);
 
-    static QChar GetLastChar(const QString &fn, FileHelper::Errors *err);
+    static QChar GetLastChar(const QString &fn, FileErrors *err);
 
 };
 }

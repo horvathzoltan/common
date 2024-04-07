@@ -1,18 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-05-05T21:00:55
+# Project created by QtCreator 2019-04-02T08:27:00
 #
 #-------------------------------------------------
 
 QT       -= gui
 
-#TARGET = settingshelper
+#TARGET = fileerror
 TEMPLATE = lib
 
-CONFIG += c++14
-msvc:QMAKE_CXXFLAGS += /std:c++17
-
-DEFINES += COM_SETTINGSHELPER_LIBRARY
+DEFINES += COM_FILEERROR_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -26,26 +23,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-	isettings.cpp \
-	settingshelper.cpp
+    fileerror.cpp
 
 HEADERS += \
-    settingshelper.h \
-        settingshelper_global.h \
-	isettings.h
+    fileerror.h \
+    fileerror_global.h \    
+
+CONFIG += c++14
+msvc:QMAKE_CXXFLAGS += /std:c++17
 
 include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lFileError -lStringHelper -lIniHelper
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lFileNameHelper -lFileError
 }
 
-# win32:
-# {
-# WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
-# LIBS += -L$$WINLIBS -lmacros -llogger -lstringhelper -lfilehelper
-# #message(win32libs=$$WINLIBS)
-# }
+win32:
+{
+WINLIBS = $$system_path($$HOME/$$COMMON_LIBS/)
+LIBS += -L$$WINLIBS -llogger
+#message(win32libs=$$WINLIBS)
+}
+
+#INCLUDEPATH += $$PWD
+#DEPENDPATH += $$PWD
 
 include($$PWD/../../../libinstall//libinstall.prf)
+#HOME = $$system(echo $HOME)
+#INSTALLDIR = commonlib
+#createdir.commands = $(MKDIR) $$HOME/$$INSTALLDIR
+#copydata.commands = $(COPY_FILE) $$quote(-r) $$OUT_PWD/*.so* $$HOME/$$INSTALLDIR
+#first.depends = $(first) createdir copydata
+#export(first.depends)
+#export(createdir.commands)
+#export(copydata.commands)
+#QMAKE_EXTRA_TARGETS += first createdir copydata
+
+# DISTFILES +=
+

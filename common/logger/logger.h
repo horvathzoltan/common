@@ -2,26 +2,16 @@
 #define COM_ZERROR_H
 
 #include <QString>
-//#include <QTextBrowser>
-//#include <QTabWidget>
-//#include <zstringhelper.h>
 #include "locinfo.h"
 #include "logger_global.h"
-//#include "../macrofactory/macro.h"
 
-
-//#if defined(Q_OS_LINUX)
-//#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__),__FILE__,__LINE__)
-//#elif defined(Q_OS_WIN)
-    #if defined(__GNUC__)
-    #define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__) ,__FILE__,__LINE__)
-    #elif defined(__MINGW32__)
-    #define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
-    #elif defined (_MSC_VER )
-    #define getLocInfo LocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
-    #endif
-//#endif
-
+#if defined(__GNUC__)
+#define getLocInfo LocInfo(static_cast<const char*>(__PRETTY_FUNCTION__) ,__FILE__,__LINE__)
+#elif defined(__MINGW32__)
+#define getLocInfo LocInfo(__PRETTY_FUNCTION__ ,__FILE__,__LINE__)
+#elif defined (_MSC_VER )
+#define getLocInfo LocInfo(__FUNCSIG__ ,__FILE__,__LINE__)
+#endif
 
 #define zError(msg) Logger::error2((msg), getLocInfo)
 
@@ -34,6 +24,7 @@
 #define zWarning2(msg,i) Logger::warning2((msg), getLocInfo,(i));
 #define zInfo2(msg,i) Logger::info2((msg), getLocInfo,(i));
 
+#define zMessage(msg) Logger::message((msg));
 
 // 1. log egy messaget
 // 2. szerez loc infot
@@ -80,14 +71,9 @@ namespace GUIModes{
     enum Modes:int{ INFO, INFOAPPEND, INFOCLOSE, WARNING, ERROR, DEBUG};
 }
 
-//typedef void (*zLogGUIfn)(GUIModes::Modes mode, const QString &msg, const QString &loci, const QString &st, void *ui, int type);
-
-
 class COM_LOGGERSHARED_EXPORT Logger
 {
 private:
-    //static zLogGUIfn _GUILogger;
-
     static bool _isBreakOnError;
     static bool _isVerbose;
     static bool _isInited;
@@ -104,10 +90,6 @@ private:
     static void err_message(ErrLevel::Levels level, const QString& msg);
     static void dbg_message(DbgLevel::Levels level, const QString& msg);
 
-    // static void *_ui;
-    // static QString openInfo(const QString& txt);
-    // static void appendInfo(const QString& key, const QString& txt);
-    // static void closeInfo(const QString& key);
 public:
 
     static void init(ErrLevel::Levels level,
@@ -121,6 +103,7 @@ public:
     static void info2(const QStringList& msg, const LocInfo& l);
     static void debug2(const LocInfo& l);
     static void trace2(const LocInfo& l);
+    static void message(const QString& msg);
 };
 
 

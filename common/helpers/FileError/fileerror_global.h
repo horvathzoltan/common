@@ -1,0 +1,13 @@
+#ifndef COM_FILEERROR_GLOBAL_H
+#define COM_FILEERROR_GLOBAL_H
+
+
+#include <QtCore/qglobal.h>
+
+#if defined(COM_FILEERROR_LIBRARY)
+#  define COM_FILEERRORSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define COM_FILEERRORSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // COM_FILEERROR_GLOBAL_H

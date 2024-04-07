@@ -111,7 +111,7 @@ bool Downloader::Wget(const QString &url, const QString &filename)
     bool valid = !url.isEmpty() && !filename.isEmpty();
     bool retVal = false;
     if(valid){
-        auto cmd = QStringLiteral(R"(wget "%1" -O "%2"")").arg(url).arg(filename);
+        auto cmd = QStringLiteral(R"(wget "%1" -O "%2")").arg(url).arg(filename);
         auto out = ProcessHelper::ShellExecute(cmd);
         retVal = !out.exitCode;
         }

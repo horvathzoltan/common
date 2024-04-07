@@ -1,5 +1,6 @@
 #include "settingshelper.h"
 #include "../../helpers/IniHelper/inihelper.h"
+#include "../../helpers/FileHelper/filehelper.h"
 #include "../../helpers/TextFileHelper/textfilehelper.h"
 //#include <QSettings>
 //#include <QApplication>
@@ -31,9 +32,9 @@ bool SettingsHelper::LoadSettings()
     bool isok = false;
     if(!_s) return false;
 
-    FileHelper:: Errors err;
+    FileErrors err;
     QStringList lines = TextFileHelper::LoadLines(_globalSettingsFileName, &err);
-    if(err == FileHelper::Errors::Ok)
+    if(err == FileErrors::Ok)
     {
         auto map = IniHelper::Parse(lines, ',');
         _s->parseIni(map);
@@ -42,7 +43,7 @@ bool SettingsHelper::LoadSettings()
 
 
     lines = TextFileHelper::LoadLines(_userSettingsFileName, &err);
-    if(err == FileHelper::Errors::Ok)
+    if(err == FileErrors::Ok)
     {
         auto map = IniHelper::Parse(lines, ',');
         _s->parseIni(map);
@@ -58,10 +59,10 @@ bool SettingsHelper::SaveSettings()
 
     auto m = _s->toIni();
     auto txt = IniHelper::toString(m, NAME);
-    FileHelper::Errors err;
+    FileErrors err;
 
     FileHelper::Save(txt, _userSettingsFileName, &err);
-    return err == FileHelper::Errors::Ok;
+    return err == FileErrors::Ok;
 }
 
 //QString SettingsHelper::getFileName()

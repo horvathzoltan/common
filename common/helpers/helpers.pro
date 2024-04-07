@@ -7,6 +7,7 @@ SUBDIRS += \
     SettingsHelper \
     SignalHelper \
     StringHelper \
+    FileError \
     FileNameHelper \
     FileHelper \
     IniHelper \
@@ -16,8 +17,9 @@ SUBDIRS += \
 
 FileHelper.depends = StringHelper
 IniHelper.depends = StringHelper
-SettingsHelper.depends = StringHelper FileHelper FileNameHelper TextFileHelper IniHelper
-XmlHelper.depends = StringHelper FileHelper FileNameHelper TextFileHelper IniHelper
+TextFileHelper.depends = FileError FileHelper
+SettingsHelper.depends = StringHelper FileError FileHelper FileNameHelper TextFileHelper IniHelper
+XmlHelper.depends = StringHelper FileError FileHelper FileNameHelper TextFileHelper IniHelper
 Downloader.depends = ProcessHelper
 
 

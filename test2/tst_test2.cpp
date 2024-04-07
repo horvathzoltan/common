@@ -55,7 +55,7 @@ void test2::test_case2()
 
     qDebug() << "testfile:" << fn;
 
-    com::helpers::FileHelper::Errors err;
+    com::helpers::FileErrors err;
     com::helpers::FileHelper::Save(e, fn, &err);
     qDebug() << "err:" << err;
 
@@ -82,18 +82,18 @@ void test2::test_case3()
     auto a = com::helpers::IniHelper::toString(m, fn);
     qDebug() << a;
 
-    com::helpers::FileHelper::Errors err;
+    com::helpers::FileErrors err;
     com::helpers::FileHelper::Save(a, fn, &err);
     qDebug() << "err:" << err;
 
     auto isExist = QFileInfo::exists(fn);
     QVERIFY(isExist);
 
-    com::helpers::FileHelper::Errors err2;
+    com::helpers::FileErrors err2;
     auto b = com::helpers::TextFileHelper::LoadLines(fn,&err2);
     qDebug() << "err:" << err2;
 
-    if(err == com::helpers::FileHelper::Errors::Ok){
+    if(err == com::helpers::FileErrors::Ok){
         auto n = com::helpers::IniHelper::Parse(b, ',');
         QVERIFY(n.contains(k1));
         QVERIFY(n.contains(k2));

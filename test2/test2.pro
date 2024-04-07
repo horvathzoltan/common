@@ -78,6 +78,7 @@ unix:!macx:
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lStringHelper
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lTextFileHelper
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lFileNameHelper
+LIBS += -L$$COMMON_LIBS_FULLPATH/ -lFileError
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lFileHelper
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -lshortguid
 LIBS += -L$$COMMON_LIBS_FULLPATH/ -llogger

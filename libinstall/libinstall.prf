@@ -25,3 +25,6 @@ win32 {
 QMAKE_POST_LINK +=$(COPY_FILE) $$shell_path($$OUT_PWD/$$BUILD/*.lib) $$shell_path($$HOME/$$INSTALLDIR)
 QMAKE_POST_LINK +=& $(COPY_FILE) $$shell_path($$OUT_PWD/$$BUILD/*.dll) $$shell_path($$HOME/$$INSTALLDIR)
 }
+
+DISTFILES += \
+    common.prf

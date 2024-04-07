@@ -18,7 +18,7 @@ bool FileHelper::_verbose = false;
 
 QString FileHelper::load2(const QString& filename)
 {
-    bool valid = FnValidate_Load(filename, nullptr);
+    bool valid = FnValidator::Validate_Load(filename, nullptr);
     if(!valid) return QString();
 
     QFile f(filename);
@@ -39,25 +39,25 @@ A txt-t nem feltétlenül kell itt validálni
 - üres fájl mentése/létrehozása lehet egy valós igény
 */
 
-bool FileHelper::Save(const QString& txt, const QString& filename, FileHelper::Errors *err){
+bool FileHelper::Save(const QString& txt, const QString& filename, FileErrors *err){
     return Save_private(txt, filename, err, false);
 }
 
-bool FileHelper::Append(const QString& txt, const QString& filename, FileHelper::Errors *err){
+bool FileHelper::Append(const QString& txt, const QString& filename, FileErrors *err){
     return Save_private(txt, filename, err, true);
 }
 
-bool FileHelper::Save(const QByteArray& txt, const QString& filename, FileHelper::Errors *err){
+bool FileHelper::Save(const QByteArray& txt, const QString& filename, FileErrors *err){
     return Save_private(txt, filename, err, false);
 }
 
-bool FileHelper::Append(const QByteArray& txt, const QString& filename, FileHelper::Errors *err){
+bool FileHelper::Append(const QByteArray& txt, const QString& filename, FileErrors *err){
     return Save_private(txt, filename, err, true);
 }
 
-bool FileHelper::Save_private(const QString& txt, const QString& filename, FileHelper::Errors *err, bool isAppend)
+bool FileHelper::Save_private(const QString& txt, const QString& filename, FileErrors *err, bool isAppend)
 {    
-    bool valid = FileHelper::FnValidate_Save(filename, err);
+    bool valid = FnValidator::Validate_Save(filename, err);
     if(!valid) return false;
 
 
@@ -78,7 +78,7 @@ bool FileHelper::Save_private(const QString& txt, const QString& filename, FileH
     {
         auto errDesc = f.errorString();
         if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(filename, errDesc));
-        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
+        if(err != nullptr) *err = FileErrors::CannotWrite;
         return false;
     }
 
@@ -94,7 +94,7 @@ bool FileHelper::Save_private(const QString& txt, const QString& filename, FileH
     return true;
 }
 
-bool FileHelper::Save_private(const QByteArray& data, const QString& fn, FileHelper::Errors *err, bool isAppend)
+bool FileHelper::Save_private(const QByteArray& data, const QString& fn, FileErrors *err, bool isAppend)
 {
     if(fn.length()>256) return false;
     QFileInfo fi(fn);
@@ -110,7 +110,7 @@ bool FileHelper::Save_private(const QByteArray& data, const QString& fn, FileHel
     {
         auto errDesc = f.errorString();
         if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(fn, errDesc));
-        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
+        if(err != nullptr) *err = FileErrors::CannotWrite;
         return false;
     }
 
@@ -118,7 +118,7 @@ bool FileHelper::Save_private(const QByteArray& data, const QString& fn, FileHel
     if(u==-1 && err){
         auto errDesc = f.errorString();
         if(_verbose) zInfo(QStringLiteral("cannot save: %1, %2").arg(fn, errDesc));
-        if(err != nullptr) *err = FileHelper::Errors::CannotWrite;
+        if(err != nullptr) *err = FileErrors::CannotWrite;
         return false;
     }
     f.close();
@@ -179,7 +179,7 @@ QString FileHelper::GetFileName(const QString &fn)
 
 bool FileHelper::Exists(const QString &filename)
 {
-    bool valid = FnValidate_Load(filename, nullptr);
+    bool valid = FnValidator::Validate_Load(filename, nullptr);
     if(!valid) return false;
 
     return true;
@@ -194,51 +194,51 @@ bool FileHelper::Delete(const QString &filename)
 }
 
 
-bool FileHelper::FnValidate_Load(const QString& filename, Errors *err)
-{
-    bool valid = FnValidate_Save(filename, err);
+// bool FileHelper::FnValidate_Load(const QString& filename, FileErrors *err)
+// {
+//     bool valid = FnValidate_Save(filename, err);
 
-    if(!valid) return false;
+//     if(!valid) return false;
 
-    QFileInfo fi(filename);
+//     QFileInfo fi(filename);
 
-    if(!fi.exists())
-    {
-        if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
-        if(err != nullptr) *err= Errors::FileNotExists;
-        return false;
-    }
+//     if(!fi.exists())
+//     {
+//         if(_verbose) zInfo(QStringLiteral("file not exist: %1").arg(filename));
+//         if(err != nullptr) *err= Errors::FileNotExists;
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
-bool FileHelper::FnValidate_Save(const QString& filename, Errors *err)
-{
-    if(filename.isEmpty())
-    {
-        if(_verbose) zInfo(QStringLiteral("no file name").arg(filename));
-        if(err != nullptr) *err= Errors::NoFileName;
-        return false;
-    }
+// bool FileHelper::FnValidate_Save(const QString& filename, Errors *err)
+// {
+//     if(filename.isEmpty())
+//     {
+//         if(_verbose) zInfo(QStringLiteral("no file name").arg(filename));
+//         if(err != nullptr) *err= Errors::NoFileName;
+//         return false;
+//     }
 
-    if(filename.length()>256)
-    {
-        if(_verbose) zInfo(QStringLiteral("filename too long: %1").arg(filename));
-        if(err!=nullptr) *err = FileHelper::Errors::FileNameTooLong;
-        return false;
-    }
+//     if(filename.length()>256)
+//     {
+//         if(_verbose) zInfo(QStringLiteral("filename too long: %1").arg(filename));
+//         if(err!=nullptr) *err = FileHelper::Errors::FileNameTooLong;
+//         return false;
+//     }
 
-    QFileInfo fi(filename);
+//     QFileInfo fi(filename);
 
-    if(!fi.isAbsolute())
-    {
-        if(_verbose) zInfo(QStringLiteral("path is not absolute: %1").arg(filename));
-        if(err != nullptr) *err= Errors::PathIsNotAbsolute;
-        return false;
-    }
+//     if(!fi.isAbsolute())
+//     {
+//         if(_verbose) zInfo(QStringLiteral("path is not absolute: %1").arg(filename));
+//         if(err != nullptr) *err= Errors::PathIsNotAbsolute;
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 }  // namespace helper
 }  // namespace com
