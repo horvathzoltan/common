@@ -27,7 +27,7 @@ SOURCES += \
 
 HEADERS += \
     filenamehelper.h \
-    filehnameelper_global.h \    
+    filenamehelper_global.h \
 
 CONFIG += c++14
 msvc:QMAKE_CXXFLAGS += /std:c++17

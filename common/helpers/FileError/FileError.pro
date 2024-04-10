@@ -36,7 +36,7 @@ include($$PWD/../../../libinstall//common.prf)
 
 unix:!macx:
 {
-LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger -lFileNameHelper -lFileError
+LIBS += -L$$HOME/$$COMMON_LIBS/ -llogger
 }
 
 win32:
